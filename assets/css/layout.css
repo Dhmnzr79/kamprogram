@@ -1,5 +1,7 @@
 .container {
-  max-width: var(--container-max-width);
+  width: min(var(--container-max), 100% - 2 * var(--container-pad-mob));
+  margin-inline: auto;
+  padding-inline: var(--container-pad-mob);
 }
 
 .row {
@@ -13,6 +15,10 @@
 }
 
 @media (min-width: 1280px) {
+  .container {
+    padding-inline: var(--container-pad-desk);
+  }
+
   .row {
     gap: var(--grid-gap-desk);
   }

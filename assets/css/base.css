@@ -3,7 +3,9 @@
   --brk-1280: 1280px;
   --brk-1400: 1400px;
 
-  --container-max-width: 1400px;
+  --container-max: 1400px;
+  --container-pad-mob: 16px;
+  --container-pad-desk: 24px;
 
   --grid-gap-mob: 16px;
   --grid-gap-tab: 24px;
