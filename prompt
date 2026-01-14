@@ -8,36 +8,24 @@
 – Если есть сомнение — остановись и задай вопрос
 
 
-Создаем и одключаем CSS-файлы:
+Как правильно это зафиксировать (рекомендую)
+В base.css (или layout.css)
+:root {
+  --container-max: 1400px;
 
-base.css
-layout.css
-components.css
-utilities.css
-pages/course.css
+  --container-pad-mob: 16px;
+  --container-pad-desk: 24px;
+}
 
+Сам контейнер
+.container {
+  width: min(var(--container-max), 100% - 2 * var(--container-pad-mob));
+  margin-inline: auto;
+  padding-inline: var(--container-pad-mob);
+}
 
-Подключаем базовые CSS-переменные
-
-Минимальный must-have:
-
- брейкпоинты (--brk-*)
-
- container max-width - 1400px
-
- grid gap
-Desktop (≥1280): gap: 30px
-Tablet (≥768): gap: 24px
-Mobile: gap: 16px
-
-
- базовые цвета (если в макете они глобальные)
- Заголовки - #000  
- Текст - #333333 
-
- FFB846 фон
- FD6844 фон
- FF7700 - кнопка
- белый
- F3F3F3 - серый фон
-background: linear-gradient(89.28deg, rgba(57, 30, 175, 0.9) 0.53%, rgba(186, 49, 100, 0.9) 98.78%), - фирменный градиент
+@media (min-width: 1280px) {
+  .container {
+    padding-inline: var(--container-pad-desk);
+  }
+}
