@@ -8,3 +8,36 @@
 – Если есть сомнение — остановись и задай вопрос
 
 
+Создаем и одключаем CSS-файлы:
+
+base.css
+layout.css
+components.css
+utilities.css
+pages/course.css
+
+
+Подключаем базовые CSS-переменные
+
+Минимальный must-have:
+
+ брейкпоинты (--brk-*)
+
+ container max-width - 1400px
+
+ grid gap
+Desktop (≥1280): gap: 30px
+Tablet (≥768): gap: 24px
+Mobile: gap: 16px
+
+
+ базовые цвета (если в макете они глобальные)
+ Заголовки - #000  
+ Текст - #333333 
+
+ FFB846 фон
+ FD6844 фон
+ FF7700 - кнопка
+ белый
+ F3F3F3 - серый фон
+background: linear-gradient(89.28deg, rgba(57, 30, 175, 0.9) 0.53%, rgba(186, 49, 100, 0.9) 98.78%), - фирменный градиент

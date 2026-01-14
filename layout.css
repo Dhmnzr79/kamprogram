@@ -1,0 +1,21 @@
+.container {
+  max-width: var(--container-max-width);
+}
+
+.row {
+  gap: var(--grid-gap-mob);
+}
+
+@media (min-width: 768px) {
+  .row {
+    gap: var(--grid-gap-tab);
+  }
+}
+
+@media (min-width: 1280px) {
+  .row {
+    gap: var(--grid-gap-desk);
+  }
+}
+
+

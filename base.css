@@ -1,0 +1,28 @@
+:root {
+  --brk-768: 768px;
+  --brk-1280: 1280px;
+  --brk-1400: 1400px;
+
+  --container-max-width: 1400px;
+
+  --grid-gap-mob: 16px;
+  --grid-gap-tab: 24px;
+  --grid-gap-desk: 30px;
+
+  --color-heading: #000;
+  --color-text: #333333;
+
+  --color-bg-ffb846: #ffb846;
+  --color-bg-fd6844: #fd6844;
+  --color-btn-ff7700: #ff7700;
+  --color-white: #ffffff;
+  --color-bg-f3f3f3: #f3f3f3;
+
+  --gradient-brand: linear-gradient(
+    89.28deg,
+    rgba(57, 30, 175, 0.9) 0.53%,
+    rgba(186, 49, 100, 0.9) 98.78%
+  );
+}
+
+
