@@ -1,3 +1,24 @@
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Inter-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "NT Somic";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../fonts/NTSomic-Semibold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "NT Somic";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/NTSomic-Bold.woff2") format("woff2");
+}
+
 :root {
   --brk-768: 768px;
   --brk-1280: 1280px;
@@ -11,20 +32,48 @@
   --grid-gap-tab: 24px;
   --grid-gap-desk: 30px;
 
+  --font-text: Inter, sans-serif;
+  --font-heading: "NT Somic", sans-serif;
+
   --color-heading: #000;
   --color-text: #333333;
 
-  --color-bg-ffb846: #ffb846;
-  --color-bg-fd6844: #fd6844;
-  --color-btn-ff7700: #ff7700;
+  --color-bg-1: #ffb846;
+  --color-bg-2: #fd6844;
+  --color-btn: #ff7700;
   --color-white: #ffffff;
-  --color-bg-f3f3f3: #f3f3f3;
+  --color-bg-gray: #f3f3f3;
 
   --gradient-brand: linear-gradient(
     89.28deg,
     rgba(57, 30, 175, 0.9) 0.53%,
     rgba(186, 49, 100, 0.9) 98.78%
   );
+}
+
+body {
+  font-family: var(--font-text);
+}
+
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+p + p {
+  margin-top: 12px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
 }
 
 
