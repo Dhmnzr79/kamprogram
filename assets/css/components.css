@@ -16,6 +16,35 @@
   justify-content: space-between;
 }
 
+.site-nav__list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav__submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav__courses {
+  position: relative;
+}
+
+.site-nav__submenu[hidden] {
+  display: none;
+}
+
+.site-nav__submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  z-index: 20;
+}
+
 .has-hero .site-header {
     position: absolute;
     top: 0;

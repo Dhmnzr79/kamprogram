@@ -6,7 +6,6 @@ while (have_posts()) {
 
   $post_id = get_the_ID();
 
-  $short = get_post_meta($post_id, '_kp_course_short', true);
   $price = get_post_meta($post_id, '_kp_course_price', true);
   $age = get_post_meta($post_id, '_kp_course_age', true);
   $schedule = get_post_meta($post_id, '_kp_course_schedule', true);
@@ -22,6 +21,7 @@ while (have_posts()) {
   $why_title = get_post_meta($post_id, '_kp_why_title', true);
   $why_text = get_post_meta($post_id, '_kp_why_text', true);
   $why_btn = get_post_meta($post_id, '_kp_why_btn', true);
+  $why_photo_id = (int) get_post_meta($post_id, '_kp_why_photo_id', true);
 
   $less_title = get_post_meta($post_id, '_kp_less_title', true);
   $less_text = get_post_meta($post_id, '_kp_less_text', true);
@@ -37,24 +37,38 @@ while (have_posts()) {
   <main class="page-course">
     <section class="hero hero--with-header-bg">
       <div class="container">
-        <h1><?php echo esc_html($hero_h1 ?: get_the_title()); ?></h1>
-        <?php if ($hero_text) : ?>
-          <div><?php echo esc_html($hero_text); ?></div>
-        <?php endif; ?>
-      </div>
-    </section>
+        <div class="hero__content">
+          <div class="hero__main">
+            <h1><?php echo esc_html($hero_h1 ?: get_the_title()); ?></h1>
 
-    <section class="section">
-      <div class="container">
-        <h2>Общие</h2>
-        <?php if (has_post_thumbnail($post_id)) : ?>
-          <div><?php echo get_the_post_thumbnail($post_id, 'large'); ?></div>
-        <?php endif; ?>
-        <?php if ($short) : ?><p><?php echo esc_html($short); ?></p><?php endif; ?>
-        <?php if ($price) : ?><p>Стоимость: <?php echo esc_html($price); ?></p><?php endif; ?>
-        <?php if ($age) : ?><p>Возраст: <?php echo esc_html($age); ?></p><?php endif; ?>
-        <?php if ($schedule) : ?><p>График: <?php echo esc_html($schedule); ?></p><?php endif; ?>
-        <?php if ($duration) : ?><p>Длительность: <?php echo esc_html($duration); ?></p><?php endif; ?>
+            <?php if ($hero_text) : ?>
+              <div class="hero__text"><?php echo esc_html($hero_text); ?></div>
+            <?php endif; ?>
+
+            <?php if ($price) : ?>
+              <div class="hero__price">Стоимость: <?php echo esc_html($price); ?></div>
+            <?php endif; ?>
+
+            <a class="hero__cta" href="#">Записаться на бесплатный урок</a>
+          </div>
+
+          <div class="hero__indexes">
+            <div class="hero__index">
+              <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
+              <div class="hero__index-text">Возраст: <?php echo esc_html($age); ?></div>
+            </div>
+
+            <div class="hero__index">
+              <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
+              <div class="hero__index-text">График: <?php echo esc_html($schedule); ?></div>
+            </div>
+
+            <div class="hero__index">
+              <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
+              <div class="hero__index-text">Длительность: <?php echo esc_html($duration); ?></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -77,6 +91,9 @@ while (have_posts()) {
       <div class="container">
         <?php if ($why_title) : ?><h2><?php echo esc_html($why_title); ?></h2><?php endif; ?>
         <?php if ($why_text) : ?><div><?php echo esc_html($why_text); ?></div><?php endif; ?>
+        <?php if ($why_photo_id) : ?>
+          <div><?php echo wp_get_attachment_image($why_photo_id, 'large'); ?></div>
+        <?php endif; ?>
         <?php if ($why_btn) : ?><a href="#"><?php echo esc_html($why_btn); ?></a><?php endif; ?>
       </div>
     </section>
@@ -113,13 +130,19 @@ while (have_posts()) {
           <div>
             <?php foreach ($res_cards as $card) :
               $card = is_array($card) ? $card : [];
-              $icon = $card['icon'] ?? '';
+              $icon_id = (int) ($card['icon_id'] ?? 0);
+              $icon_url = $card['icon'] ?? '';
               $t = $card['title'] ?? '';
               $d = $card['text'] ?? '';
-              if (!$icon && !$t && !$d) { continue; }
+              if (!$icon_id && !$icon_url && !$t && !$d) { continue; }
               ?>
               <div>
-                <?php if ($icon) : ?><img src="<?php echo esc_url($icon); ?>" alt=""><?php endif; ?>
+                <?php if ($icon_id) : ?>
+                  <?php $src = wp_get_attachment_url($icon_id); ?>
+                  <?php if ($src) : ?><img src="<?php echo esc_url($src); ?>" alt=""><?php endif; ?>
+                <?php elseif ($icon_url) : ?>
+                  <img src="<?php echo esc_url($icon_url); ?>" alt="">
+                <?php endif; ?>
                 <?php if ($t) : ?><h3><?php echo esc_html($t); ?></h3><?php endif; ?>
                 <?php if ($d) : ?><div><?php echo esc_html($d); ?></div><?php endif; ?>
               </div>

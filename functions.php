@@ -10,10 +10,59 @@ add_action('wp_enqueue_scripts', function () {
   wp_enqueue_style('kamprogram-page-course', $theme_uri . '/assets/css/pages/course.css', ['kamprogram-utilities'], null);
 
   wp_enqueue_script('kamprogram-reviews-slider', $theme_uri . '/assets/js/reviews-slider.js', [], null, true);
+  wp_enqueue_script('kamprogram-courses-dropdown', $theme_uri . '/assets/js/courses-dropdown.js', [], null, true);
 });
 
+add_action('admin_enqueue_scripts', function (string $hook_suffix) {
+  if ($hook_suffix !== 'post.php' && $hook_suffix !== 'post-new.php') {
+    return;
+  }
+
+  $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+  if (!$screen || $screen->post_type !== 'course') {
+    return;
+  }
+
+  wp_enqueue_media();
+  wp_enqueue_script(
+    'kamprogram-admin-course-media',
+    get_stylesheet_directory_uri() . '/assets/js/admin-course-media.js',
+    ['jquery'],
+    null,
+    true
+  );
+});
+
+add_filter('upload_mimes', function (array $mimes) {
+  if (!current_user_can('manage_options')) {
+    return $mimes;
+  }
+
+  $mimes['svg'] = 'image/svg+xml';
+  $mimes['svgz'] = 'image/svg+xml';
+
+  return $mimes;
+});
+
+add_filter('wp_check_filetype_and_ext', function ($data, $file, $filename, $mimes) {
+  if (!current_user_can('manage_options')) {
+    return $data;
+  }
+
+  $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+  if ($ext !== 'svg' && $ext !== 'svgz') {
+    return $data;
+  }
+
+  return [
+    'ext' => $ext,
+    'type' => 'image/svg+xml',
+    'proper_filename' => $filename,
+  ];
+}, 10, 4);
+
 add_filter('body_class', function (array $classes) {
-  $has_hero = is_front_page() || is_page_template('page-templates/template-course.php');
+  $has_hero = is_front_page() || is_page_template('page-templates/template-course.php') || is_singular('course');
   $classes[] = $has_hero ? 'has-hero' : 'no-hero';
 
   return $classes;
@@ -291,6 +340,8 @@ function kp_course_metabox_sections_render(\WP_Post $post) {
   $why_title = kp_course_meta_get($post->ID, '_kp_why_title', '');
   $why_text = kp_course_meta_get($post->ID, '_kp_why_text', '');
   $why_btn = kp_course_meta_get($post->ID, '_kp_why_btn', '');
+  $why_photo_id = (int) kp_course_meta_get($post->ID, '_kp_why_photo_id', 0);
+  $why_photo_url = $why_photo_id ? wp_get_attachment_url($why_photo_id) : '';
 
   $less_title = kp_course_meta_get($post->ID, '_kp_less_title', '');
   $less_text = kp_course_meta_get($post->ID, '_kp_less_text', '');
@@ -364,6 +415,21 @@ function kp_course_metabox_sections_render(\WP_Post $post) {
         <th scope="row"><label for="kp_why_btn">Название кнопки</label></th>
         <td><input id="kp_why_btn" name="kp_why_btn" type="text" class="regular-text" value="<?php echo esc_attr($why_btn); ?>"></td>
       </tr>
+      <tr>
+        <th scope="row">Фото</th>
+        <td>
+          <input type="hidden" name="kp_why_photo_id" value="<?php echo esc_attr((string) $why_photo_id); ?>" data-kp-why-photo-input>
+          <div data-kp-why-photo-preview>
+            <?php if ($why_photo_url) : ?>
+              <img src="<?php echo esc_url($why_photo_url); ?>" alt="" style="max-width: 100%; height: auto;">
+            <?php endif; ?>
+          </div>
+          <p>
+            <button type="button" class="button" data-kp-why-photo-open>Загрузить</button>
+            <button type="button" class="button" data-kp-why-photo-remove <?php echo $why_photo_id ? '' : 'hidden'; ?>>Удалить</button>
+          </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 
@@ -407,14 +473,26 @@ function kp_course_metabox_sections_render(\WP_Post $post) {
     <tbody>
       <?php for ($i = 0; $i < 3; $i++) :
         $card = is_array($res_cards[$i] ?? null) ? $res_cards[$i] : [];
-        $icon = $card['icon'] ?? '';
+        $icon_id = (int) ($card['icon_id'] ?? 0);
+        $icon_url = $icon_id ? wp_get_attachment_url($icon_id) : '';
         $title = $card['title'] ?? '';
         $text = $card['text'] ?? '';
         ?>
         <tr>
           <th scope="row">Карточка <?php echo (int) ($i + 1); ?></th>
           <td>
-            <p><label>Иконка (URL)<br><input name="kp_res_cards[<?php echo (int) $i; ?>][icon]" type="text" class="large-text" value="<?php echo esc_attr($icon); ?>"></label></p>
+            <p>
+              <label>Иконка</label><br>
+              <input type="hidden" name="kp_res_cards[<?php echo (int) $i; ?>][icon_id]" value="<?php echo esc_attr((string) $icon_id); ?>" data-kp-card-input="<?php echo (int) $i; ?>">
+              <span data-kp-card-preview="<?php echo (int) $i; ?>">
+                <?php if ($icon_url) : ?>
+                  <img src="<?php echo esc_url($icon_url); ?>" alt="" style="max-width: 100px; height: auto;">
+                <?php endif; ?>
+              </span>
+              <br>
+              <button type="button" class="button" data-kp-card-open="<?php echo (int) $i; ?>">Загрузить</button>
+              <button type="button" class="button" data-kp-card-remove="<?php echo (int) $i; ?>" <?php echo $icon_id ? '' : 'hidden'; ?>>Удалить</button>
+            </p>
             <p><label>Заголовок<br><input name="kp_res_cards[<?php echo (int) $i; ?>][title]" type="text" class="large-text" value="<?php echo esc_attr($title); ?>"></label></p>
             <p><label>Текст<br><textarea name="kp_res_cards[<?php echo (int) $i; ?>][text]" rows="2" class="large-text"><?php echo esc_textarea($text); ?></textarea></label></p>
           </td>
@@ -488,6 +566,11 @@ add_action('save_post_course', function (int $post_id) {
   $set_text('kp_why_text', '_kp_why_text', true);
   $set_text('kp_why_btn', '_kp_why_btn');
 
+  if (isset($_POST['kp_why_photo_id'])) {
+    $why_photo_id = is_string($_POST['kp_why_photo_id']) ? (int) $_POST['kp_why_photo_id'] : 0;
+    update_post_meta($post_id, '_kp_why_photo_id', $why_photo_id > 0 ? $why_photo_id : 0);
+  }
+
   $set_text('kp_less_title', '_kp_less_title');
   $set_text('kp_less_text', '_kp_less_text', true);
   $set_text('kp_less_extra', '_kp_less_extra', true);
@@ -511,7 +594,7 @@ add_action('save_post_course', function (int $post_id) {
     for ($i = 0; $i < 3; $i++) {
       $row = is_array($raw_cards[$i] ?? null) ? $raw_cards[$i] : [];
       $cards[] = [
-        'icon' => is_string($row['icon'] ?? null) ? esc_url_raw($row['icon']) : '',
+        'icon_id' => isset($row['icon_id']) && (is_string($row['icon_id']) || is_int($row['icon_id']) || is_float($row['icon_id'])) ? max(0, (int) $row['icon_id']) : 0,
         'title' => is_string($row['title'] ?? null) ? sanitize_text_field($row['title']) : '',
         'text' => is_string($row['text'] ?? null) ? sanitize_textarea_field($row['text']) : '',
       ];

@@ -24,13 +24,50 @@
           </div>
 
           <div class="site-header__menu">
-            <?php
-            wp_nav_menu([
-              'theme_location' => 'primary',
-              'container' => false,
-              'fallback_cb' => false,
-            ]);
-            ?>
+            <nav class="site-nav" aria-label="Главное меню">
+              <ul class="site-nav__list">
+                <li class="site-nav__item">
+                  <a class="site-nav__link" href="<?php echo esc_url(home_url('/')); ?>">Главная</a>
+                </li>
+
+                <li class="site-nav__item">
+                  <?php $about_page = get_page_by_path('o-nas'); ?>
+                  <?php if ($about_page) : ?>
+                    <a class="site-nav__link" href="<?php echo esc_url(get_permalink($about_page)); ?>">О нас</a>
+                  <?php endif; ?>
+                </li>
+
+                <li class="site-nav__item site-nav__courses">
+                  <button class="site-nav__toggle" type="button" aria-expanded="false" data-courses-toggle>Наши курсы</button>
+                  <ul class="site-nav__submenu" hidden data-courses-menu>
+                    <?php
+                    $courses_query = new WP_Query([
+                      'post_type' => 'course',
+                      'post_status' => 'publish',
+                      'posts_per_page' => -1,
+                    ]);
+
+                    while ($courses_query->have_posts()) {
+                      $courses_query->the_post();
+                      ?>
+                      <li class="site-nav__submenu-item">
+                        <a class="site-nav__submenu-link" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                      </li>
+                      <?php
+                    }
+                    wp_reset_postdata();
+                    ?>
+                  </ul>
+                </li>
+
+                <li class="site-nav__item">
+                  <?php $contacts_page = get_page_by_path('kontakty'); ?>
+                  <?php if ($contacts_page) : ?>
+                    <a class="site-nav__link" href="<?php echo esc_url(get_permalink($contacts_page)); ?>">Контакты</a>
+                  <?php endif; ?>
+                </li>
+              </ul>
+            </nav>
           </div>
 
           <div class="site-header__contacts">

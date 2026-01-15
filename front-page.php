@@ -71,7 +71,7 @@ get_header();
           ?>
 
           <div class="col-6">
-            <article class="home-courses-cards__card row">
+            <a class="home-courses-cards__card row" href="<?php the_permalink(); ?>">
               <div class="col-6">
                 <?php if (has_post_thumbnail($course_id)) : ?>
                   <div class="home-courses-cards__card-photo">
@@ -91,9 +91,9 @@ get_header();
                   <div class="home-courses-cards__card-age"><?php echo esc_html($course_age); ?></div>
                 <?php endif; ?>
 
-                <a class="home-courses-cards__card-cta" href="<?php the_permalink(); ?>">Записаться</a>
+                <div class="home-courses-cards__card-cta">Записаться</div>
               </div>
-            </article>
+            </a>
           </div>
 
           <?php
