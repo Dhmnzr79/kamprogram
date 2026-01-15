@@ -8,6 +8,8 @@ add_action('wp_enqueue_scripts', function () {
   wp_enqueue_style('kamprogram-components', $theme_uri . '/assets/css/components.css', ['kamprogram-layout'], null);
   wp_enqueue_style('kamprogram-utilities', $theme_uri . '/assets/css/utilities.css', ['kamprogram-components'], null);
   wp_enqueue_style('kamprogram-page-course', $theme_uri . '/assets/css/pages/course.css', ['kamprogram-utilities'], null);
+
+  wp_enqueue_script('kamprogram-reviews-slider', $theme_uri . '/assets/js/reviews-slider.js', [], null, true);
 });
 
 add_filter('body_class', function (array $classes) {
