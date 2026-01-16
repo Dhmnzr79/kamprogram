@@ -49,7 +49,7 @@ while (have_posts()) {
               <div class="hero__price">Стоимость: <?php echo esc_html($price); ?></div>
             <?php endif; ?>
 
-            <a class="hero__cta" href="#">Записаться на бесплатный урок</a>
+            <button class="hero__cta" type="button">Записаться на бесплатный урок</button>
           </div>
 
           <div class="hero__indexes">
@@ -74,60 +74,77 @@ while (have_posts()) {
 
     <section class="section course-for-whom">
       <div class="container">
-        <?php if ($for_title) : ?><h2><?php echo esc_html($for_title); ?></h2><?php endif; ?>
-        <?php if ($for_subtitle) : ?><div><?php echo esc_html($for_subtitle); ?></div><?php endif; ?>
-        <?php if (!empty(array_filter($for_items))) : ?>
-          <ul>
-            <?php foreach ($for_items as $item) : ?>
-              <?php if (!$item) { continue; } ?>
-              <li><?php echo esc_html($item); ?></li>
-            <?php endforeach; ?>
-          </ul>
-        <?php endif; ?>
+        <div class="row">
+          <div class="col-6">
+            <?php if ($for_title) : ?><h2 class="course-for-whom__title"><?php echo esc_html($for_title); ?></h2><?php endif; ?>
+          </div>
+
+          <div class="col-6">
+            <?php if ($for_subtitle) : ?><div class="course-for-whom__subtitle"><?php echo esc_html($for_subtitle); ?></div><?php endif; ?>
+            <?php if (!empty(array_filter($for_items))) : ?>
+              <ul class="course-for-whom__list">
+                <?php foreach ($for_items as $item) : ?>
+                  <?php if (!$item) { continue; } ?>
+                  <li class="course-for-whom__list-item"><?php echo esc_html($item); ?></li>
+                <?php endforeach; ?>
+              </ul>
+            <?php endif; ?>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="section course-why">
       <div class="container">
-        <?php if ($why_title) : ?><h2><?php echo esc_html($why_title); ?></h2><?php endif; ?>
-        <?php if ($why_text) : ?><div><?php echo esc_html($why_text); ?></div><?php endif; ?>
-        <?php if ($why_photo_id) : ?>
-          <div><?php echo wp_get_attachment_image($why_photo_id, 'large'); ?></div>
-        <?php endif; ?>
-        <?php if ($why_btn) : ?><a href="#"><?php echo esc_html($why_btn); ?></a><?php endif; ?>
+        <div class="row">
+          <div class="col-6">
+            <?php if ($why_title) : ?><h2 class="course-why__title"><?php echo esc_html($why_title); ?></h2><?php endif; ?>
+            <?php if ($why_text) : ?><div class="course-why__subtitle"><?php echo esc_html($why_text); ?></div><?php endif; ?>
+          </div>
+
+          <div class="col-6">
+            <?php if ($why_photo_id) : ?>
+              <div class="course-why__media"><?php echo wp_get_attachment_image($why_photo_id, 'large'); ?></div>
+            <?php endif; ?>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="section course-lessons">
       <div class="container">
-        <?php if ($less_title) : ?><h2><?php echo esc_html($less_title); ?></h2><?php endif; ?>
-        <?php if ($less_text) : ?><div><?php echo esc_html($less_text); ?></div><?php endif; ?>
-
-        <?php if (!empty($less_items)) : ?>
-          <div>
-            <?php foreach ($less_items as $row) :
-              $row = is_array($row) ? $row : [];
-              $t = $row['title'] ?? '';
-              $d = $row['text'] ?? '';
-              if (!$t && !$d) { continue; }
-              ?>
-              <div>
-                <?php if ($t) : ?><h3><?php echo esc_html($t); ?></h3><?php endif; ?>
-                <?php if ($d) : ?><div><?php echo esc_html($d); ?></div><?php endif; ?>
-              </div>
-            <?php endforeach; ?>
+        <div class="row">
+          <div class="col-6">
+            <?php if ($less_title) : ?><h2 class="course-lessons__title"><?php echo esc_html($less_title); ?></h2><?php endif; ?>
+            <?php if ($less_text) : ?><div class="course-lessons__subtitle"><?php echo esc_html($less_text); ?></div><?php endif; ?>
           </div>
-        <?php endif; ?>
 
-        <?php if ($less_extra) : ?><div><?php echo esc_html($less_extra); ?></div><?php endif; ?>
+          <div class="col-6">
+            <?php if (!empty($less_items)) : ?>
+              <div class="course-lessons__items">
+                <?php foreach ($less_items as $row) :
+                  $row = is_array($row) ? $row : [];
+                  $t = $row['title'] ?? '';
+                  $d = $row['text'] ?? '';
+                  if (!$t && !$d) { continue; }
+                  ?>
+                  <div class="course-lessons__item">
+                    <?php if ($t) : ?><h3 class="course-lessons__item-title"><?php echo esc_html($t); ?></h3><?php endif; ?>
+                    <?php if ($d) : ?><div class="course-lessons__item-text"><?php echo esc_html($d); ?></div><?php endif; ?>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="section course-results">
       <div class="container">
-        <h2>Результат обучения</h2>
+        <h2 class="course-results__title">Результат обучения</h2>
         <?php if (!empty($res_cards)) : ?>
-          <div>
+          <div class="row course-results__grid">
             <?php foreach ($res_cards as $card) :
               $card = is_array($card) ? $card : [];
               $icon_id = (int) ($card['icon_id'] ?? 0);
@@ -136,15 +153,17 @@ while (have_posts()) {
               $d = $card['text'] ?? '';
               if (!$icon_id && !$icon_url && !$t && !$d) { continue; }
               ?>
-              <div>
-                <?php if ($icon_id) : ?>
-                  <?php $src = wp_get_attachment_url($icon_id); ?>
-                  <?php if ($src) : ?><img src="<?php echo esc_url($src); ?>" alt=""><?php endif; ?>
-                <?php elseif ($icon_url) : ?>
-                  <img src="<?php echo esc_url($icon_url); ?>" alt="">
-                <?php endif; ?>
-                <?php if ($t) : ?><h3><?php echo esc_html($t); ?></h3><?php endif; ?>
-                <?php if ($d) : ?><div><?php echo esc_html($d); ?></div><?php endif; ?>
+              <div class="col-4">
+                <div class="course-results__card">
+                  <?php if ($icon_id) : ?>
+                    <?php $src = wp_get_attachment_url($icon_id); ?>
+                    <?php if ($src) : ?><img class="course-results__icon" src="<?php echo esc_url($src); ?>" alt=""><?php endif; ?>
+                  <?php elseif ($icon_url) : ?>
+                    <img class="course-results__icon" src="<?php echo esc_url($icon_url); ?>" alt="">
+                  <?php endif; ?>
+                  <?php if ($t) : ?><h3 class="course-results__card-title"><?php echo esc_html($t); ?></h3><?php endif; ?>
+                  <?php if ($d) : ?><div class="course-results__card-text"><?php echo esc_html($d); ?></div><?php endif; ?>
+                </div>
               </div>
             <?php endforeach; ?>
           </div>
@@ -154,8 +173,12 @@ while (have_posts()) {
 
     <section class="section course-cta">
       <div class="container">
-        <?php if ($cta_title) : ?><h2><?php echo esc_html($cta_title); ?></h2><?php endif; ?>
-        <?php if ($cta_text) : ?><div><?php echo esc_html($cta_text); ?></div><?php endif; ?>
+        <?php if ($cta_title) : ?><h2 class="course-cta__title"><?php echo esc_html($cta_title); ?></h2><?php endif; ?>
+        <?php if ($cta_text) : ?><div class="course-cta__text"><?php echo esc_html($cta_text); ?></div><?php endif; ?>
+
+        <div class="course-cta__form">
+          <?php echo do_shortcode('[contact-form-7 id="6c52f0a" title="Основная форма"]'); ?>
+        </div>
       </div>
     </section>
 

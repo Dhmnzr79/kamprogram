@@ -45,6 +45,27 @@
   z-index: 20;
 }
 
+.home-courses-cards__card {
+  position: relative;
+}
+
+.home-courses-cards__card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+}
+
+.home-courses-cards__card > .row {
+  position: relative;
+  z-index: 0;
+}
+
+.home-courses-cards__card-cta {
+  position: relative;
+  z-index: 2;
+}
+
 .has-hero .site-header {
     position: absolute;
     top: 0;

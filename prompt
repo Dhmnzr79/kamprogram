@@ -1,4 +1,4 @@
-Перед началом: используй правила из /rules (CORE + GRID + SPACING + CSS_ARCH).
+Перед началом каждого действия: обязательно читай и используй правила из /rules (CORE + GRID + SPACING + CSS_ARCH). 
 
 Запреты и правила:
 – Дизайн только по Figma, ничего не додумывай
@@ -9,10 +9,35 @@
 – Если есть сомнение — остановись и задай вопрос
 – Коммиты запрещены без моей команды
 
-Еще поработем над курсами в админке
+Идем на страницу курса. Форма course-cta
 
-Нужно вот здесь Почему важен курс - добавить возможность загружать фото
+Приводим ее в нормальный html вид по правилам:
 
-А в Результат обучения - иконку сделать не ссылкой, а чтобы загружать можно было
+Заголовок
+Текст
+И форма [contact-form-7 id="6c52f0a" title="Основная форма"]
 
-html + php + js +css (при необходимости)
+Далее нужно учесть вот это:
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.js-phone').forEach(input => {
+    input.addEventListener('input', () => {
+      let x = input.value.replace(/\D/g, '').substring(0, 11);
+      if (x.startsWith('8')) x = '7' + x.substring(1);
+      if (!x.startsWith('7')) x = '7' + x;
+
+      let formatted = '+7';
+      if (x.length > 1) formatted += '(' + x.substring(1, 4);
+      if (x.length >= 4) formatted += ') ' + x.substring(4, 7);
+      if (x.length >= 7) formatted += '-' + x.substring(7, 9);
+      if (x.length >= 9) formatted += '-' + x.substring(9, 11);
+
+      input.value = formatted;
+    });
+  });
+});
+</script>
+
+
+режим html+js

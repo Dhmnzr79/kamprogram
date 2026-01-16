@@ -8,7 +8,7 @@ get_header();
       <div class="hero__main">
         <h1>Курсы для детей и подростков в Петропавловске-Камчатском</h1>
         <div class="hero__text">IT, робототехника, творчество и развитие мышления. Помогаем детям не просто учиться, а понимать, создавать и думать.</div>
-        <a class="hero__cta" href="#">Записаться на бесплатный урок</a>
+        <button class="hero__cta" type="button">Записаться на бесплатный урок</button>
       </div>
 
       <div class="hero__indexes">
@@ -71,29 +71,33 @@ get_header();
           ?>
 
           <div class="col-6">
-            <a class="home-courses-cards__card row" href="<?php the_permalink(); ?>">
-              <div class="col-6">
-                <?php if (has_post_thumbnail($course_id)) : ?>
-                  <div class="home-courses-cards__card-photo">
-                    <?php echo get_the_post_thumbnail($course_id, 'medium'); ?>
-                  </div>
-                <?php endif; ?>
+            <article class="home-courses-cards__card">
+              <a class="home-courses-cards__card-link" href="<?php the_permalink(); ?>" aria-label="Перейти к курсу"></a>
 
-                <h3 class="home-courses-cards__card-title"><?php the_title(); ?></h3>
+              <div class="row">
+                <div class="col-6">
+                  <?php if (has_post_thumbnail($course_id)) : ?>
+                    <div class="home-courses-cards__card-photo">
+                      <?php echo get_the_post_thumbnail($course_id, 'medium'); ?>
+                    </div>
+                  <?php endif; ?>
+
+                  <h3 class="home-courses-cards__card-title"><?php the_title(); ?></h3>
+                </div>
+
+                <div class="col-6">
+                  <?php if ($course_short) : ?>
+                    <div class="home-courses-cards__card-short"><?php echo esc_html($course_short); ?></div>
+                  <?php endif; ?>
+
+                  <?php if ($course_age) : ?>
+                    <div class="home-courses-cards__card-age"><?php echo esc_html($course_age); ?></div>
+                  <?php endif; ?>
+
+                  <button class="home-courses-cards__card-cta" type="button" data-modal="signup">Записаться</button>
+                </div>
               </div>
-
-              <div class="col-6">
-                <?php if ($course_short) : ?>
-                  <div class="home-courses-cards__card-short"><?php echo esc_html($course_short); ?></div>
-                <?php endif; ?>
-
-                <?php if ($course_age) : ?>
-                  <div class="home-courses-cards__card-age"><?php echo esc_html($course_age); ?></div>
-                <?php endif; ?>
-
-                <div class="home-courses-cards__card-cta">Записаться</div>
-              </div>
-            </a>
+            </article>
           </div>
 
           <?php
@@ -136,7 +140,7 @@ get_header();
             <div class="home-quiz__fact">Первый урок бесплатно</div>
           </div>
 
-          <a class="home-quiz__cta" href="#">Пройти тест</a>
+          <button class="home-quiz__cta" type="button">Пройти тест</button>
         </div>
       </div>
     </div>

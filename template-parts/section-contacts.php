@@ -4,8 +4,8 @@
       <div class="col-6">
         <h2 class="contacts__title">Контакты</h2>
         <div class="contacts__address">г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
-        <a class="contacts__phone" href="tel:+79248941600">+7 924 894-16-00</a>
-        <a class="contacts__cta" href="#">Заказать обратный звонок</a>
+        <div class="contacts__phone">+7 924 894-16-00</div>
+        <button class="contacts__cta" type="button">Заказать обратный звонок</button>
       </div>
 
       <div class="col-6">
