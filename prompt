@@ -6,38 +6,21 @@
 – Структурные классы по BEM (п.8) (block, block__element) разрешены
 – Модификаторы и дизайнерские классы — только по моей команде
 – Стили добавляй только в правильный файл по архитектуре
+- Каждый селектор определяется **только один раз**. Запрещено дублировать один и тот же класс в разных местах и переопределять класс в нескольких файлах  
+- Запрещено вставлять media-запросы между стилями  
+- Запрещено разбивать стили одного блока по файлу  
+- Стили идут **в том же порядке**, что и блоки на странице
+- Каждый блок — **цельная секция стилей**
+- Если у родителя уже задано свойство не повторяй его в дочернем элементе
 – Если есть сомнение — остановись и задай вопрос
 – Коммиты запрещены без моей команды
 
-Идем на страницу курса. Форма course-cta
-
-Приводим ее в нормальный html вид по правилам:
-
-Заголовок
-Текст
-И форма [contact-form-7 id="6c52f0a" title="Основная форма"]
-
-Далее нужно учесть вот это:
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.js-phone').forEach(input => {
-    input.addEventListener('input', () => {
-      let x = input.value.replace(/\D/g, '').substring(0, 11);
-      if (x.startsWith('8')) x = '7' + x.substring(1);
-      if (!x.startsWith('7')) x = '7' + x;
-
-      let formatted = '+7';
-      if (x.length > 1) formatted += '(' + x.substring(1, 4);
-      if (x.length >= 4) formatted += ') ' + x.substring(4, 7);
-      if (x.length >= 7) formatted += '-' + x.substring(7, 9);
-      if (x.length >= 9) formatted += '-' + x.substring(9, 11);
-
-      input.value = formatted;
-    });
-  });
-});
-</script>
+Давай добавим еще Hero-wrapper, а внутри него hero content
 
 
-режим html+js
+
+
+
+режим html+css
+
+

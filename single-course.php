@@ -13,6 +13,7 @@ while (have_posts()) {
 
   $hero_h1 = get_post_meta($post_id, '_kp_hero_h1', true);
   $hero_text = get_post_meta($post_id, '_kp_hero_text', true);
+  $hero_kid_photo_id = (int) get_post_meta($post_id, '_kp_hero_kid_photo_id', true);
 
   $for_title = get_post_meta($post_id, '_kp_for_title', true);
   $for_subtitle = get_post_meta($post_id, '_kp_for_subtitle', true);
@@ -37,9 +38,15 @@ while (have_posts()) {
   <main class="page-course">
     <section class="hero hero--with-header-bg">
       <div class="container">
-        <div class="hero__content">
-          <div class="hero__main">
+        <div class="hero__wrapper">
+          <div class="hero__content">
             <h1><?php echo esc_html($hero_h1 ?: get_the_title()); ?></h1>
+
+            <?php if ($hero_kid_photo_id) : ?>
+              <div class="hero__kid-photo">
+                <?php echo wp_get_attachment_image($hero_kid_photo_id, 'full'); ?>
+              </div>
+            <?php endif; ?>
 
             <?php if ($hero_text) : ?>
               <div class="hero__text"><?php echo esc_html($hero_text); ?></div>
@@ -50,22 +57,22 @@ while (have_posts()) {
             <?php endif; ?>
 
             <button class="hero__cta" type="button">Записаться на бесплатный урок</button>
-          </div>
 
-          <div class="hero__indexes">
-            <div class="hero__index">
-              <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
-              <div class="hero__index-text">Возраст: <?php echo esc_html($age); ?></div>
-            </div>
+            <div class="hero__indexes">
+              <div class="hero__index">
+                <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
+                <div class="hero__index-text">Возраст: <?php echo esc_html($age); ?></div>
+              </div>
 
-            <div class="hero__index">
-              <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
-              <div class="hero__index-text">График: <?php echo esc_html($schedule); ?></div>
-            </div>
+              <div class="hero__index">
+                <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
+                <div class="hero__index-text">График: <?php echo esc_html($schedule); ?></div>
+              </div>
 
-            <div class="hero__index">
-              <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
-              <div class="hero__index-text">Длительность: <?php echo esc_html($duration); ?></div>
+              <div class="hero__index">
+                <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
+                <div class="hero__index-text">Длительность: <?php echo esc_html($duration); ?></div>
+              </div>
             </div>
           </div>
         </div>

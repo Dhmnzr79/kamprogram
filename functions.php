@@ -10,7 +10,7 @@ add_action('wp_enqueue_scripts', function () {
   wp_enqueue_style('kamprogram-page-course', $theme_uri . '/assets/css/pages/course.css', ['kamprogram-utilities'], null);
 
   wp_enqueue_script('kamprogram-reviews-slider', $theme_uri . '/assets/js/reviews-slider.js', [], null, true);
-  wp_enqueue_script('kamprogram-courses-dropdown', $theme_uri . '/assets/js/courses-dropdown.js', [], null, true);
+  wp_enqueue_script('kamprogram-header-menu', $theme_uri . '/assets/js/header-menu.js', [], null, true);
   wp_enqueue_script('kamprogram-phone-mask', $theme_uri . '/assets/js/phone-mask.js', [], null, true);
 });
 
@@ -62,6 +62,91 @@ add_filter('wp_check_filetype_and_ext', function ($data, $file, $filename, $mime
   ];
 }, 10, 4);
 
+add_filter('wp_nav_menu_objects', function (array $items, $args) {
+  if (!is_object($args) || ($args->theme_location ?? '') !== 'primary') {
+    return $items;
+  }
+
+  // Remove previously injected course items to avoid duplicates.
+  $items = array_values(array_filter($items, function ($item) {
+    return empty($item->kp_generated);
+  }));
+
+  $parent = null;
+  $parent_index = null;
+  $kursy_page = get_page_by_path('kursy');
+
+  // Prefer matching by linked page (/kursy), fallback to title match.
+  foreach ($items as $i => $item) {
+    if ($kursy_page && isset($item->object, $item->object_id) && $item->object === 'page' && (int) $item->object_id === (int) $kursy_page->ID) {
+      $parent = $item;
+      $parent_index = $i;
+      break;
+    }
+  }
+
+  if (!$parent) {
+    foreach ($items as $i => $item) {
+      $title = isset($item->title) ? (string) $item->title : '';
+      $title = str_replace("\xC2\xA0", ' ', $title); // nbsp
+      $title = preg_replace('/\s+/u', ' ', trim($title));
+      $title_lc = function_exists('mb_strtolower') ? mb_strtolower($title) : strtolower($title);
+
+      if ($title_lc === 'наши курсы' || (strpos($title_lc, 'курсы') !== false && empty($item->menu_item_parent))) {
+        $parent = $item;
+        $parent_index = $i;
+        break;
+      }
+    }
+  }
+
+  if (!$parent) {
+    return $items;
+  }
+
+  $courses = get_posts([
+    'post_type' => 'course',
+    'post_status' => 'publish',
+    'numberposts' => -1,
+    'orderby' => 'menu_order',
+    'order' => 'ASC',
+  ]);
+
+  $order_base = 1000;
+  foreach ($courses as $idx => $course) {
+    // Clone an existing WP menu item so Walker can safely render it as a submenu entry.
+    $obj = clone $parent;
+    $obj->ID = -1 * (int) $course->ID;
+    $obj->db_id = $obj->ID;
+    $obj->menu_item_parent = (string) $parent->ID;
+    $obj->object_id = (string) $course->ID;
+    $obj->object = 'course';
+    $obj->type = 'post_type';
+    $obj->type_label = 'Курс';
+    $obj->title = get_the_title($course);
+    $obj->url = get_permalink($course);
+    $obj->classes = ['menu-item', 'menu-item-course'];
+    $obj->menu_order = $order_base + $idx;
+    $obj->kp_generated = true;
+
+    $items[] = $obj;
+  }
+
+  // Ensure parent is treated as having children (for JS/CSS selectors).
+  if ($parent_index !== null) {
+    $classes = is_array($items[$parent_index]->classes ?? null) ? $items[$parent_index]->classes : [];
+    if (!in_array('menu-item-has-children', $classes, true)) {
+      $classes[] = 'menu-item-has-children';
+    }
+    $items[$parent_index]->classes = $classes;
+
+    // Prevent navigation on click; this item is a dropdown trigger.
+    $items[$parent_index]->url = '#';
+  }
+
+  return $items;
+}, 10, 2);
+
 add_filter('body_class', function (array $classes) {
   $has_hero = is_front_page() || is_page_template('page-templates/template-course.php') || is_singular('course');
   $classes[] = $has_hero ? 'has-hero' : 'no-hero';
@@ -86,10 +171,6 @@ add_action('after_switch_theme', function () {
     'О нас' => [
       'slug' => 'o-nas',
       'template' => 'default',
-    ],
-    'Курсы' => [
-      'slug' => 'kursy',
-      'template' => 'page-templates/template-course.php',
     ],
     'Контакты' => [
       'slug' => 'kontakty',
@@ -117,10 +198,6 @@ add_action('after_switch_theme', function () {
     if (!is_wp_error($new_page_id) && $new_page_id) {
       $page_ids[$title] = $new_page_id;
     }
-  }
-
-  if (!empty($page_ids['Курсы'])) {
-    update_post_meta($page_ids['Курсы'], '_wp_page_template', 'page-templates/template-course.php');
   }
 
   if (empty(get_option('page_on_front')) && !empty($page_ids['Главная'])) {
@@ -154,6 +231,438 @@ add_action('after_switch_theme', function () {
   $locations = get_theme_mod('nav_menu_locations', []);
   $locations['primary'] = $menu_id;
   set_theme_mod('nav_menu_locations', $locations);
+});
+
+add_action('init', function () {
+  // Hard repair: rebuild broken primary menu items if they became empty (<a></a>).
+  // Runs once.
+  if (get_option('kamprogram_rebuild_menu_v1')) {
+    return;
+  }
+
+  $locations = get_theme_mod('nav_menu_locations', []);
+  $primary_menu_id = isset($locations['primary']) ? (int) $locations['primary'] : 0;
+  if (!$primary_menu_id) {
+    // Fallback to a menu named "Main" if location not set.
+    $menu_obj = wp_get_nav_menu_object('Main');
+    $primary_menu_id = $menu_obj ? (int) $menu_obj->term_id : 0;
+  }
+
+  if (!$primary_menu_id) {
+    update_option('kamprogram_rebuild_menu_v1', 1);
+    return;
+  }
+
+  $items = wp_get_nav_menu_items($primary_menu_id);
+  $has_broken = false;
+  if (is_array($items)) {
+    foreach ($items as $it) {
+      if (!empty($it->menu_item_parent)) {
+        continue;
+      }
+      $t = is_string($it->title ?? null) ? trim((string) $it->title) : '';
+      $u = is_string($it->url ?? null) ? trim((string) $it->url) : '';
+      if ($t === '' || $u === '') {
+        $has_broken = true;
+        break;
+      }
+    }
+  }
+
+  if (!$has_broken) {
+    update_option('kamprogram_rebuild_menu_v1', 1);
+    return;
+  }
+
+  // Delete all existing items in this menu (top-level and children).
+  if (is_array($items)) {
+    foreach ($items as $it) {
+      wp_delete_post((int) $it->ID, true);
+    }
+  }
+
+  // Ensure required pages exist.
+  $about_page = get_page_by_path('o-nas');
+  $contacts_page = get_page_by_path('kontakty');
+
+  // Recreate menu items in required order.
+  wp_update_nav_menu_item($primary_menu_id, 0, [
+    'menu-item-title' => 'Главная',
+    'menu-item-type' => 'custom',
+    'menu-item-url' => home_url('/'),
+    'menu-item-status' => 'publish',
+    'menu-item-position' => 1,
+  ]);
+
+  $courses_item_id = wp_update_nav_menu_item($primary_menu_id, 0, [
+    'menu-item-title' => 'Наши курсы',
+    'menu-item-type' => 'custom',
+    'menu-item-url' => '#',
+    'menu-item-status' => 'publish',
+    'menu-item-position' => 2,
+  ]);
+
+  if ($about_page) {
+    wp_update_nav_menu_item($primary_menu_id, 0, [
+      'menu-item-title' => 'О нас',
+      'menu-item-object' => 'page',
+      'menu-item-object-id' => (int) $about_page->ID,
+      'menu-item-type' => 'post_type',
+      'menu-item-status' => 'publish',
+      'menu-item-position' => 3,
+    ]);
+  }
+
+  if ($contacts_page) {
+    wp_update_nav_menu_item($primary_menu_id, 0, [
+      'menu-item-title' => 'Контакты',
+      'menu-item-object' => 'page',
+      'menu-item-object-id' => (int) $contacts_page->ID,
+      'menu-item-type' => 'post_type',
+      'menu-item-status' => 'publish',
+      'menu-item-position' => 4,
+    ]);
+  }
+
+  // Assign menu to primary location.
+  $locations = get_theme_mod('nav_menu_locations', []);
+  $locations['primary'] = $primary_menu_id;
+  set_theme_mod('nav_menu_locations', $locations);
+
+  // Stop older menu migrations from re-running.
+  update_option('kamprogram_menu_order_v1', 1);
+  update_option('kamprogram_menu_order_v2', 1);
+  update_option('kamprogram_menu_repair_v1', 1);
+
+  // Keep for clarity (and possible future use).
+  if (!empty($courses_item_id)) {
+    update_option('kamprogram_menu_courses_parent_id', (int) $courses_item_id);
+  }
+
+  update_option('kamprogram_rebuild_menu_v1', 1);
+}, 1);
+
+add_action('init', function () {
+  if (get_option('kamprogram_deleted_kursy_page_v1')) {
+    return;
+  }
+
+  $kursy_page = get_page_by_path('kursy');
+  if (!$kursy_page) {
+    update_option('kamprogram_deleted_kursy_page_v1', 1);
+    return;
+  }
+
+  $kursy_id = (int) $kursy_page->ID;
+
+  // Convert any menu item pointing to this page into a dropdown trigger.
+  $locations = get_theme_mod('nav_menu_locations', []);
+  $primary_menu_id = isset($locations['primary']) ? (int) $locations['primary'] : 0;
+
+  if ($primary_menu_id) {
+    $items = wp_get_nav_menu_items($primary_menu_id);
+    if (is_array($items)) {
+      foreach ($items as $item) {
+        $is_kursy_link = ($item->object === 'page' && (int) $item->object_id === $kursy_id)
+          || (is_string($item->url) && (strpos($item->url, 'page_id=' . $kursy_id) !== false));
+
+        if (!$is_kursy_link) {
+          continue;
+        }
+
+        wp_update_nav_menu_item($primary_menu_id, (int) $item->ID, [
+          'menu-item-title' => 'Наши курсы',
+          'menu-item-type' => 'custom',
+          'menu-item-url' => '#',
+          'menu-item-status' => 'publish',
+        ]);
+      }
+    }
+  }
+
+  // Delete the page permanently.
+  wp_delete_post($kursy_id, true);
+
+  update_option('kamprogram_deleted_kursy_page_v1', 1);
+});
+
+add_action('init', function () {
+  if (get_option('kamprogram_menu_order_v1')) {
+    return;
+  }
+
+  $locations = get_theme_mod('nav_menu_locations', []);
+  $primary_menu_id = isset($locations['primary']) ? (int) $locations['primary'] : 0;
+  if (!$primary_menu_id) {
+    update_option('kamprogram_menu_order_v1', 1);
+    return;
+  }
+
+  $items = wp_get_nav_menu_items($primary_menu_id);
+  if (!is_array($items)) {
+    update_option('kamprogram_menu_order_v1', 1);
+    return;
+  }
+
+  $normalize = function ($s) {
+    $s = is_string($s) ? $s : '';
+    $s = str_replace("\xC2\xA0", ' ', $s); // nbsp
+    $s = preg_replace('/\s+/u', ' ', trim($s));
+    return function_exists('mb_strtolower') ? mb_strtolower($s) : strtolower($s);
+  };
+
+  $top = [];
+  foreach ($items as $item) {
+    if (!empty($item->menu_item_parent)) {
+      continue;
+    }
+    $top[] = $item;
+  }
+
+  $find = function (callable $predicate) use ($top) {
+    foreach ($top as $item) {
+      if ($predicate($item)) {
+        return $item;
+      }
+    }
+    return null;
+  };
+
+  $home = $find(function ($item) use ($normalize) {
+    return $normalize($item->title ?? '') === 'главная';
+  });
+  $courses = $find(function ($item) use ($normalize) {
+    $t = $normalize($item->title ?? '');
+    return $t === 'наши курсы' || $t === 'курсы';
+  });
+  $about = $find(function ($item) use ($normalize) {
+    return $normalize($item->title ?? '') === 'о нас';
+  });
+  $contacts = $find(function ($item) use ($normalize) {
+    return $normalize($item->title ?? '') === 'контакты';
+  });
+
+  $pos = 1;
+  foreach ([$home, $courses, $about, $contacts] as $item) {
+    if (!$item) {
+      continue;
+    }
+    // Safe ordering: update post menu_order only (do not rewrite menu item meta).
+    wp_update_post([
+      'ID' => (int) $item->ID,
+      'menu_order' => $pos,
+      'post_status' => 'publish',
+    ]);
+    $pos++;
+  }
+
+  update_option('kamprogram_menu_order_v1', 1);
+});
+
+add_action('init', function () {
+  // Fix for sites where v1 reorder could have broken menu items.
+  if (get_option('kamprogram_menu_order_v2')) {
+    return;
+  }
+
+  $locations = get_theme_mod('nav_menu_locations', []);
+  $primary_menu_id = isset($locations['primary']) ? (int) $locations['primary'] : 0;
+  if (!$primary_menu_id) {
+    update_option('kamprogram_menu_order_v2', 1);
+    return;
+  }
+
+  $items = wp_get_nav_menu_items($primary_menu_id);
+  if (!is_array($items)) {
+    update_option('kamprogram_menu_order_v2', 1);
+    return;
+  }
+
+  $normalize = function ($s) {
+    $s = is_string($s) ? $s : '';
+    $s = str_replace("\xC2\xA0", ' ', $s); // nbsp
+    $s = preg_replace('/\s+/u', ' ', trim($s));
+    return function_exists('mb_strtolower') ? mb_strtolower($s) : strtolower($s);
+  };
+
+  $top = [];
+  foreach ($items as $item) {
+    if (!empty($item->menu_item_parent)) {
+      continue;
+    }
+    $top[] = $item;
+  }
+
+  $find = function (callable $predicate) use ($top) {
+    foreach ($top as $item) {
+      if ($predicate($item)) {
+        return $item;
+      }
+    }
+    return null;
+  };
+
+  $home = $find(function ($item) use ($normalize) {
+    return $normalize($item->title ?? '') === 'главная';
+  });
+  $courses = $find(function ($item) use ($normalize) {
+    $t = $normalize($item->title ?? '');
+    return $t === 'наши курсы' || $t === 'курсы';
+  });
+  $about = $find(function ($item) use ($normalize) {
+    return $normalize($item->title ?? '') === 'о нас';
+  });
+  $contacts = $find(function ($item) use ($normalize) {
+    return $normalize($item->title ?? '') === 'контакты';
+  });
+
+  $ordered = array_values(array_filter([$home, $courses, $about, $contacts]));
+  $ordered_ids = array_map(function ($i) { return (int) $i->ID; }, $ordered);
+
+  $pos = 1;
+  foreach ($ordered as $item) {
+    wp_update_post([
+      'ID' => (int) $item->ID,
+      'menu_order' => $pos,
+      'post_status' => 'publish',
+    ]);
+    $pos++;
+  }
+
+  // Keep any other top-level items after the required ones.
+  foreach ($top as $item) {
+    if (in_array((int) $item->ID, $ordered_ids, true)) {
+      continue;
+    }
+    wp_update_post([
+      'ID' => (int) $item->ID,
+      'menu_order' => $pos,
+      'post_status' => 'publish',
+    ]);
+    $pos++;
+  }
+
+  update_option('kamprogram_menu_order_v2', 1);
+});
+
+add_action('init', function () {
+  // Repair menu items if their URLs became empty due to previous migrations.
+  if (get_option('kamprogram_menu_repair_v1')) {
+    return;
+  }
+
+  $locations = get_theme_mod('nav_menu_locations', []);
+  $primary_menu_id = isset($locations['primary']) ? (int) $locations['primary'] : 0;
+  if (!$primary_menu_id) {
+    update_option('kamprogram_menu_repair_v1', 1);
+    return;
+  }
+
+  $items = wp_get_nav_menu_items($primary_menu_id);
+  if (!is_array($items)) {
+    update_option('kamprogram_menu_repair_v1', 1);
+    return;
+  }
+
+  $normalize = function ($s) {
+    $s = is_string($s) ? $s : '';
+    $s = str_replace("\xC2\xA0", ' ', $s); // nbsp
+    $s = preg_replace('/\s+/u', ' ', trim($s));
+    return function_exists('mb_strtolower') ? mb_strtolower($s) : strtolower($s);
+  };
+
+  $get_top = function () use ($items) {
+    $top = [];
+    foreach ($items as $it) {
+      if (!empty($it->menu_item_parent)) {
+        continue;
+      }
+      $top[] = $it;
+    }
+    return $top;
+  };
+
+  $top = $get_top();
+
+  $find = function (callable $predicate) use ($top) {
+    foreach ($top as $item) {
+      if ($predicate($item)) {
+        return $item;
+      }
+    }
+    return null;
+  };
+
+  $home_item = $find(function ($item) use ($normalize) {
+    return $normalize($item->title ?? '') === 'главная';
+  });
+  $courses_item = $find(function ($item) use ($normalize) {
+    $t = $normalize($item->title ?? '');
+    return $t === 'наши курсы' || $t === 'курсы';
+  });
+  $about_item = $find(function ($item) use ($normalize) {
+    return $normalize($item->title ?? '') === 'о нас';
+  });
+  $contacts_item = $find(function ($item) use ($normalize) {
+    return $normalize($item->title ?? '') === 'контакты';
+  });
+
+  $about_page = get_page_by_path('o-nas');
+  $contacts_page = get_page_by_path('kontakty');
+
+  if ($home_item && empty($home_item->url)) {
+    wp_update_nav_menu_item($primary_menu_id, (int) $home_item->ID, [
+      'menu-item-title' => 'Главная',
+      'menu-item-type' => 'custom',
+      'menu-item-url' => home_url('/'),
+      'menu-item-status' => 'publish',
+    ]);
+  }
+
+  if ($courses_item && empty($courses_item->url)) {
+    wp_update_nav_menu_item($primary_menu_id, (int) $courses_item->ID, [
+      'menu-item-title' => 'Наши курсы',
+      'menu-item-type' => 'custom',
+      'menu-item-url' => '#',
+      'menu-item-status' => 'publish',
+    ]);
+  }
+
+  if ($about_item && $about_page && empty($about_item->url)) {
+    wp_update_nav_menu_item($primary_menu_id, (int) $about_item->ID, [
+      'menu-item-title' => 'О нас',
+      'menu-item-object' => 'page',
+      'menu-item-object-id' => (int) $about_page->ID,
+      'menu-item-type' => 'post_type',
+      'menu-item-status' => 'publish',
+    ]);
+  }
+
+  if ($contacts_item && $contacts_page && empty($contacts_item->url)) {
+    wp_update_nav_menu_item($primary_menu_id, (int) $contacts_item->ID, [
+      'menu-item-title' => 'Контакты',
+      'menu-item-object' => 'page',
+      'menu-item-object-id' => (int) $contacts_page->ID,
+      'menu-item-type' => 'post_type',
+      'menu-item-status' => 'publish',
+    ]);
+  }
+
+  // Force required order positions as requested.
+  $pos = 1;
+  foreach ([$home_item, $courses_item, $about_item, $contacts_item] as $it) {
+    if (!$it) {
+      continue;
+    }
+    wp_update_post([
+      'ID' => (int) $it->ID,
+      'menu_order' => $pos,
+      'post_status' => 'publish',
+    ]);
+    $pos++;
+  }
+
+  update_option('kamprogram_menu_repair_v1', 1);
 });
 
 add_action('init', function () {
@@ -333,6 +842,8 @@ function kp_course_metabox_sections_render(\WP_Post $post) {
 
   $hero_h1 = kp_course_meta_get($post->ID, '_kp_hero_h1', '');
   $hero_text = kp_course_meta_get($post->ID, '_kp_hero_text', '');
+  $hero_kid_photo_id = (int) kp_course_meta_get($post->ID, '_kp_hero_kid_photo_id', 0);
+  $hero_kid_photo_url = $hero_kid_photo_id ? wp_get_attachment_url($hero_kid_photo_id) : '';
 
   $for_title = kp_course_meta_get($post->ID, '_kp_for_title', '');
   $for_subtitle = kp_course_meta_get($post->ID, '_kp_for_subtitle', '');
@@ -365,6 +876,21 @@ function kp_course_metabox_sections_render(\WP_Post $post) {
       <tr>
         <th scope="row"><label for="kp_hero_text">Расшифровка</label></th>
         <td><textarea id="kp_hero_text" name="kp_hero_text" rows="3" class="large-text"><?php echo esc_textarea($hero_text); ?></textarea></td>
+      </tr>
+      <tr>
+        <th scope="row">PNG фото ребёнка</th>
+        <td>
+          <input type="hidden" name="kp_hero_kid_photo_id" value="<?php echo esc_attr((string) $hero_kid_photo_id); ?>" data-kp-hero-kid-photo-input>
+          <div data-kp-hero-kid-photo-preview>
+            <?php if ($hero_kid_photo_url) : ?>
+              <img src="<?php echo esc_url($hero_kid_photo_url); ?>" alt="" style="max-width: 100%; height: auto;">
+            <?php endif; ?>
+          </div>
+          <p>
+            <button type="button" class="button" data-kp-hero-kid-photo-open>Загрузить</button>
+            <button type="button" class="button" data-kp-hero-kid-photo-remove <?php echo $hero_kid_photo_id ? '' : 'hidden'; ?>>Удалить</button>
+          </p>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -551,6 +1077,11 @@ add_action('save_post_course', function (int $post_id) {
 
   $set_text('kp_hero_h1', '_kp_hero_h1');
   $set_text('kp_hero_text', '_kp_hero_text', true);
+
+  if (isset($_POST['kp_hero_kid_photo_id'])) {
+    $hero_kid_photo_id = is_string($_POST['kp_hero_kid_photo_id']) ? (int) $_POST['kp_hero_kid_photo_id'] : 0;
+    update_post_meta($post_id, '_kp_hero_kid_photo_id', $hero_kid_photo_id > 0 ? $hero_kid_photo_id : 0);
+  }
 
   $set_text('kp_for_title', '_kp_for_title');
   $set_text('kp_for_subtitle', '_kp_for_subtitle', true);

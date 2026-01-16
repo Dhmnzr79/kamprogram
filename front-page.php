@@ -4,36 +4,37 @@ get_header();
 
 <section class="hero hero--with-header-bg">
   <div class="container">
-    <div class="hero__content">
-      <div class="hero__main">
+    <div class="hero__wrapper">
+      <div class="hero__content">
         <h1>Курсы для детей и подростков в Петропавловске-Камчатском</h1>
         <div class="hero__text">IT, робототехника, творчество и развитие мышления. Помогаем детям не просто учиться, а понимать, создавать и думать.</div>
+        <div class="hero__price"></div>
         <button class="hero__cta" type="button">Записаться на бесплатный урок</button>
-      </div>
 
-      <div class="hero__indexes">
-        <div class="hero__index">
-        <img
-          src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
-          alt=""
-        >
-          <div class="hero__index-text">Курсы для детей от 5 до 18 лет</div>
-        </div>
+        <div class="hero__indexes">
+          <div class="hero__index">
+          <img
+            src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
+            alt=""
+          >
+            <div class="hero__index-text">Курсы для детей от 5 до 18 лет</div>
+          </div>
 
-        <div class="hero__index">
-        <img
-          src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
-          alt=""
-        >
-          <div class="hero__index-text">Практика и проекты на каждом занятии</div>
-        </div>
+          <div class="hero__index">
+          <img
+            src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
+            alt=""
+          >
+            <div class="hero__index-text">Практика и проекты на каждом занятии</div>
+          </div>
 
-        <div class="hero__index">
-        <img
-          src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
-          alt=""
-        >
-          <div class="hero__index-text">Небольшие группы и живое общение</div>
+          <div class="hero__index">
+          <img
+            src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
+            alt=""
+          >
+            <div class="hero__index-text">Небольшие группы и живое общение</div>
+          </div>
         </div>
       </div>
     </div>

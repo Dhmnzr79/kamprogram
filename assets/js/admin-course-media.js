@@ -78,6 +78,13 @@
       previewSelector: "[data-kp-why-photo-preview]",
     });
 
+    bindUploader({
+      openSelector: "[data-kp-hero-kid-photo-open]",
+      removeSelector: "[data-kp-hero-kid-photo-remove]",
+      inputSelector: "[data-kp-hero-kid-photo-input]",
+      previewSelector: "[data-kp-hero-kid-photo-preview]",
+    });
+
     bindCardUploaders();
   };
 

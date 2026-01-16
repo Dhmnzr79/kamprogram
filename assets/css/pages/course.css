@@ -1,2 +1,76 @@
+/* Page: course */
+.page-course .hero__content {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(8, auto);
+  gap: 10px;
+}
 
+.page-course .hero__content h1 {
+  grid-column: 1 / 3;
+  grid-row: 1 / 4;
+}
 
+.page-course .hero__text {
+  grid-column: 1 / 3;
+  grid-row: 4 / 6;
+}
+
+.page-course .hero__price {
+  grid-column: 1 / 3;
+  grid-row: 6 / 8;
+}
+
+.page-course .hero__cta {
+  grid-column: 1 / 3;
+  grid-row: 8 / 9;
+}
+
+.page-course .hero__indexes {
+  grid-column: 4 / 5;
+  grid-row: 2 / 8;
+}
+
+.page-course .hero__content h1 {
+  position: relative;
+  z-index: 0;
+}
+
+.page-course .hero__kid-photo {
+  grid-column: 1 / 3;
+  grid-row: 1 / 4;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.page-course .hero__kid-photo img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
+
+@media (min-width: 1280px) {
+  .page-course .hero__wrapper {
+    position: relative;
+  }
+
+  .page-course .hero__kid-photo {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    grid-column: auto;
+    grid-row: auto;
+    z-index: 2;
+  }
+
+  .page-course .hero__content h1 {
+    position: static;
+  }
+}
