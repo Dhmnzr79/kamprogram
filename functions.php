@@ -12,6 +12,7 @@ add_action('wp_enqueue_scripts', function () {
   wp_enqueue_script('kamprogram-reviews-slider', $theme_uri . '/assets/js/reviews-slider.js', [], null, true);
   wp_enqueue_script('kamprogram-header-menu', $theme_uri . '/assets/js/header-menu.js', [], null, true);
   wp_enqueue_script('kamprogram-phone-mask', $theme_uri . '/assets/js/phone-mask.js', [], null, true);
+  wp_enqueue_script('kamprogram-modal', $theme_uri . '/assets/js/modal.js', [], null, true);
 });
 
 add_action('admin_enqueue_scripts', function (string $hook_suffix) {

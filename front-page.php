@@ -9,7 +9,7 @@ get_header();
         <h1>Курсы для детей и подростков в Петропавловске-Камчатском</h1>
         <div class="hero__text">IT, робототехника, творчество и развитие мышления. Помогаем детям не просто учиться, а понимать, создавать и думать.</div>
         <div class="hero__price"></div>
-        <button class="hero__cta" type="button">Записаться на бесплатный урок</button>
+        <button class="hero__cta" type="button" data-modal="signup">Записаться на бесплатный урок</button>
 
         <div class="hero__indexes">
           <div class="hero__index">

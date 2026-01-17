@@ -51,6 +51,18 @@
     </div>
   </footer>
 
+  <div class="modal" id="modal-signup">
+    <div class="modal__overlay" data-modal-close></div>
+    <div class="modal__content">
+      <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">×</button>
+      <h2 class="modal__title">Оставьте заявку</h2>
+      <div class="modal__subtitle">И мы свяжемся с вами в ближайшее время</div>
+      <div class="modal__form">
+        <?php echo do_shortcode('[contact-form-7 id="6c52f0a" title="Основная форма"]'); ?>
+      </div>
+    </div>
+  </div>
+
   <?php wp_footer(); ?>
 </body>
 </html>
