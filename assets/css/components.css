@@ -40,19 +40,22 @@
   gap: 10px;
 }
 
-.hero__content h1 {
+.hero__heading {
   grid-column: 1 / 3;
-  grid-row: 1 / 4;
-}
-
-.hero__text {
-  grid-column: 1 / 3;
-  grid-row: 4 / 6;
+  grid-row: 1 / 6;
 }
 
 .hero__price {
   grid-column: 1 / 3;
   grid-row: 6 / 8;
+}
+
+.hero__price-label {
+  display: block;
+}
+
+.hero__price-value {
+  display: block;
 }
 
 .hero__cta {
@@ -63,6 +66,14 @@
 .hero__indexes {
   grid-column: 4 / 5;
   grid-row: 2 / 8;
+}
+
+.hero__index-label {
+  display: block;
+}
+
+.hero__index-value {
+  display: block;
 }
 
 body.has-hero .hero--with-header-bg .hero__wrapper {
@@ -151,8 +162,52 @@ body.is-drawer-open {
   display: none;
 }
 
+/* Home Courses Cards */
+
 .home-courses-cards__card {
   position: relative;
+  background: var(--color-bg-gray);
+  padding: 40px;
+  border-radius: 30px;
+}
+
+.home-courses-cards__card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.home-courses-cards__card-inner {
+  display: flex;
+  height: 100%;
+}
+
+.home-courses-cards__card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;          /* ВАЖНО */
+}
+
+.home-courses-cards__card-cta {
+  margin-top: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.home-courses-cards__card-photo-wrap {
+  overflow: hidden;
+  width: 180px;
+  height: 220px;
+  border-radius: 90px;
+}
+
+.home-courses-cards__card-photo img {
+  transition: transform 0.3s ease;
+}
+
+.home-courses-cards__card:hover
+.home-courses-cards__card-photo img {
+  transform: scale(1.1);
 }
 
 .home-courses-cards__card-link {
@@ -170,6 +225,14 @@ body.is-drawer-open {
 .home-courses-cards__card-cta {
   position: relative;
   z-index: 2;
+}
+
+/* Home Quiz */
+
+.home-quiz__content {
+  background: var(--color-bg-2);
+  border-radius: 30px;
+  padding: 30px;
 }
 
 .reviews__slider {

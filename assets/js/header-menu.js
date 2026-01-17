@@ -59,9 +59,18 @@
     const link = target.closest("a");
     if (!link) return;
 
-    const li = link.closest(".menu-item-has-children") || link.closest("li");
-    const submenu = li?.querySelector("ul.sub-menu");
-    if (!li || !submenu) return;
+    const li = link.closest(".menu-item-has-children");
+    if (!li) return;
+
+    const submenu = li.querySelector("ul.sub-menu");
+    if (!submenu) return;
+
+    // Проверяем, является ли ссылка родительской (прямой дочерней ссылкой li)
+    // или ссылкой внутри подменю
+    const isParentLink = link.parentElement === li;
+    
+    // Если это ссылка внутри подменю - разрешаем переход
+    if (!isParentLink) return;
 
     e.preventDefault();
 

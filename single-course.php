@@ -40,7 +40,13 @@ while (have_posts()) {
       <div class="container">
         <div class="hero__wrapper">
           <div class="hero__content">
-            <h1><?php echo esc_html($hero_h1 ?: get_the_title()); ?></h1>
+            <div class="hero__heading">
+              <h1><?php echo esc_html($hero_h1 ?: get_the_title()); ?></h1>
+
+              <?php if ($hero_text) : ?>
+                <div class="hero__text"><?php echo esc_html($hero_text); ?></div>
+              <?php endif; ?>
+            </div>
 
             <?php if ($hero_kid_photo_id) : ?>
               <div class="hero__kid-photo">
@@ -48,12 +54,11 @@ while (have_posts()) {
               </div>
             <?php endif; ?>
 
-            <?php if ($hero_text) : ?>
-              <div class="hero__text"><?php echo esc_html($hero_text); ?></div>
-            <?php endif; ?>
-
             <?php if ($price) : ?>
-              <div class="hero__price">Стоимость: <?php echo esc_html($price); ?></div>
+              <div class="hero__price">
+                <div class="hero__price-label">Стоимость:</div>
+                <div class="hero__price-value"><?php echo esc_html($price); ?></div>
+              </div>
             <?php endif; ?>
 
             <button class="hero__cta" type="button">Записаться на бесплатный урок</button>
@@ -61,17 +66,20 @@ while (have_posts()) {
             <div class="hero__indexes">
               <div class="hero__index">
                 <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
-                <div class="hero__index-text">Возраст: <?php echo esc_html($age); ?></div>
+                <div class="hero__index-label">Возраст:</div>
+                <div class="hero__index-value"><?php echo esc_html($age); ?></div>
               </div>
 
               <div class="hero__index">
                 <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
-                <div class="hero__index-text">График: <?php echo esc_html($schedule); ?></div>
+                <div class="hero__index-label">График:</div>
+                <div class="hero__index-value"><?php echo esc_html($schedule); ?></div>
               </div>
 
               <div class="hero__index">
                 <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
-                <div class="hero__index-text">Длительность: <?php echo esc_html($duration); ?></div>
+                <div class="hero__index-label">Длительность:</div>
+                <div class="hero__index-value"><?php echo esc_html($duration); ?></div>
               </div>
             </div>
           </div>

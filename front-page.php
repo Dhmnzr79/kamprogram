@@ -6,8 +6,10 @@ get_header();
   <div class="container">
     <div class="hero__wrapper">
       <div class="hero__content">
-        <h1>Курсы для детей и подростков в Петропавловске-Камчатском</h1>
-        <div class="hero__text">IT, робототехника, творчество и развитие мышления. Помогаем детям не просто учиться, а понимать, создавать и думать.</div>
+        <div class="hero__heading">
+          <h1>Курсы для детей и подростков в Петропавловске-Камчатском</h1>
+          <div class="hero__text">IT, робототехника, творчество и развитие мышления. Помогаем детям не просто учиться, а понимать, создавать и думать.</div>
+        </div>
         <div class="hero__price"></div>
         <button class="hero__cta" type="button" data-modal="signup">Записаться на бесплатный урок</button>
 
@@ -73,33 +75,57 @@ get_header();
 
           <div class="col-6">
             <article class="home-courses-cards__card">
-              <a class="home-courses-cards__card-link" href="<?php the_permalink(); ?>" aria-label="Перейти к курсу"></a>
+              <a class="home-courses-cards__card-link"
+                href="<?php the_permalink(); ?>"
+                aria-label="Перейти к курсу"></a>
 
-              <div class="row">
-                <div class="col-6">
-                  <?php if (has_post_thumbnail($course_id)) : ?>
-                    <div class="home-courses-cards__card-photo">
-                      <?php echo get_the_post_thumbnail($course_id, 'medium'); ?>
-                    </div>
-                  <?php endif; ?>
+              <div class="home-courses-cards__card-inner">
 
-                  <h3 class="home-courses-cards__card-title"><?php the_title(); ?></h3>
+                <div class="home-courses-cards__card-main">
+
+                  <div class="home-courses-cards__card-photo-wrap">
+                    <?php if (has_post_thumbnail($course_id)) : ?>
+                      <div class="home-courses-cards__card-photo">
+                        <?php echo get_the_post_thumbnail($course_id, 'medium'); ?>
+                      </div>
+                    <?php endif; ?>
+                  </div>
+
+                  <h3 class="home-courses-cards__card-title">
+                    <?php the_title(); ?>
+                  </h3>
+
                 </div>
 
-                <div class="col-6">
-                  <?php if ($course_short) : ?>
-                    <div class="home-courses-cards__card-short"><?php echo esc_html($course_short); ?></div>
-                  <?php endif; ?>
+                <div class="home-courses-cards__card-body">
 
-                  <?php if ($course_age) : ?>
-                    <div class="home-courses-cards__card-age"><?php echo esc_html($course_age); ?></div>
-                  <?php endif; ?>
+                  <div class="home-courses-cards__card-meta">
+                    <?php if ($course_short) : ?>
+                      <div class="home-courses-cards__card-short">
+                        <?php echo esc_html($course_short); ?>
+                      </div>
+                    <?php endif; ?>
 
-                  <button class="home-courses-cards__card-cta" type="button" data-modal="signup">Записаться</button>
+                    <?php if ($course_age) : ?>
+                      <div class="home-courses-cards__card-age">
+                        <?php echo esc_html($course_age); ?>
+                      </div>
+                    <?php endif; ?>
+                  </div>
+
+                  <button
+                    class="home-courses-cards__card-cta"
+                    type="button"
+                    data-modal="signup">
+                    Записаться
+                  </button>
+
                 </div>
               </div>
+
             </article>
           </div>
+
 
           <?php
         }
@@ -115,33 +141,35 @@ get_header();
   ?>
   <section class="section home-quiz">
     <div class="container">
-      <div class="row">
-        <div class="col-6">
-          <h2 class="home-quiz__title">Не знаете,<br>какой курс подойдёт вашему ребёнку?</h2>
+      <div class="home-quiz__content">
+        <div class="row">
+          <div class="col-6">
+            <h2 class="home-quiz__title">Не знаете,<br>какой курс подойдёт вашему ребёнку?</h2>
 
-          <div class="home-quiz__faces">
-            <img
-              class="home-quiz__face"
-              src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/face-bg-01.jpg'); ?>"
-              alt=""
-            >
-            <img
-              class="home-quiz__face"
-              src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/face-bg-02.jpg'); ?>"
-              alt=""
-            >
-          </div>
-        </div>
-
-        <div class="col-6">
-          <div class="home-quiz__text">Ответьте всего на 4 коротких вопроса, и мы подскажем направления, которые лучше всего подойдут по возрасту и интересам.</div>
-
-          <div class="home-quiz__facts">
-            <div class="home-quiz__fact">Займёт не больше 2 минут</div>
-            <div class="home-quiz__fact">Первый урок бесплатно</div>
+            <div class="home-quiz__faces">
+              <img
+                class="home-quiz__face"
+                src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/face-bg-01.jpg'); ?>"
+                alt=""
+              >
+              <img
+                class="home-quiz__face"
+                src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/face-bg-02.jpg'); ?>"
+                alt=""
+              >
+            </div>
           </div>
 
-          <button class="home-quiz__cta" type="button">Пройти тест</button>
+          <div class="col-6">
+            <div class="home-quiz__text">Ответьте всего на 4 коротких вопроса, и мы подскажем направления, которые лучше всего подойдут по возрасту и интересам.</div>
+
+            <div class="home-quiz__facts">
+              <div class="home-quiz__fact">Займёт не больше 2 минут</div>
+              <div class="home-quiz__fact">Первый урок бесплатно</div>
+            </div>
+
+            <button class="home-quiz__cta" type="button">Пройти тест</button>
+          </div>
         </div>
       </div>
     </div>
