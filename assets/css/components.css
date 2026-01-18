@@ -1,6 +1,6 @@
 .site-header {
   background: transparent;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -63,11 +63,6 @@
   grid-row: 8 / 9;
 }
 
-.hero__indexes {
-  grid-column: 4 / 5;
-  grid-row: 2 / 8;
-}
-
 .hero__index-label {
   display: block;
 }
@@ -82,10 +77,12 @@
 }
 
 .hero__indexes {
+  grid-column: 4 / 5;
+  grid-row: 2 / 8;
+  justify-self: end;
   display: flex;
   flex-direction: column;
   gap: 30px;
-  align-items: end;
 }
 
 .hero__index {
@@ -97,6 +94,7 @@
   border-top: 1px solid #fff;
   border-left: 1px solid #fff;
   max-width: 280px;
+  min-width: 230px;
 }
 
 .hero__index-text {
@@ -229,11 +227,25 @@ body.is-drawer-open {
 
 /* Home Courses Cards */
 
+/* Ряд с карточками */
+
+.home-courses-cards__list {
+  align-items: stretch;
+}
+
+.home-courses-cards__list .col-6 {
+  display: flex;
+}
+
 .home-courses-cards__card {
   position: relative;
   background: var(--color-bg-gray);
-  padding: 40px;
+  padding: 30px;
   border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
 }
 
 .home-courses-cards__card-meta {
@@ -312,6 +324,34 @@ body.is-drawer-open {
   z-index: 2;
 }
 
+/* Наши плюсы */
+
+.center-advantages .col-8,
+.center-advantages .col-4 {
+  display: flex;
+  flex-direction: column;
+}
+
+.center-advantages__grid,
+.center-advantages__aside {
+  flex: 1;
+}
+
+.center-advantages__aside {
+  background: #F5E1D8;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.center-advantages__title {
+  padding-bottom: 40px;
+}
+
+.center-advantages__grid {
+  row-gap: 50px;
+}
 
 /* Home Quiz */
 
@@ -319,6 +359,35 @@ body.is-drawer-open {
   background: var(--gradient-brand);
   border-radius: 30px;
   padding: 30px;
+}
+
+.home-quiz__faces {
+  display: flex;
+  align-items: center;
+}
+
+.home-quiz__face {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.home-quiz__face + .home-quiz__face {
+  margin-left: -15px;
+}
+
+.home-quiz__face:last-child {
+  outline: 4px solid #5A37AF;
+  z-index: 1;
+}
+
+.home-quiz__body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
 }
 
 .reviews__slider {

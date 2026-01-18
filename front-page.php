@@ -169,19 +169,23 @@ get_header();
           </div>
 
           <div class="col-6">
-            <div class="home-quiz__text">Ответьте всего на 4 коротких вопроса, и мы подскажем направления, которые лучше всего подойдут по возрасту и интересам.</div>
+            <div class="home-quiz__body">
+              <div class="home-quiz__info">
+                <div class="home-quiz__text">Ответьте всего на 4 коротких вопроса, и мы подскажем направления, которые лучше всего подойдут по возрасту и интересам.</div>
 
-            <div class="home-quiz__facts">
-              <div class="home-quiz__fact">Займёт не больше 2 минут</div>
-              <div class="home-quiz__fact">Первый урок бесплатно</div>
+                <div class="home-quiz__facts">
+                  <div class="home-quiz__fact">Займёт не больше 2 минут</div>
+                  <div class="home-quiz__fact">Первый урок бесплатно</div>
+                </div>
+              </div>
+
+              <button class="btn btn--primary home-quiz__cta" type="button">
+                Пройти тест
+                <svg class="btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.75 7.75L0.75 7.75M14.75 7.75L7.75 14.75M14.75 7.75L7.75 0.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
             </div>
-
-            <button class="btn btn--primary home-quiz__cta" type="button">
-              Пройти тест
-              <svg class="btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.75 7.75L0.75 7.75M14.75 7.75L7.75 14.75M14.75 7.75L7.75 0.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
           </div>
         </div>
       </div>
