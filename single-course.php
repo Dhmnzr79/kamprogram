@@ -61,7 +61,12 @@ while (have_posts()) {
               </div>
             <?php endif; ?>
 
-            <button class="hero__cta" type="button">Записаться на бесплатный урок</button>
+            <button class="btn btn--secondary hero__cta" type="button">
+              Записаться на бесплатный урок
+              <svg class="btn__icon" width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.28846 0.75L14.75 7.21154L8.28846 13.6731M13.8526 7.21154L0.749999 7.21154" stroke="#FC573B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
 
             <div class="hero__indexes">
               <div class="hero__index">

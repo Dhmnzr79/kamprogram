@@ -5,7 +5,12 @@
         <h2 class="contacts__title">Контакты</h2>
         <div class="contacts__address">г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
         <div class="contacts__phone">+7 924 894-16-00</div>
-        <button class="contacts__cta" type="button">Заказать обратный звонок</button>
+        <button class="btn btn--primary contacts__cta" type="button">
+          Заказать обратный звонок
+          <svg class="btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.75 7.75L0.75 7.75M14.75 7.75L7.75 14.75M14.75 7.75L7.75 0.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
 
       <div class="col-6">

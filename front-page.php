@@ -11,7 +11,12 @@ get_header();
           <div class="hero__text">IT, робототехника, творчество и развитие мышления. Помогаем детям не просто учиться, а понимать, создавать и думать.</div>
         </div>
         <div class="hero__price"></div>
-        <button class="hero__cta" type="button" data-modal="signup">Записаться на бесплатный урок</button>
+        <button class="btn btn--secondary hero__cta" type="button" data-modal="signup">
+          Записаться на бесплатный урок
+          <svg class="btn__icon" width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.28846 0.75L14.75 7.21154L8.28846 13.6731M13.8526 7.21154L0.749999 7.21154" stroke="#FC573B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
 
         <div class="hero__indexes">
           <div class="hero__index">
@@ -114,10 +119,13 @@ get_header();
                   </div>
 
                   <button
-                    class="home-courses-cards__card-cta"
+                    class="btn btn--primary home-courses-cards__card-cta"
                     type="button"
                     data-modal="signup">
                     Записаться
+                    <svg class="btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14.75 7.75L0.75 7.75M14.75 7.75L7.75 14.75M14.75 7.75L7.75 0.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                   </button>
 
                 </div>
@@ -168,7 +176,12 @@ get_header();
               <div class="home-quiz__fact">Первый урок бесплатно</div>
             </div>
 
-            <button class="home-quiz__cta" type="button">Пройти тест</button>
+            <button class="btn btn--primary home-quiz__cta" type="button">
+              Пройти тест
+              <svg class="btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.75 7.75L0.75 7.75M14.75 7.75L7.75 14.75M14.75 7.75L7.75 0.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
