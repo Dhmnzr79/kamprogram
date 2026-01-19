@@ -36,8 +36,7 @@
 
           <div class="site-header__contacts" data-header-contacts>
             <div class="site-header__contact-info">
-              <div class="site-header__address">📍 г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
-              <a class="site-header__email" href="mailto:info@kamprogram.ru">📧 info@kamprogram.ru</a>
+              <div class="site-header__address"> г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
               <a class="site-header__phone" href="tel:+79248941600">📞 +7 924 894-16-00</a>
             </div>
           </div>

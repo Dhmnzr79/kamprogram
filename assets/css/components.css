@@ -408,17 +408,18 @@ body.is-drawer-open {
 .home-quiz__content {
   background: var(--gradient-brand);
   border-radius: 30px;
-  padding: 30px;
+  padding: 40px;
 }
 
 .home-quiz__faces {
   display: flex;
   align-items: center;
+  margin-top: 50px;
 }
 
 .home-quiz__face {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -439,6 +440,46 @@ body.is-drawer-open {
     align-items: start;
     justify-content: space-between;
 }
+
+.home-quiz__title {
+  color: #fff;
+}
+
+.home-quiz__heading {
+  color: #fff;
+  font-size: 26px;
+  font-family: var(--font-text);
+  font-weight: 400;
+}
+
+.home-quiz__description {
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.home-quiz__facts {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.home-quiz__fact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.25); 
+  padding: 10px 14px;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.home-quiz__fact img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 
 /* Reviews */
 
@@ -504,6 +545,10 @@ body.is-drawer-open {
 .reviews__photo {
   width: 60px;
   border-radius: 50%;
+}
+
+.reviews__text {
+  font-size: 16px;
 }
 
 .reviews__name {

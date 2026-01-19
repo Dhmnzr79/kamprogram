@@ -150,7 +150,7 @@ h1 {
 h2 {
   font-size: var(--fs-h2);
   line-height: var(--lh-h2);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 h3 {

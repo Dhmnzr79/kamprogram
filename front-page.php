@@ -152,7 +152,7 @@ get_header();
       <div class="home-quiz__content">
         <div class="row">
           <div class="col-6">
-            <h2 class="home-quiz__title">Не знаете,<br>какой курс подойдёт вашему ребёнку?</h2>
+            <h2 class="home-quiz__title"><span>Не знаете,</span><br>какой курс подойдёт вашему ребёнку?</h2>
 
             <div class="home-quiz__faces">
               <img
@@ -171,11 +171,24 @@ get_header();
           <div class="col-6">
             <div class="home-quiz__body">
               <div class="home-quiz__info">
-                <div class="home-quiz__text">Ответьте всего на 4 коротких вопроса, и мы подскажем направления, которые лучше всего подойдут по возрасту и интересам.</div>
+                <h3 class="home-quiz__heading">Ответьте всего на 4 коротких вопроса</h3>
+                <div class="home-quiz__description">и мы подскажем направления, которые лучше всего подойдут по возрасту и интересам.</div>
 
                 <div class="home-quiz__facts">
-                  <div class="home-quiz__fact">Займёт не больше 2 минут</div>
-                  <div class="home-quiz__fact">Первый урок бесплатно</div>
+                  <div class="home-quiz__fact">
+                    <img
+                      src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
+                      alt=""
+                    >
+                    Займёт не больше 2 минут
+                  </div>
+                  <div class="home-quiz__fact">
+                    <img
+                      src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
+                      alt=""
+                    >
+                    Первый урок бесплатно
+                  </div>
                 </div>
               </div>
 
