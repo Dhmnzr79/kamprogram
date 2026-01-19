@@ -350,7 +350,16 @@ body.is-drawer-open {
 }
 
 .center-advantages__grid {
-  row-gap: 50px;
+  row-gap: 100px;
+}
+
+.center-advantages__icon {
+  width: 80px;
+  margin-bottom: 20px;
+}
+
+.center-advantages__card-title {
+  margin-bottom: 10px;
 }
 
 /* Home Quiz */
@@ -390,6 +399,8 @@ body.is-drawer-open {
     justify-content: space-between;
 }
 
+/* Reviews */
+
 .reviews__slider {
   position: relative;
 }
@@ -408,10 +419,12 @@ body.is-drawer-open {
   transform: translateX(0);
   transition: transform 200ms linear;
   will-change: transform;
+  align-items: stretch;
 }
 
 .reviews__slide {
   flex: 0 0 calc((100% - 0px) / 1);
+  display: flex;
 }
 
 .reviews__dots {
@@ -433,9 +446,95 @@ body.is-drawer-open {
   background: #000;
 }
 
-.site-footer {
-  background: var(--color-bg-gray);
+.reviews__card {
+  background-color: var(--color-bg-gray);
+  background-image: url("../svg/review-bg.svg");
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: 280px 60px;
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
 }
+
+.reviews__photo {
+  width: 60px;
+  border-radius: 50%;
+}
+
+.reviews__name {
+  font-size: 20px;
+  font-family: var(--font-heading);
+}
+
+.site-footer {
+  background: #120F2C;
+  padding-block: 48px;
+}
+
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-footer__logo img {
+  width: 60px;
+  height: auto;
+  display: block;
+}
+
+.site-footer__tagline {
+  font-size: 14px;
+  color: #A2A2A2;
+  line-height: 1.4;
+}
+
+.site-footer__courses-title {
+  margin-bottom: 16px;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.site-footer__courses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.site-footer__courses-link {
+  color: #A2A2A2;
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 1.4;
+  transition: color .2s ease;
+}
+
+.site-footer__courses-link:hover {
+  color: #ffffff;
+}
+
+.site-footer__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.site-footer__address {
+  font-size: 15px;
+  color: #A2A2A2;
+  line-height: 1.4;
+}
+
+.site-footer__phone {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
 
 .modal {
   position: fixed;

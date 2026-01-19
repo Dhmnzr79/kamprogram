@@ -15,7 +15,7 @@
 
       <div class="col-6">
         <div class="contacts__map">
-          <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A39e1e4a37db6c8620c08a28ca6df7df2b5be9e8b139ce5bbb9cf4e7ec4e83745&amp;width=100%25&amp;height=500&amp;lang=ru_RU&amp;scroll=true"></script>
+          <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A39e1e4a37db6c8620c08a28ca6df7df2b5be9e8b139ce5bbb9cf4e7ec4e83745&amp;width=100%25&amp;height=500&amp;lang=ru_RU&amp;scroll=false"></script>
         </div>
       </div>
     </div>
