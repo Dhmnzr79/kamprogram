@@ -45,7 +45,7 @@
 
       <div class="col-4">
         <div class="center-advantages__aside">
-          <h3 class="center-advantages__aside-title">Бесплатный пробный урок</h3>
+          <h3 class="center-advantages__aside-title"><span>Бесплатный</span> пробный урок</h3>
           <div class="center-advantages__aside-text">Ребёнок познакомится с форматом занятий, а вы сможете задать все вопросы и принять решение без спешки.</div>
           <button class="btn btn--secondary center-advantages__aside-cta" type="button">
             Записаться на бесплатный урок

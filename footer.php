@@ -43,8 +43,8 @@
 
         <div class="col-3">
           <div class="site-footer__contacts">
-            <div class="site-footer__address">г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
-            <div class="site-footer__phone">+7 924 894-16-00</div>
+            <div class="site-footer__address">📍 г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
+            <a class="site-footer__phone" href="tel:+79248941600">+7 924 894-16-00</a>
           </div>
         </div>
       </div>

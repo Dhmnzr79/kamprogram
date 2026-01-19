@@ -338,15 +338,45 @@ body.is-drawer-open {
 }
 
 .center-advantages__aside {
-  background: #F5E1D8;
+  background: linear-gradient(
+  to bottom,
+  #FD6844 0%,
+  #FD6844 60%,
+  #FFB846 60%,
+  #FFB846 100%
+);
   padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  gap: 15px;
+  border-radius: 30px;
+  position: relative;
 }
+
+.center-advantages__aside::before {
+  content: "";
+  position: absolute;
+  top: -70px;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../img/plus-bg.png");
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: contain;
+  pointer-events: none;
+  z-index: 0;
+}
+
 
 .center-advantages__title {
   padding-bottom: 40px;
+}
+
+.center-advantages__aside-text {
+  margin-bottom: 15px;
+  z-index: 5;
 }
 
 .center-advantages__grid {
@@ -360,6 +390,17 @@ body.is-drawer-open {
 
 .center-advantages__card-title {
   margin-bottom: 10px;
+}
+
+.center-advantages__aside-title {
+  font-size: 36px;
+  line-height: 1.1;
+  z-index: 5;
+}
+
+.center-advantages__aside-title span {
+  color: #ffffff;
+  font-size: 48px;
 }
 
 /* Home Quiz */
@@ -470,6 +511,48 @@ body.is-drawer-open {
   font-family: var(--font-heading);
 }
 
+/* Contacts */
+
+.contacts .col-6 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+}
+
+.contacts__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contacts__address {
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.contacts__email {
+  font-size: 20px;
+  line-height: 1.4;
+  color: inherit;
+  text-decoration: none;
+}
+
+.contacts__phone {
+  font-size: 30px;
+  line-height: 1.2;
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contacts__cta {
+  align-self: flex-start;
+}
+
+
+/* Footer */
+
 .site-footer {
   background: #120F2C;
   padding-block: 48px;
@@ -533,8 +616,8 @@ body.is-drawer-open {
   font-size: 18px;
   font-weight: 500;
   color: #ffffff;
+  text-decoration: none;
 }
-
 
 .modal {
   position: fixed;

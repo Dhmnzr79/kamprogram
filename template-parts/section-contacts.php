@@ -3,8 +3,11 @@
     <div class="row">
       <div class="col-6">
         <h2 class="contacts__title">Контакты</h2>
-        <div class="contacts__address">г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
-        <div class="contacts__phone">+7 924 894-16-00</div>
+        <div class="contacts__info">
+          <div class="contacts__address">📍 г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
+          <a class="contacts__email" href="mailto:info@kamprogram.ru">📧 info@kamprogram.ru</a>
+          <a class="contacts__phone" href="tel:+79248941600">📞 +7 924 894-16-00</a>
+        </div>
         <button class="btn btn--primary contacts__cta" type="button">
           Заказать обратный звонок
           <svg class="btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
