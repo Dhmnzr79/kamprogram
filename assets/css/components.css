@@ -595,6 +595,114 @@ body.is-drawer-open {
   align-self: flex-start;
 }
 
+/* About page */
+
+.about__content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  height: 100%;
+}
+
+.about__facts {
+  margin-top: 40px;
+}
+
+.about__fact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.about__fact::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-image: url("../svg/chk-red.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  flex-shrink: 0;
+}
+
+.about__media {
+  display: flex;
+  justify-content: end;
+}
+
+.about__media img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 30px;
+}
+
+.about-for-whom__cards .col-4,
+.about-for-whom__bottom .col-4,
+.about-for-whom__bottom .col-8 {
+  display: flex;
+}
+
+.about-for-whom__card {
+  background: #FFEBEC;
+  padding: 30px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.about-for-whom__side {
+  background: #f9dffd;
+  padding: 30px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.about-for-whom__icon {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  margin-bottom: 40px;
+}
+
+.about-for-whom__bottom {
+  margin-top: var(--grid-gap-desk);
+}
+
+.about-for-whom__wide {
+  padding: 40px 460px 40px 30px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  background-image: url(../img/for-who-bg.jpg);
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: cover;
+}
+
+.about-for-whom__wide-title {
+  font-size: 36px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+
+.about-for-whom__wide-text {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.about-for-whom__wide-title span {
+  color: var(--color-bg-1);
+}
 
 /* Footer */
 
@@ -812,5 +920,10 @@ body.is-modal-open {
 
   .reviews__slide {
     flex-basis: calc((100% - 2 * var(--grid-gap-desk)) / 3);
+  }
+
+  .about__fact {
+    flex-direction: row;
+    align-items: center;
   }
 }
