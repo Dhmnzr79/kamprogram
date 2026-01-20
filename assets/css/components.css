@@ -9,7 +9,7 @@
 
 /* Hero */
 .hero {
-  background-color: var(--color-bg-1);
+  background: linear-gradient(to bottom, #FFA746, #FD6844);
   overflow: hidden;
   height: min(840px, 100vh);
   position: relative;
@@ -1006,7 +1006,15 @@ body.is-modal-open {
   transform: translateX(10px);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1279px) {
+  .hero {
+    height: auto;
+  }
+
+  .hero::before {
+    display: none;
+  }
+
   .hero__content {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, auto);
@@ -1060,7 +1068,9 @@ body.is-modal-open {
   .hero__price {
     display: none;
   }
+}
 
+@media (max-width: 767px) {
   .home-courses-cards__card-inner {
     flex-direction: column;
   }
@@ -1075,31 +1085,46 @@ body.is-modal-open {
 }
 
 @media (min-width: 768px) and (max-width: 1279px) {
-  .hero__content {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, auto);
+  .home-courses-cards__card-inner {
+    flex-direction: column;
   }
 
-  .hero__intro {
-    grid-column: 1;
-    grid-row: 1;
+  .home-courses-cards__card-main, .home-courses-cards__card-body {
+    width: 100%;
+  }
+
+  .home-quiz__content .row {
+    grid-template-columns: 1fr;
+  }
+
+  .home-quiz__content .col-6 {
+    grid-column: span 12;
+  }
+
+  .center-advantages .col-8,
+  .center-advantages .col-4 {
+    grid-column: span 12;
+  }
+
+  .center-advantages__aside::before {
+    display: none;
+  }
+
+  .center-advantages__aside {
+    background: #FD6844;
+  }
+
+  .hero__header h1 {
+    font-size: 40px;
+    padding-right: 30%;
+  }
+
+  .hero__kid-photo--mobile {
+    width: 260px;
   }
 
   .hero__indexes {
-    grid-column: 1;
-    grid-row: 3;
-    justify-self: stretch;
-    max-width: none;
-    min-width: auto;
-  }
-
-  .hero__cta {
-    grid-column: 1;
-    grid-row: 4;
-  }
-
-  .hero__price {
-    display: none;
+    flex-direction: row;
   }
 
   .reviews__controls {

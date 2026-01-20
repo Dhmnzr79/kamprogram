@@ -81,24 +81,6 @@ while (have_posts()) {
                 <div class="hero__index-value"><?php echo esc_html($duration); ?></div>
               </div>
             </div>
-              <div class="hero__index">
-                <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
-                <div class="hero__index-label">Возраст:</div>
-                <div class="hero__index-value"><?php echo esc_html($age); ?></div>
-              </div>
-
-              <div class="hero__index">
-                <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
-                <div class="hero__index-label">График:</div>
-                <div class="hero__index-value"><?php echo esc_html($schedule); ?></div>
-              </div>
-
-              <div class="hero__index">
-                <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
-                <div class="hero__index-label">Длительность:</div>
-                <div class="hero__index-value"><?php echo esc_html($duration); ?></div>
-              </div>
-            </div>
 
             <button class="btn btn--secondary hero__cta" type="button">
               Записаться на бесплатный урок
