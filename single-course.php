@@ -40,8 +40,16 @@ while (have_posts()) {
       <div class="container">
         <div class="hero__wrapper">
           <div class="hero__content">
-            <div class="hero__heading">
-              <h1><?php echo esc_html($hero_h1 ?: get_the_title()); ?></h1>
+            <div class="hero__intro">
+              <div class="hero__header">
+                <h1><?php echo esc_html($hero_h1 ?: get_the_title()); ?></h1>
+
+                <?php if ($hero_kid_photo_id) : ?>
+                  <div class="hero__kid-photo--mobile">
+                    <?php echo wp_get_attachment_image($hero_kid_photo_id, 'full'); ?>
+                  </div>
+                <?php endif; ?>
+              </div>
 
               <?php if ($hero_text) : ?>
                 <div class="hero__text"><?php echo esc_html($hero_text); ?></div>
@@ -49,24 +57,10 @@ while (have_posts()) {
             </div>
 
             <?php if ($hero_kid_photo_id) : ?>
-              <div class="hero__kid-photo">
+              <div class="hero__kid-photo hero__kid-photo--desktop">
                 <?php echo wp_get_attachment_image($hero_kid_photo_id, 'full'); ?>
               </div>
             <?php endif; ?>
-
-            <?php if ($price) : ?>
-              <div class="hero__price">
-                <div class="hero__price-label">Стоимость:</div>
-                <div class="hero__price-value"><?php echo esc_html($price); ?></div>
-              </div>
-            <?php endif; ?>
-
-            <button class="btn btn--secondary hero__cta" type="button">
-              Записаться на бесплатный урок
-              <svg class="btn__icon" width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.28846 0.75L14.75 7.21154L8.28846 13.6731M13.8526 7.21154L0.749999 7.21154" stroke="#FC573B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
 
             <div class="hero__indexes">
               <div class="hero__index">
@@ -87,6 +81,38 @@ while (have_posts()) {
                 <div class="hero__index-value"><?php echo esc_html($duration); ?></div>
               </div>
             </div>
+              <div class="hero__index">
+                <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
+                <div class="hero__index-label">Возраст:</div>
+                <div class="hero__index-value"><?php echo esc_html($age); ?></div>
+              </div>
+
+              <div class="hero__index">
+                <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
+                <div class="hero__index-label">График:</div>
+                <div class="hero__index-value"><?php echo esc_html($schedule); ?></div>
+              </div>
+
+              <div class="hero__index">
+                <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
+                <div class="hero__index-label">Длительность:</div>
+                <div class="hero__index-value"><?php echo esc_html($duration); ?></div>
+              </div>
+            </div>
+
+            <button class="btn btn--secondary hero__cta" type="button">
+              Записаться на бесплатный урок
+              <svg class="btn__icon" width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.28846 0.75L14.75 7.21154L8.28846 13.6731M13.8526 7.21154L0.749999 7.21154" stroke="#FC573B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <?php if ($price) : ?>
+              <div class="hero__price">
+                <div class="hero__price-label">Стоимость:</div>
+                <div class="hero__price-value"><?php echo esc_html($price); ?></div>
+              </div>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -118,13 +144,27 @@ while (have_posts()) {
       <div class="container">
         <div class="row">
           <div class="col-6">
-            <?php if ($why_title) : ?><h2 class="course-why__title"><?php echo esc_html($why_title); ?></h2><?php endif; ?>
-            <?php if ($why_text) : ?><div class="course-why__subtitle"><?php echo esc_html($why_text); ?></div><?php endif; ?>
+            <div class="course-why__content">
+              <div class="course-why__text">
+                <?php if ($why_title) : ?><h2 class="course-why__title"><?php echo esc_html($why_title); ?></h2><?php endif; ?>
+                <?php if ($why_text) : ?><div class="course-why__subtitle"><?php echo esc_html($why_text); ?></div><?php endif; ?>
+              </div>
+              <button class="btn btn--primary course-why__btn" type="button" data-modal="signup">
+                <?php echo esc_html($why_btn ?: 'Записаться на бесплатный урок'); ?>
+                <svg class="btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.75 7.75L0.75 7.75M14.75 7.75L7.75 14.75M14.75 7.75L7.75 0.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
           </div>
 
           <div class="col-6">
             <?php if ($why_photo_id) : ?>
-              <div class="course-why__media"><?php echo wp_get_attachment_image($why_photo_id, 'large'); ?></div>
+              <div class="course-why__media">
+                <div class="course-why__media-wrap">
+                  <?php echo wp_get_attachment_image($why_photo_id, 'large', false, ['class' => 'course-why__media-img']); ?>
+                </div>
+              </div>
             <?php endif; ?>
           </div>
         </div>
@@ -142,16 +182,30 @@ while (have_posts()) {
           <div class="col-6">
             <?php if (!empty($less_items)) : ?>
               <div class="course-lessons__items">
-                <?php foreach ($less_items as $row) :
+                <?php 
+                $items_count = count(array_filter($less_items, function($row) {
+                  $row = is_array($row) ? $row : [];
+                  $t = $row['title'] ?? '';
+                  $d = $row['text'] ?? '';
+                  return !!(trim($t) || trim($d));
+                }));
+                $item_index = 0;
+                foreach ($less_items as $row) :
                   $row = is_array($row) ? $row : [];
                   $t = $row['title'] ?? '';
                   $d = $row['text'] ?? '';
                   if (!$t && !$d) { continue; }
+                  $item_index++;
                   ?>
                   <div class="course-lessons__item">
                     <?php if ($t) : ?><h3 class="course-lessons__item-title"><?php echo esc_html($t); ?></h3><?php endif; ?>
                     <?php if ($d) : ?><div class="course-lessons__item-text"><?php echo esc_html($d); ?></div><?php endif; ?>
                   </div>
+                  <?php if ($item_index < $items_count) : ?>
+                    <div class="course-lessons__divider" data-delay="<?php echo esc_attr($items_count > 2 ? ($item_index - 1) * 0.2 : 0); ?>">
+                      <div class="course-lessons__divider-line"></div>
+                    </div>
+                  <?php endif; ?>
                 <?php endforeach; ?>
               </div>
             <?php endif; ?>
@@ -193,11 +247,13 @@ while (have_posts()) {
 
     <section class="section course-cta">
       <div class="container">
-        <?php if ($cta_title) : ?><h2 class="course-cta__title"><?php echo esc_html($cta_title); ?></h2><?php endif; ?>
-        <?php if ($cta_text) : ?><div class="course-cta__text"><?php echo esc_html($cta_text); ?></div><?php endif; ?>
+        <div class="course-cta__content">
+          <?php if ($cta_title) : ?><h2 class="course-cta__title"><?php echo esc_html($cta_title); ?></h2><?php endif; ?>
+          <?php if ($cta_text) : ?><div class="course-cta__text"><?php echo esc_html($cta_text); ?></div><?php endif; ?>
 
-        <div class="course-cta__form">
-          <?php echo do_shortcode('[contact-form-7 id="6c52f0a" title="Основная форма"]'); ?>
+          <div class="course-cta__form">
+            <?php echo do_shortcode('[contact-form-7 id="6c52f0a" title="Основная форма"]'); ?>
+          </div>
         </div>
       </div>
     </section>

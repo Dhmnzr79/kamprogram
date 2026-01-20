@@ -13,6 +13,9 @@ add_action('wp_enqueue_scripts', function () {
   wp_enqueue_script('kamprogram-header-menu', $theme_uri . '/assets/js/header-menu.js', [], null, true);
   wp_enqueue_script('kamprogram-phone-mask', $theme_uri . '/assets/js/phone-mask.js', [], null, true);
   wp_enqueue_script('kamprogram-modal', $theme_uri . '/assets/js/modal.js', [], null, true);
+  wp_enqueue_script('kamprogram-cf7-button', $theme_uri . '/assets/js/cf7-button.js', [], null, true);
+  wp_enqueue_script('kamprogram-course-why-parallax', $theme_uri . '/assets/js/course-why-parallax.js', [], null, true);
+  wp_enqueue_script('kamprogram-course-lessons-divider', $theme_uri . '/assets/js/course-lessons-divider.js', [], null, true);
 });
 
 add_action('admin_enqueue_scripts', function (string $hook_suffix) {
@@ -151,6 +154,17 @@ add_filter('wp_nav_menu_objects', function (array $items, $args) {
 add_filter('body_class', function (array $classes) {
   $has_hero = is_front_page() || is_page_template('page-templates/template-course.php') || is_singular('course');
   $classes[] = $has_hero ? 'has-hero' : 'no-hero';
+
+  $about_page = get_page_by_path('o-nas');
+  $contacts_page = get_page_by_path('kontakty');
+  
+  if ($about_page && is_page($about_page->ID)) {
+    $classes[] = 'page-is-about';
+  }
+  
+  if ($contacts_page && is_page($contacts_page->ID)) {
+    $classes[] = 'page-is-contacts';
+  }
 
   return $classes;
 });
@@ -1137,6 +1151,54 @@ add_action('save_post_course', function (int $post_id) {
 
   $set_text('kp_cta_title', '_kp_cta_title');
   $set_text('kp_cta_text', '_kp_cta_text', true);
+});
+
+// Отключаем автоматическое добавление <br> и <p> в формах CF7
+add_filter('wpcf7_autop_or_not', '__return_false');
+
+add_filter('wpcf7_form_elements', function ($content) {
+  // Заменяем input[type="submit"] на button с классами и иконкой
+  $icon_svg = '<svg class="btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.75 7.75L0.75 7.75M14.75 7.75L7.75 14.75M14.75 7.75L7.75 0.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  
+  // Паттерн для поиска input submit
+  $pattern = '/<input\s+([^>]*type=["\']submit["\'][^>]*)>/i';
+  
+  $content = preg_replace_callback(
+    $pattern,
+    function ($matches) use ($icon_svg) {
+      $attrs_string = $matches[1];
+      
+      // Парсим атрибуты
+      $attrs = [];
+      $name = '';
+      $id = '';
+      $value = 'Отправить заявку';
+      
+      // Извлекаем name
+      if (preg_match('/name=["\']([^"\']+)["\']/i', $attrs_string, $m)) {
+        $name = ' name="' . esc_attr($m[1]) . '"';
+      }
+      
+      // Извлекаем id
+      if (preg_match('/id=["\']([^"\']+)["\']/i', $attrs_string, $m)) {
+        $id = ' id="' . esc_attr($m[1]) . '"';
+      }
+      
+      // Извлекаем value (текст кнопки)
+      if (preg_match('/value=["\']([^"\']+)["\']/i', $attrs_string, $m)) {
+        $value = esc_html($m[1]);
+      }
+      
+      // Собираем button без пробелов между элементами (чтобы избежать <br>)
+      return '<button type="submit" class="btn btn-primary"' . $name . $id . '>' . trim($value) . $icon_svg . '</button>';
+    },
+    $content
+  );
+  
+  // Удаляем лишние <br> которые могли появиться
+  $content = str_replace(['<br />', '<br>', '<br/>'], '', $content);
+  
+  return $content;
 });
 
 

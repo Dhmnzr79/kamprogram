@@ -40,9 +40,21 @@
   gap: 10px;
 }
 
-.hero__heading {
+.hero__intro {
   grid-column: 1 / 3;
   grid-row: 1 / 6;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero__header {
+  position: relative;
+}
+
+.hero__text {
+  font-size: 20px;
+  color: #000;
+  margin-top: auto;
 }
 
 .hero__price {
@@ -71,9 +83,45 @@
   display: block;
 }
 
-.hero__text {
-  font-size: 20px;
-  color: #000;
+.hero__kid-photo--mobile {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 140px;
+  height: 120%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero__kid-photo--mobile img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
+
+.hero__kid-photo {
+  grid-column: 1 / 3;
+  grid-row: 1 / 4;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero__kid-photo--desktop {
+  display: block;
+}
+
+.hero__kid-photo img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  display: block;
 }
 
 .hero__indexes {
@@ -123,6 +171,20 @@ body.is-drawer-open {
   margin-top: 20px;
   border-top: 1px solid #fff;
   border-left: 1px solid #fff;
+}
+
+body.page-is-about .site-header,
+body.page-is-contacts .site-header {
+  background: #f3f3f3;
+}
+
+body.page-is-about .site-header__inner,
+body.page-is-contacts .site-header__inner {
+  padding: 15px 0;
+  border-radius: 0;
+  margin-top: 0;
+  background: transparent;
+  border: none;
 }
 
 .site-header__brand {
@@ -317,11 +379,6 @@ body.is-drawer-open {
 .home-courses-cards__card > .row {
   position: relative;
   z-index: 0;
-}
-
-.home-courses-cards__card-cta {
-  position: relative;
-  z-index: 2;
 }
 
 /* Наши плюсы */
@@ -835,6 +892,73 @@ body.is-drawer-open {
   margin: 0;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form__label {
+  font-size: 16px;
+  font-family: var(--font-text);
+  color: var(--color-text);
+}
+
+.form__input {
+  width: 100%;
+  height: 58px;
+  padding: 0 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background: #ffffff;
+  font-family: var(--font-text);
+  font-size: 18px;
+  color: var(--color-text);
+  box-sizing: border-box;
+}
+
+.form__input::placeholder {
+  color: #999999;
+}
+
+.form__actions {
+  display: flex;
+}
+
+.form__actions .btn {
+  width: 100%;
+  height: 58px;
+}
+
+.form__privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.form__privacy input[type="checkbox"] {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.form__privacy a {
+  color: var(--color-btn);
+  text-decoration: none;
+}
+
+.modal .form__input,
+.modal .form__actions .btn {
+  width: 100%;
+}
+
 body.is-modal-open {
   overflow: hidden;
 }
@@ -862,6 +986,11 @@ body.is-modal-open {
   color: var(--color-white);
 }
 
+.btn-primary {
+  background: var(--color-btn);
+  color: var(--color-white);
+}
+
 .btn--secondary {
   background: var(--color-white);
   color: #FC573B;
@@ -877,7 +1006,102 @@ body.is-modal-open {
   transform: translateX(10px);
 }
 
-@media (min-width: 768px) {
+@media (max-width: 767px) {
+  .hero__content {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+  }
+
+  .hero__intro {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .hero__header {
+    z-index: 2;
+    padding: 15px 0;
+    font-size: 24px;
+    border-bottom: 5px solid;
+  }
+
+  .hero__header h1 {
+    font-size: 24px;
+    padding-right: 40%;
+  }
+
+  .hero__kid-photo--mobile {
+    display: block;
+  }
+
+  .hero__kid-photo--mobile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .hero__kid-photo--desktop {
+    display: none;
+  }
+
+  .hero__indexes {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: stretch;
+    max-width: none;
+    min-width: auto;
+  }
+
+  .hero__cta {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .hero__price {
+    display: none;
+  }
+
+  .home-courses-cards__card-inner {
+    flex-direction: column;
+  }
+
+  .home-courses-cards__card-body {
+    width: 100%;
+  }
+
+  .home-courses-cards__card-main {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .hero__content {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+  }
+
+  .hero__intro {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .hero__indexes {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: stretch;
+    max-width: none;
+    min-width: auto;
+  }
+
+  .hero__cta {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .hero__price {
+    display: none;
+  }
+
   .reviews__controls {
     display: flex;
     justify-content: flex-end;
@@ -911,7 +1135,13 @@ body.is-modal-open {
   .site-header__contacts {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .site-header__phone {
+    color: #000000;
+    text-decoration: none;
   }
 
   .reviews__track {

@@ -6,18 +6,18 @@ get_header();
   <div class="container">
     <div class="hero__wrapper">
       <div class="hero__content">
-        <div class="hero__heading">
-          <h1>Курсы для детей и подростков в Петропавловске-Камчатском</h1>
+        <div class="hero__intro">
+          <div class="hero__header">
+            <h1>Курсы для детей и подростков в Петропавловске-Камчатском</h1>
+            <div class="hero__kid-photo--mobile">
+              <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/hero-bg.png'); ?>" alt="">
+            </div>
+          </div>
           <div class="hero__text">IT, робототехника, творчество и развитие мышления. Помогаем детям не просто учиться, а понимать, создавать и думать.</div>
         </div>
-        <div class="hero__price"></div>
-        <button class="btn btn--secondary hero__cta" type="button" data-modal="signup">
-          Записаться на бесплатный урок
-          <svg class="btn__icon" width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8.28846 0.75L14.75 7.21154L8.28846 13.6731M13.8526 7.21154L0.749999 7.21154" stroke="#FC573B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-
+        <div class="hero__kid-photo hero__kid-photo--desktop">
+          <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/hero-bg.png'); ?>" alt="">
+        </div>
         <div class="hero__indexes">
           <div class="hero__index">
           <img
@@ -42,6 +42,14 @@ get_header();
           >
             <div class="hero__index-text">Небольшие группы и живое общение</div>
           </div>
+        </div>
+        <button class="btn btn--secondary hero__cta" type="button" data-modal="signup">
+          Записаться на бесплатный урок
+          <svg class="btn__icon" width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.28846 0.75L14.75 7.21154L8.28846 13.6731M13.8526 7.21154L0.749999 7.21154" stroke="#FC573B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="hero__price"></div>
         </div>
       </div>
     </div>
