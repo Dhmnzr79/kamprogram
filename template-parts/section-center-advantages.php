@@ -47,7 +47,7 @@
         <div class="center-advantages__aside">
           <h3 class="center-advantages__aside-title"><span>Бесплатный</span> пробный урок</h3>
           <div class="center-advantages__aside-text">Ребёнок познакомится с форматом занятий, а вы сможете задать все вопросы и принять решение без спешки.</div>
-          <button class="btn btn--secondary center-advantages__aside-cta" type="button">
+          <button class="btn btn--secondary center-advantages__aside-cta" type="button" data-modal="signup">
             Записаться на бесплатный урок
             <svg class="btn__icon" width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8.28846 0.75L14.75 7.21154L8.28846 13.6731M13.8526 7.21154L0.749999 7.21154" stroke="#FC573B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

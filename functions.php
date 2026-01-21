@@ -1153,7 +1153,331 @@ add_action('save_post_course', function (int $post_id) {
   $set_text('kp_cta_text', '_kp_cta_text', true);
 });
 
+// SEO: Управление title и meta description
+add_filter('pre_get_document_title', function ($title) {
+  $site_name = 'Центр профессий будущего на Камчатке';
+
+  if (is_front_page()) {
+    return 'Курсы для детей и подростков в Петропавловске-Камчатском | ' . $site_name;
+  } elseif (is_singular('course')) {
+    $course_title = get_the_title();
+    return $course_title . ' | ' . $site_name;
+  } elseif (is_page()) {
+    $page_id = get_queried_object_id();
+    $page_slug = get_post_field('post_name', $page_id);
+    
+    if ($page_slug === 'o-nas') {
+      return 'О нас | ' . $site_name;
+    } elseif ($page_slug === 'kontakty') {
+      return 'Контакты | ' . $site_name;
+    } else {
+      $page_title = get_the_title($page_id);
+      if ($page_title && $page_title !== '') {
+        return $page_title . ' | ' . $site_name;
+      }
+    }
+  } elseif (is_404()) {
+    return 'Страница не найдена | ' . $site_name;
+  }
+
+  return $title;
+}, 10, 1);
+
+add_filter('document_title_parts', function (array $title) {
+  $site_name = 'Центр профессий будущего на Камчатке';
+
+  if (is_front_page()) {
+    $title['title'] = 'Курсы для детей и подростков в Петропавловске-Камчатском';
+    $title['site'] = $site_name;
+  } elseif (is_singular('course')) {
+    $course_title = get_the_title();
+    $title['title'] = $course_title;
+    $title['site'] = $site_name;
+  } elseif (is_page()) {
+    $page_id = get_queried_object_id();
+    $page_slug = get_post_field('post_name', $page_id);
+    
+    if ($page_slug === 'o-nas') {
+      $title['title'] = 'О нас';
+      $title['site'] = $site_name;
+    } elseif ($page_slug === 'kontakty') {
+      $title['title'] = 'Контакты';
+      $title['site'] = $site_name;
+    } else {
+      $page_title = get_the_title($page_id);
+      if ($page_title && $page_title !== '') {
+        $title['title'] = $page_title;
+        $title['site'] = $site_name;
+      }
+    }
+  } elseif (is_404()) {
+    $title['title'] = 'Страница не найдена';
+    $title['site'] = $site_name;
+  }
+
+  return $title;
+}, 10, 1);
+
+add_action('wp_head', function () {
+  $description = '';
+
+  if (is_front_page()) {
+    $description = 'IT, робототехника, творчество и развитие мышления для детей от 5 до 18 лет. Практика на каждом занятии, небольшие группы, современные направления обучения в Петропавловске-Камчатском.';
+  } elseif (is_singular('course')) {
+    $course_title = get_the_title();
+    $course_short = get_post_meta(get_the_ID(), '_kp_course_short', true);
+    
+    if ($course_short) {
+      $description = wp_trim_words($course_short, 20, '');
+    } else {
+      $description = $course_title . ' для детей в Петропавловске-Камчатском. Центр профессий будущего на Камчатке.';
+    }
+    
+    $description .= ' Записаться на бесплатный урок.';
+  } elseif (is_page()) {
+    $page_slug = get_post_field('post_name', get_queried_object_id());
+    
+    if ($page_slug === 'o-nas') {
+      $description = 'Центр профессий будущего на Камчатке. Курсы для детей и подростков: программирование, робототехника, математика, творчество.';
+    } elseif ($page_slug === 'kontakty') {
+      $description = 'Контакты центра профессий будущего на Камчатке. Адрес: г. Петропавловск-Камчатский, ул. Максутова, д.34. Телефон: +7 924 894-16-00.';
+    }
+  } elseif (is_404()) {
+    $description = 'Запрашиваемая страница не найдена. Вернитесь на главную страницу или воспользуйтесь меню сайта.';
+    echo '<meta name="robots" content="noindex, nofollow">' . "\n";
+  }
+
+  if ($description) {
+    $description = wp_trim_words($description, 25, '');
+    $description = mb_substr($description, 0, 160);
+    echo '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
+  }
+}, 1);
+
+// Schema.org разметка
+add_action('wp_head', function () {
+  $site_name = 'Центр профессий будущего на Камчатке';
+  $site_url = home_url('/');
+  $org_id = $site_url . '#organization';
+  
+  // EducationalOrganization для главной страницы
+  if (is_front_page()) {
+    $schema = [
+      '@context' => 'https://schema.org',
+      '@type' => 'EducationalOrganization',
+      '@id' => $org_id,
+      'name' => $site_name,
+      'url' => $site_url,
+      'address' => [
+        '@type' => 'PostalAddress',
+        'addressLocality' => 'Петропавловск-Камчатский',
+        'streetAddress' => 'ул. Максутова, д.34',
+      ],
+      'telephone' => '+79248941600',
+    ];
+    
+    echo '<script type="application/ld+json">' . "\n";
+    echo wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    echo "\n" . '</script>' . "\n";
+  }
+  
+  // Course для страницы курса
+  if (is_singular('course')) {
+    $course_id = get_the_ID();
+    $course_title = get_the_title();
+    $course_short = get_post_meta($course_id, '_kp_course_short', true);
+    $course_url = get_permalink($course_id);
+    
+    $schema = [
+      '@context' => 'https://schema.org',
+      '@type' => 'Course',
+      'name' => $course_title,
+      'provider' => [
+        '@type' => 'EducationalOrganization',
+        '@id' => $org_id,
+        'name' => $site_name,
+      ],
+      'url' => $course_url,
+    ];
+    
+    if ($course_short) {
+      $schema['description'] = wp_trim_words($course_short, 30, '');
+    }
+    
+    echo '<script type="application/ld+json">' . "\n";
+    echo wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    echo "\n" . '</script>' . "\n";
+  }
+  
+  // ContactPage для страницы контактов
+  $contacts_page = get_page_by_path('kontakty');
+  if ($contacts_page && is_page($contacts_page->ID)) {
+    $schema = [
+      '@context' => 'https://schema.org',
+      '@type' => 'ContactPage',
+      'name' => 'Контакты',
+      'url' => get_permalink($contacts_page->ID),
+      'mainEntity' => [
+        '@type' => 'EducationalOrganization',
+        '@id' => $org_id,
+        'name' => $site_name,
+        'address' => [
+          '@type' => 'PostalAddress',
+          'addressLocality' => 'Петропавловск-Камчатский',
+          'streetAddress' => 'ул. Максутова, д.34',
+        ],
+        'telephone' => '+79248941600',
+      ],
+    ];
+    
+    echo '<script type="application/ld+json">' . "\n";
+    echo wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    echo "\n" . '</script>' . "\n";
+  }
+}, 5);
+
+// Open Graph разметка
+add_action('wp_head', function () {
+  $site_name = 'Центр профессий будущего на Камчатке';
+  $site_url = home_url('/');
+  $current_url = (is_ssl() ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+  
+  $og_title = '';
+  $og_description = '';
+  $og_image = get_stylesheet_directory_uri() . '/assets/img/hero-bg.png';
+  $og_type = 'website';
+  
+  if (is_front_page()) {
+    $og_title = 'Курсы для детей и подростков в Петропавловске-Камчатском | ' . $site_name;
+    $og_description = 'IT, робототехника, творчество и развитие мышления для детей от 5 до 18 лет. Практика на каждом занятии, небольшие группы, современные направления обучения в Петропавловске-Камчатском.';
+  } elseif (is_singular('course')) {
+    $og_title = get_the_title() . ' | ' . $site_name;
+    $course_short = get_post_meta(get_the_ID(), '_kp_course_short', true);
+    if ($course_short) {
+      $og_description = wp_trim_words($course_short, 20, '');
+    } else {
+      $og_description = get_the_title() . ' для детей в Петропавловске-Камчатском. Центр профессий будущего на Камчатке.';
+    }
+    $og_type = 'article';
+    
+    $course_image_id = get_post_meta(get_the_ID(), '_kp_hero_kid_photo_id', true);
+    if ($course_image_id) {
+      $course_image = wp_get_attachment_image_url($course_image_id, 'large');
+      if ($course_image) {
+        $og_image = $course_image;
+      }
+    }
+  } elseif (is_page()) {
+    $page_id = get_queried_object_id();
+    $og_title = get_the_title($page_id) . ' | ' . $site_name;
+    $page_slug = get_post_field('post_name', $page_id);
+    
+    if ($page_slug === 'o-nas') {
+      $og_description = 'Центр профессий будущего на Камчатке. Курсы для детей и подростков: программирование, робототехника, математика, творчество.';
+    } elseif ($page_slug === 'kontakty') {
+      $og_description = 'Контакты центра профессий будущего на Камчатке. Адрес: г. Петропавловск-Камчатский, ул. Максутова, д.34. Телефон: +7 924 894-16-00.';
+    }
+  }
+  
+  if ($og_title) {
+    echo '<meta property="og:title" content="' . esc_attr($og_title) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr(wp_trim_words($og_description ?: '', 25, '')) . '">' . "\n";
+    echo '<meta property="og:image" content="' . esc_url($og_image) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url($current_url) . '">' . "\n";
+    echo '<meta property="og:type" content="' . esc_attr($og_type) . '">' . "\n";
+    echo '<meta property="og:site_name" content="' . esc_attr($site_name) . '">' . "\n";
+  }
+}, 6);
+
+// Canonical URL
+add_action('wp_head', function () {
+  $canonical = '';
+  
+  if (is_front_page()) {
+    $canonical = home_url('/');
+  } elseif (is_singular()) {
+    $canonical = get_permalink();
+  } elseif (is_archive()) {
+    $canonical = get_post_type_archive_link(get_post_type());
+  }
+  
+  if ($canonical) {
+    echo '<link rel="canonical" href="' . esc_url($canonical) . '">' . "\n";
+  }
+}, 7);
+
+// BreadcrumbList Schema.org
+add_action('wp_head', function () {
+  if (is_front_page() || is_404()) {
+    return;
+  }
+  
+  $breadcrumbs = [
+    [
+      '@type' => 'ListItem',
+      'position' => 1,
+      'name' => 'Главная',
+      'item' => home_url('/'),
+    ],
+  ];
+  
+  $position = 2;
+  
+  if (is_singular('course')) {
+    $breadcrumbs[] = [
+      '@type' => 'ListItem',
+      'position' => $position,
+      'name' => get_the_title(),
+      'item' => get_permalink(),
+    ];
+  } elseif (is_page()) {
+    $page_id = get_queried_object_id();
+    $breadcrumbs[] = [
+      '@type' => 'ListItem',
+      'position' => $position,
+      'name' => get_the_title($page_id),
+      'item' => get_permalink($page_id),
+    ];
+  }
+  
+  if (count($breadcrumbs) > 1) {
+    $schema = [
+      '@context' => 'https://schema.org',
+      '@type' => 'BreadcrumbList',
+      'itemListElement' => $breadcrumbs,
+    ];
+    
+    echo '<script type="application/ld+json">' . "\n";
+    echo wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    echo "\n" . '</script>' . "\n";
+  }
+}, 8);
+
+// Автоматические alt-тексты для изображений
+add_filter('wp_get_attachment_image_attributes', function ($attr, $attachment, $size) {
+  if (empty($attr['alt']) && $attachment) {
+    $alt = get_post_meta($attachment->ID, '_wp_attachment_image_alt', true);
+    if (empty($alt)) {
+      $alt = get_the_title($attachment->ID);
+      if (empty($alt)) {
+        $alt = get_bloginfo('name');
+      }
+    }
+    $attr['alt'] = $alt;
+  }
+  return $attr;
+}, 10, 3);
+
+// Оптимизация изображений: loading="lazy"
+add_filter('wp_get_attachment_image_attributes', function ($attr) {
+  if (!isset($attr['loading'])) {
+    $attr['loading'] = 'lazy';
+  }
+  return $attr;
+}, 20, 1);
+
 // Отключаем автоматическое добавление <br> и <p> в формах CF7
+
 add_filter('wpcf7_autop_or_not', '__return_false');
 
 add_filter('wpcf7_form_elements', function ($content) {
