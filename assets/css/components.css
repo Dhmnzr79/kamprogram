@@ -393,6 +393,10 @@ body.page-is-contacts .site-header__inner {
 }
 
 .home-courses-cards__card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   transition: transform 0.3s ease;
 }
 
@@ -746,6 +750,10 @@ body.page-is-contacts .site-header__inner {
   flex-direction: column;
   gap: 10px;
   flex: 1;
+}
+
+.about-for-whom__cards .col-4:nth-child(2) .about-for-whom__card {
+  background: #f9dffd;
 }
 
 .about-for-whom__side {
@@ -1188,6 +1196,72 @@ body.is-modal-open {
 
   .reviews__dots {
     display: none;
+  }
+
+  .hero__text {
+    padding-right: 0;
+  }
+
+  .hero__index {
+    width: 100%;
+  }
+
+  .hero__cta {
+    margin-top: 40px;
+  }
+
+  .center-advantages__grid {
+    row-gap: 30px;
+  }
+
+  .site-footer .row > .col-3 {
+    grid-column: span 4;
+  }
+
+  .site-footer .row > .col-6 {
+    grid-column: span 4;
+  }
+
+  .site-footer__courses-grid {
+    display: block;
+  }
+
+  .site-footer__courses-grid .col-6 {
+    grid-column: span 12;
+  }
+
+  .site-header__tagline {
+    display: block;
+  }
+
+  .home-quiz__faces {
+    display: none;
+  }
+
+  .home-quiz {
+    padding: 0;
+  }
+
+  .home-quiz__cta {
+    margin-top: 40px;
+  }
+
+  .home-courses-cards__card-meta {
+    margin: 10px 0 20px;
+  }
+
+  .home-courses-cards__card-photo-wrap {
+    width: 120px;
+    height: 147px;
+  }
+
+  .center-advantages__aside-title span {
+    font-size: 36px;
+  }
+
+  .home-courses-cards__card-main,
+  .home-courses-cards__card-body {
+    gap: 5px;
   }
 }
 

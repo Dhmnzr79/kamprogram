@@ -149,6 +149,10 @@
   width: 100%;
 }
 
+.course-results__grid .col-4:nth-child(2) .course-results__card {
+  background: #f9dffd;
+}
+
 .course-results__icon {
   width: 70px;
   height: 70px;
@@ -179,6 +183,38 @@
 
 .course-cta .form__privacy {
   color: var(--color-white);
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .course-for-whom__title,
+  .course-why__title,
+  .course-lessons__title {
+    padding-right: 0px;
+  }
+
+  .course-for-whom__list-item {
+    font-size: 17px;
+  }
+
+  .course-why__subtitle {
+    font-size: 17px;
+  }
+
+  .course-lessons__subtitle {
+    font-size: 17px;
+  }
+
+  .course-results__card {
+    padding: 20px;
+  }
+
+  .course-cta__text {
+    font-size: 17px;
+  }
+
+  .course-results__icon {
+    margin-bottom: 20px;
+  }
 }
 
 @media (min-width: 1280px) {
