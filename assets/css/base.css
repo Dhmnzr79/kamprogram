@@ -151,6 +151,7 @@ h2 {
   font-size: var(--fs-h2);
   line-height: var(--lh-h2);
   font-weight: 600;
+  margin-bottom: 40px;
 }
 
 h3 {
@@ -174,4 +175,10 @@ p {
 
 p + p {
   margin-top: 12px;
+}
+
+@media (max-width: 1279px) {
+  h2 {
+    margin-bottom: 24px;
+  }
 }

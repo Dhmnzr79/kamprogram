@@ -50,6 +50,7 @@
 
 @media (min-width: 1280px) {
   .container {
+    width: min(var(--container-max), 100% - 2 * var(--container-pad-desk));
     padding-inline: var(--container-pad-desk);
   }
 

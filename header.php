@@ -39,8 +39,15 @@
             <a class="site-header__phone" href="tel:+79248941600">📞 +7 924 894-16-00</a>
           </div>
 
-          <a class="site-header__call" href="tel:+79248941600" aria-label="Позвонить">Позвонить</a>
-          <button class="site-header__burger" type="button" aria-label="Открыть меню" aria-expanded="false" data-header-burger>Меню</button>
+          <div class="site-header__mobile-buttons">
+            <a class="btn-call" href="tel:+79248941600" aria-label="Позвонить">
+              <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/phone-icon.svg'); ?>" alt="">
+            </a>
+            <button class="btn-menu" type="button" aria-haspopup="dialog" aria-controls="mobileNav" aria-expanded="false" data-header-burger>
+              <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/menu-icon.svg'); ?>" alt="">
+              <span class="sr-only">Открыть меню</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
