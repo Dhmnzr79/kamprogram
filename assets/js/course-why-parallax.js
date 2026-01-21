@@ -2,6 +2,7 @@
   const init = () => {
     const mediaWrap = document.querySelector('.course-why__media-wrap');
     const mediaImg = document.querySelector('.course-why__media-img');
+    const figureTop = document.querySelector('.course-why__decorations-figure--top');
     
     if (!mediaWrap || !mediaImg) {
       return;
@@ -32,6 +33,12 @@
         // Применяем смещение (0% в начале, -16.67% в конце)
         const translateY = -maxOffset * clampedProgress * 100;
         mediaImg.style.transform = `translateY(${translateY}%)`;
+
+        // Parallax для figure-02 (слегка плывет при скролле)
+        if (figureTop) {
+          const figureOffset = -30 * clampedProgress;
+          figureTop.style.transform = `translateY(${figureOffset}px)`;
+        }
       }
     };
 

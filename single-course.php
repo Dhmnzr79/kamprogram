@@ -146,6 +146,10 @@ while (have_posts()) {
                 <div class="course-why__media-wrap">
                   <?php echo wp_get_attachment_image($why_photo_id, 'large', false, ['class' => 'course-why__media-img']); ?>
                 </div>
+                <div class="course-why__decorations">
+                  <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/figure-02.svg'); ?>" alt="" class="course-why__decorations-figure course-why__decorations-figure--top">
+                  <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/figure-01.svg'); ?>" alt="" class="course-why__decorations-figure course-why__decorations-figure--bottom">
+                </div>
               </div>
             <?php endif; ?>
           </div>
