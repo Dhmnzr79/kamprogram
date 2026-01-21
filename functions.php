@@ -1453,6 +1453,31 @@ add_action('wp_head', function () {
   }
 }, 8);
 
+add_action('wp_head', function () {
+
+    // только страница контактов
+    if (!is_page('kontakty')) {
+        return;
+    }
+
+    $schema = [
+        "@context" => "https://schema.org",
+        "@type"    => "ContactPage",
+        "name"     => get_the_title(),
+        "url"      => get_permalink(),
+        "mainEntity" => [
+            "@type" => "EducationalOrganization",
+            "name"  => get_bloginfo('name'),
+            "url"   => home_url('/')
+        ]
+    ];
+
+    echo '<script type="application/ld+json">'
+        . json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+        . '</script>';
+
+});
+
 // Автоматические alt-тексты для изображений
 add_filter('wp_get_attachment_image_attributes', function ($attr, $attachment, $size) {
   if (empty($attr['alt']) && $attachment) {

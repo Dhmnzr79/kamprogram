@@ -79,6 +79,24 @@
     submenu.hidden = expanded;
   });
 
+  // Close submenu when clicking outside
+  document.addEventListener("click", (e) => {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+
+    const clickedInsideMenu = target.closest(".menu-item-has-children");
+    if (clickedInsideMenu) return;
+
+    // Close all open submenus
+    document.querySelectorAll(".menu-item-has-children > a[aria-expanded='true']").forEach((link) => {
+      link.setAttribute("aria-expanded", "false");
+      const submenu = link.closest(".menu-item-has-children")?.querySelector("ul.sub-menu");
+      if (submenu) {
+        submenu.hidden = true;
+      }
+    });
+  });
+
   // Init: hide all submenus by default and set aria-expanded.
   const initSubmenus = () => {
     document.querySelectorAll(".menu-item-has-children > a").forEach((a) => {

@@ -59,14 +59,26 @@
       </div>
 
       <div class="site-header__drawer-body">
-        <?php
-        wp_nav_menu([
-          'theme_location' => 'primary',
-          'container' => false,
-          'menu_class' => 'site-nav__list site-nav__list--drawer',
-          'fallback_cb' => false,
-        ]);
-        ?>
+        <div class="site-header__drawer-brand">
+          <a class="site-header__drawer-logo" href="<?php echo esc_url(home_url('/')); ?>">
+            <img
+              src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/logo.svg'); ?>"
+              alt="<?php echo esc_attr(get_bloginfo('name')); ?>"
+            >
+          </a>
+          <div class="site-header__drawer-tagline">Центр профессий будущего на Камчатке</div>
+        </div>
+
+        <div class="site-header__drawer-menu">
+          <?php
+          wp_nav_menu([
+            'theme_location' => 'primary',
+            'container' => false,
+            'menu_class' => 'site-nav__list site-nav__list--drawer',
+            'fallback_cb' => false,
+          ]);
+          ?>
+        </div>
       </div>
     </nav>
   </header>
