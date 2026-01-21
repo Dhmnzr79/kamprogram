@@ -253,3 +253,47 @@
     right: 0;
   }
 }
+
+@media (max-width: 767px) {
+  .course-for-whom__title,
+  .course-why__title,
+  .course-lessons__title {
+    padding-right: 0px;
+  }
+
+  .course-for-whom__list-item {
+    font-size: 16px;
+  }
+
+  .course-why__subtitle {
+    font-size: 16px;
+  }
+
+  .course-why__btn {
+    margin-top: 40px;
+  }
+
+  .course-why__media-wrap {
+    height: 250px;
+  }
+
+  .course-lessons__subtitle {
+    font-size: 17px;
+  }
+
+  .course-results__card {
+    padding: 20px;
+  }
+
+  .course-results__icon {
+    margin-bottom: 20px;
+  }
+
+  .course-cta__content {
+    padding: 40px 20px;
+  }
+
+  .course-cta__text {
+    font-size: 16px;
+  }
+}
