@@ -29,6 +29,7 @@ while (have_posts()) {
   $less_items = (array) get_post_meta($post_id, '_kp_less_items', true);
   $less_extra = get_post_meta($post_id, '_kp_less_extra', true);
 
+  $res_title = get_post_meta($post_id, '_kp_res_title', true);
   $res_cards = (array) get_post_meta($post_id, '_kp_res_cards', true);
 
   $cta_title = get_post_meta($post_id, '_kp_cta_title', true);
@@ -42,7 +43,18 @@ while (have_posts()) {
           <div class="hero__content">
             <div class="hero__intro">
               <div class="hero__header">
-                <h1><?php echo esc_html($hero_h1 ?: get_the_title()); ?></h1>
+                <h1>
+                  <?php
+                  $title = $hero_h1 ?: get_the_title();
+                  $parts = explode('|', $title, 2);
+                  if (count($parts) === 2) {
+                    echo esc_html(trim($parts[0]));
+                    echo ' <span class="hero__h1-part2">' . esc_html(trim($parts[1])) . '</span>';
+                  } else {
+                    echo esc_html($title);
+                  }
+                  ?>
+                </h1>
 
                 <?php if ($hero_kid_photo_id) : ?>
                   <div class="hero__kid-photo--mobile">
@@ -202,7 +214,7 @@ while (have_posts()) {
 
     <section class="section course-results">
       <div class="container">
-        <h2 class="course-results__title">Результат обучения</h2>
+        <?php if ($res_title) : ?><h2 class="course-results__title"><?php echo esc_html($res_title); ?></h2><?php endif; ?>
         <?php if (!empty($res_cards)) : ?>
           <div class="row course-results__grid">
             <?php foreach ($res_cards as $card) :

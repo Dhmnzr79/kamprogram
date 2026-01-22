@@ -6,6 +6,17 @@
   z-index: 0;
 }
 
+.page-course .hero__h1-part2 {
+    display: block;
+    color: #ffffff;
+    margin-top: 15px;
+    font-weight: 400;
+    font-size: 30px;
+    font-family: var(--font-text);
+    line-height: 1.4;
+}
+
+
 .hero__price-value {
   font-family: var(--font-heading);
   font-size: 36px;
@@ -235,6 +246,11 @@
 
 /* Tablet */
 @media (min-width: 768px) and (max-width: 1279px) {
+  .page-course .hero__h1-part2 {
+    font-size: 24px;
+    margin-top: 10px;
+}
+
   .course-for-whom__title,
   .course-why__title,
   .course-lessons__title {
@@ -272,6 +288,10 @@
 
 /* Desktop */
 @media (min-width: 1280px) {
+  .page-course .hero__h1-part2 {
+
+  }
+
   .page-course .hero__wrapper {
     position: relative;
   }
@@ -314,10 +334,19 @@
 
 /* Mobile */
 @media (max-width: 767px) {
+  .page-course .hero__h1-part2 {
+    font-size: 17px;
+    margin-top: 6px;
+    line-height: 1.5;
+}
   .course-for-whom__title,
   .course-why__title,
   .course-lessons__title {
     padding-right: 0px;
+  }
+
+  .course-for-whom__subtitle {
+    font-size: 18px;
   }
 
   .course-for-whom__list-item {

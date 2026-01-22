@@ -875,6 +875,7 @@ function kp_course_metabox_sections_render(\WP_Post $post) {
   $less_items = (array) kp_course_meta_get($post->ID, '_kp_less_items', []);
   $less_extra = kp_course_meta_get($post->ID, '_kp_less_extra', '');
 
+  $res_title = kp_course_meta_get($post->ID, '_kp_res_title', '');
   $res_cards = (array) kp_course_meta_get($post->ID, '_kp_res_cards', []);
 
   $cta_title = kp_course_meta_get($post->ID, '_kp_cta_title', '');
@@ -1013,6 +1014,10 @@ function kp_course_metabox_sections_render(\WP_Post $post) {
   <h3>Результат обучения</h3>
   <table class="form-table" role="presentation">
     <tbody>
+      <tr>
+        <th scope="row"><label for="kp_res_title">Общий заголовок</label></th>
+        <td><input id="kp_res_title" name="kp_res_title" type="text" class="large-text" value="<?php echo esc_attr($res_title); ?>"></td>
+      </tr>
       <?php for ($i = 0; $i < 3; $i++) :
         $card = is_array($res_cards[$i] ?? null) ? $res_cards[$i] : [];
         $icon_id = (int) ($card['icon_id'] ?? 0);
@@ -1148,6 +1153,8 @@ add_action('save_post_course', function (int $post_id) {
     }
     update_post_meta($post_id, '_kp_res_cards', $cards);
   }
+
+  $set_text('kp_res_title', '_kp_res_title');
 
   $set_text('kp_cta_title', '_kp_cta_title');
   $set_text('kp_cta_text', '_kp_cta_text', true);
