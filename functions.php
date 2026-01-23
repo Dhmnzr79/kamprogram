@@ -8,11 +8,13 @@ add_action('wp_enqueue_scripts', function () {
   wp_enqueue_style('kamprogram-components', $theme_uri . '/assets/css/components.css', ['kamprogram-layout'], null);
   wp_enqueue_style('kamprogram-utilities', $theme_uri . '/assets/css/utilities.css', ['kamprogram-components'], null);
   wp_enqueue_style('kamprogram-page-course', $theme_uri . '/assets/css/pages/course.css', ['kamprogram-utilities'], null);
+  wp_enqueue_style('kamprogram-page-thanks', $theme_uri . '/assets/css/pages/thanks.css', ['kamprogram-utilities'], null);
 
   wp_enqueue_script('kamprogram-reviews-slider', $theme_uri . '/assets/js/reviews-slider.js', [], null, true);
   wp_enqueue_script('kamprogram-header-menu', $theme_uri . '/assets/js/header-menu.js', [], null, true);
   wp_enqueue_script('kamprogram-phone-mask', $theme_uri . '/assets/js/phone-mask.js', [], null, true);
   wp_enqueue_script('kamprogram-modal', $theme_uri . '/assets/js/modal.js', [], null, true);
+  wp_enqueue_script('kamprogram-quiz', $theme_uri . '/assets/js/quiz.js', ['kamprogram-modal'], null, true);
   wp_enqueue_script('kamprogram-cf7-button', $theme_uri . '/assets/js/cf7-button.js', [], null, true);
   wp_enqueue_script('kamprogram-course-why-parallax', $theme_uri . '/assets/js/course-why-parallax.js', [], null, true);
   wp_enqueue_script('kamprogram-course-lessons-divider', $theme_uri . '/assets/js/course-lessons-divider.js', [], null, true);
@@ -157,6 +159,7 @@ add_filter('body_class', function (array $classes) {
 
   $about_page = get_page_by_path('o-nas');
   $contacts_page = get_page_by_path('kontakty');
+  $thanks_page = get_page_by_path('thanks');
   
   if ($about_page && is_page($about_page->ID)) {
     $classes[] = 'page-is-about';
@@ -164,6 +167,10 @@ add_filter('body_class', function (array $classes) {
   
   if ($contacts_page && is_page($contacts_page->ID)) {
     $classes[] = 'page-is-contacts';
+  }
+
+  if ($thanks_page && is_page($thanks_page->ID)) {
+    $classes[] = 'page-is-thanks';
   }
 
   return $classes;
@@ -189,6 +196,10 @@ add_action('after_switch_theme', function () {
     ],
     'Контакты' => [
       'slug' => 'kontakty',
+      'template' => 'default',
+    ],
+    'Спасибо' => [
+      'slug' => 'thanks',
       'template' => 'default',
     ],
   ];
@@ -1556,5 +1567,50 @@ add_filter('wpcf7_form_elements', function ($content) {
   
   return $content;
 });
+
+// Редирект на страницу благодарности после отправки формы Contact Form 7
+add_action('wp_footer', function () {
+  if (!function_exists('wpcf7')) {
+    return;
+  }
+  ?>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Обработка всех форм CF7 на странице
+      document.addEventListener('wpcf7mailsent', function(event) {
+        // Редирект на страницу благодарности
+        const thanksUrl = '<?php echo esc_url(home_url('/thanks')); ?>';
+        if (thanksUrl) {
+          window.location.href = thanksUrl;
+        }
+      }, false);
+    });
+  </script>
+  <?php
+});
+
+// Создание страницы благодарности при активации темы (если её нет)
+add_action('init', function () {
+  if (get_option('kamprogram_thanks_page_created')) {
+    return;
+  }
+
+  $thanks_page = get_page_by_path('thanks');
+  if (!$thanks_page) {
+    $page_id = wp_insert_post([
+      'post_type' => 'page',
+      'post_status' => 'publish',
+      'post_title' => 'Спасибо за заявку',
+      'post_name' => 'thanks',
+      'post_content' => '',
+    ]);
+
+    if (!is_wp_error($page_id) && $page_id) {
+      update_option('kamprogram_thanks_page_created', 1);
+    }
+  } else {
+    update_option('kamprogram_thanks_page_created', 1);
+  }
+}, 1);
 
 
