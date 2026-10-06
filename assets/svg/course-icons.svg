@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="code" viewBox="0 0 32 32"><path d="m11 9-7 7 7 7m10-14 7 7-7 7M18 5l-4 22"/></symbol>
+  <symbol id="certificate" viewBox="0 0 32 32"><path d="M18 25H5V4h22v13M10 10h12M10 15h7m3 8-1 6 5-2 5 2-1-6"/><circle cx="24" cy="20" r="5"/></symbol>
+  <symbol id="pin" viewBox="0 0 32 32"><path d="M26 13c0 8-10 15-10 15S6 21 6 13a10 10 0 1 1 20 0Z"/><circle cx="16" cy="13" r="3.5"/></symbol>
+  <symbol id="mentor" viewBox="0 0 32 32"><path d="M10 5H7v8l-3 3 3 3v8h3M22 5h3v8l3 3-3 3v8h-3m-10-8c2 3 6 3 8 0M12 12h.01M20 12h.01"/></symbol>
+  <symbol id="people" viewBox="0 0 32 32"><circle cx="16" cy="10" r="4"/><path d="M8 27v-3a8 8 0 0 1 16 0v3M5 7a4 4 0 0 0 0 8m22-8a4 4 0 0 1 0 8M3 25v-3a6 6 0 0 1 3-5m23 8v-3a6 6 0 0 0-3-5"/></symbol>
+  <symbol id="blocks" viewBox="0 0 32 32"><path d="M5 17h10v11H5zm12 0h10v11H17zM11 4h10v10H11zM8 17v-3h4v3m8 0v-3h4v3M14 4V2h4v2"/></symbol>
+  <symbol id="compass" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><path d="m21 11-3 7-7 3 3-7 7-3Z"/></symbol>
+  <symbol id="bulb" viewBox="0 0 32 32"><path d="M11 23v-3a9 9 0 1 1 10 0v3H11Zm1 4h8m-6 3h4M16 23v-9m-4-1 4 3 4-3"/></symbol>
+  <symbol id="brush" viewBox="0 0 32 32"><path d="m13 20 12-15a3 3 0 0 1 4 4L17 23M13 20l4 3M13 20a5 5 0 0 0-8 4c0 2-2 4-2 4s10 2 12-3a5 5 0 0 0-2-5Z"/></symbol>
+  <symbol id="monitor" viewBox="0 0 32 32"><rect x="3" y="5" width="26" height="19" rx="2"/><path d="M3 19h26M16 24v5m-6 0h12M11 10l-3 3 3 3m10-6 3 3-3 3"/></symbol>
+  <symbol id="folder" viewBox="0 0 32 32"><path d="M4 9V6h9l3 4h12v16H4V9Zm0 5h24M12 21h8"/></symbol>
+  <symbol id="target" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><circle cx="16" cy="16" r="7"/><circle cx="16" cy="16" r="2"/></symbol>
+  <symbol id="graduation" viewBox="0 0 32 32"><path d="m2 12 14-7 14 7-14 7-14-7Zm6 3v8c5 5 11 5 16 0v-8m5-2v11"/></symbol>
+  <symbol id="play" viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" rx="3"/><path d="m13 10 9 6-9 6V10ZM4 10h5M4 22h5m14-12h5m-5 12h5"/></symbol>
+  <symbol id="pen" viewBox="0 0 32 32"><path d="m5 21 17-17a3 3 0 0 1 5 5L10 26l-7 3 2-8Zm13-13 5 5M5 21l5 5M15 29h14"/></symbol>
+  <symbol id="ruler" viewBox="0 0 32 32"><path d="M5 27V5l22 22H5Zm5-5v-6l6 6h-6ZM5 10h3m-3 5h3m-3 5h3m5 7v-3m5 3v-3"/></symbol>
+  <symbol id="wallet" viewBox="0 0 32 32"><path d="M27 11V7H6a3 3 0 0 0 0 6h23v14H6a3 3 0 0 1-3-3V10m26 7h-8v6h8"/><circle cx="24" cy="20" r=".8"/></symbol>
+  <symbol id="mail" viewBox="0 0 32 32"><rect x="3" y="6" width="26" height="20" rx="3"/><path d="m4 8 12 10L28 8"/></symbol>
+  <symbol id="phone" viewBox="0 0 32 32"><path d="m9 4 5 7-4 4c2 3 4 5 7 7l4-4 7 5c-1 5-4 6-7 5C12 25 7 20 4 11 3 8 4 5 9 4Z"/></symbol>
+  <symbol id="calendar" viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="23" rx="3"/><path d="M4 13h24M10 3v7m12-7v7M10 19h3m6 0h3m-12 5h3m6 0h3"/></symbol>
+  <symbol id="clock" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><path d="M16 8v8l5 3"/></symbol>
+  <symbol id="gift" viewBox="0 0 32 32"><path d="M5 16v13h22V16M3 10h26v6H3zM16 10v19M16 10H9a4 4 0 1 1 4-4l3 4Zm0 0h7a4 4 0 1 0-4-4l-3 4Z"/></symbol>
+</svg>

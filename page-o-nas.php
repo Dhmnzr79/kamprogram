@@ -55,7 +55,7 @@ get_header();
       <div class="row about-for-whom__cards">
         <div class="col-4">
           <article class="about-for-whom__card">
-            <img class="about-for-whom__icon" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/for-who-icon-01.svg'); ?>" alt="">
+            <?php echo kamprogram_icon('blocks', 'about-for-whom__icon feature-icon--on-surface'); ?>
             <h3 class="about-for-whom__card-title">Для детей, которым интересно разбираться, как всё устроено</h3>
             <div class="about-for-whom__card-text">Конструкторы, техника, компьютеры, логические задачи — превращаем интерес в полезные навыки.</div>
           </article>
@@ -63,7 +63,7 @@ get_header();
 
         <div class="col-4">
           <article class="about-for-whom__card">
-            <img class="about-for-whom__icon" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/for-who-icon-02.svg'); ?>" alt="">
+            <?php echo kamprogram_icon('brush', 'about-for-whom__icon feature-icon--on-surface'); ?>
             <h3 class="about-for-whom__card-title">Для тех, кто любит создавать и фантазировать</h3>
             <div class="about-for-whom__card-text">Игры, мультфильмы, дизайн, визуальные проекты — учим выражать идеи через творчество и технологии.</div>
           </article>
@@ -71,7 +71,7 @@ get_header();
 
         <div class="col-4">
           <article class="about-for-whom__card">
-            <img class="about-for-whom__icon" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/for-who-icon-03.svg'); ?>" alt="">
+            <?php echo kamprogram_icon('bulb', 'about-for-whom__icon feature-icon--on-surface'); ?>
             <h3 class="about-for-whom__card-title">Для школьников, которым важно развитие мышления</h3>
             <div class="about-for-whom__card-text">Логика, внимание, усидчивость и умение решать задачи — навыки, которые помогают в учёбе.</div>
           </article>
@@ -88,7 +88,7 @@ get_header();
 
         <div class="col-4">
           <article class="about-for-whom__side">
-            <img class="about-for-whom__icon" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/for-who-icon-04.svg'); ?>" alt="">
+            <?php echo kamprogram_icon('compass', 'about-for-whom__icon feature-icon--on-surface'); ?>
             <h3 class="about-for-whom__card-title">Для родителей, которые хотят осознанный выбор</h3>
             <div class="about-for-whom__card-text">Без давления и навязывания — сначала пробный урок, потом решение.</div>
           </article>

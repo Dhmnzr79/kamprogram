@@ -1,0 +1,39 @@
+/* Shared CTA geometry, including forms, dialogs and mobile overrides. */
+:root {
+  --button-warm-start: #ff934a;
+  --button-warm-end: #f47543;
+  --button-font-size: 17px;
+  --button-radius: 14px;
+}
+.btn {
+  /* These two tokens intentionally take precedence over section-specific rules. */
+  font-size: var(--button-font-size) !important;
+  border-radius: var(--button-radius) !important;
+}
+.btn.btn--primary, .btn.btn-primary {
+  background: linear-gradient(110deg, var(--button-warm-start), var(--button-warm-end));
+  background-size: 160% 100%;
+  background-position: 0% 50%;
+  border-radius: 14px;
+  padding: 17px 26px;
+  min-height: 56px;
+  box-sizing: border-box;
+  font-size: 17px;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+  color: #fff;
+  box-shadow: none;
+  transition: background-position .35s ease, color .2s ease;
+}
+@media (hover: hover) {
+  .btn.btn--primary:not(:disabled):hover, .btn.btn-primary:not(:disabled):hover {
+    background-position: 100% 50%;
+    box-shadow: none;
+  }
+  .btn.btn--primary:hover .btn__icon, .btn.btn-primary:hover .btn__icon { transform: translateX(4px); }
+}
+.btn.btn--primary:focus-visible, .btn.btn-primary:focus-visible { outline: 2px solid #5935b0; outline-offset: 4px; }
+.btn.btn--primary:disabled, .btn.btn-primary:disabled { cursor: not-allowed; }
+@media (prefers-reduced-motion: reduce) {
+  .btn.btn--primary, .btn.btn-primary, .btn.btn--primary .btn__icon, .btn.btn-primary .btn__icon { transition: none; }
+}

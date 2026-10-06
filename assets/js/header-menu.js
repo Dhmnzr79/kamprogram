@@ -3,6 +3,7 @@
   const burger = document.querySelector("[data-header-burger]");
   const drawer = document.querySelector("[data-header-drawer]");
   const closeBtn = document.querySelector("[data-header-close]");
+  let closeTimer;
 
   const setHeaderOffsetVar = () => {
     if (!header) return;
@@ -16,9 +17,12 @@
 
   const openDrawer = () => {
     if (!drawer || !burger) return;
+    clearTimeout(closeTimer);
     drawer.hidden = false;
+    drawer.getBoundingClientRect();
     requestAnimationFrame(() => {
       drawer.classList.add("is-open");
+      closeBtn?.focus({ preventScroll: true });
     });
     burger.setAttribute("aria-expanded", "true");
     lockScroll(true);
@@ -26,12 +30,15 @@
 
   const closeDrawer = () => {
     if (!drawer || !burger) return;
+    const wasOpen = burger.getAttribute('aria-expanded') === 'true';
     drawer.classList.remove("is-open");
     burger.setAttribute("aria-expanded", "false");
     lockScroll(false);
-    window.setTimeout(() => {
+    clearTimeout(closeTimer);
+    closeTimer = window.setTimeout(() => {
       drawer.hidden = true;
     }, 200);
+    if (wasOpen && drawer.contains(document.activeElement)) burger.focus({ preventScroll: true });
   };
 
   burger?.addEventListener("click", (e) => {
@@ -47,8 +54,21 @@
   });
 
   document.addEventListener("keydown", (e) => {
+    if (e.key === 'Tab' && burger?.getAttribute('aria-expanded') === 'true') {
+      const items = [...drawer.querySelectorAll('a[href], button')].filter(el => el.getClientRects().length);
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+    }
     if (e.key !== "Escape") return;
     closeDrawer();
+    document.querySelectorAll('.menu-item-has-children > a[aria-expanded="true"]').forEach(link => {
+      const submenu = link.parentElement.querySelector('ul.sub-menu');
+      if (submenu?.contains(document.activeElement)) link.focus();
+      link.setAttribute('aria-expanded', 'false');
+      if (submenu) submenu.hidden = true;
+    });
   });
 
   // Submenu toggles (no hover): work for both desktop and drawer.
@@ -108,7 +128,13 @@
   };
 
   initSubmenus();
+  document.addEventListener('click', event => {
+    if (burger?.getAttribute('aria-expanded') === 'true' && !drawer.contains(event.target) && !burger.contains(event.target)) closeDrawer();
+  });
   setHeaderOffsetVar();
+  const updateScrollState = () => header?.classList.toggle('is-scrolled', window.scrollY > 12);
+  updateScrollState();
+  window.addEventListener('scroll', updateScrollState, { passive: true });
   window.addEventListener("resize", () => {
     setHeaderOffsetVar();
     // close drawer on resize to desktop
@@ -117,5 +143,3 @@
     }
   });
 })();
-
-

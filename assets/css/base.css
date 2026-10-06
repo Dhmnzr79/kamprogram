@@ -59,7 +59,14 @@
   --color-bg-2: #fd6844;
   --color-btn: #ff7700;
   --color-white: #ffffff;
-  --color-bg-gray: #f3f3f3;
+  /* Shared light surfaces: cards, section fills and form controls. */
+  --surface-lilac: #faf8fd;
+  --surface-lilac-accent: #f1eafb;
+  --surface-peach: #fff4eb;
+  --surface-lilac-end: #f5effc;
+  --surface-gradient-warm: linear-gradient(120deg, var(--surface-peach), var(--surface-lilac-end));
+  --surface-gradient-lilac: linear-gradient(120deg, var(--surface-lilac), var(--surface-lilac-end));
+  --color-bg-gray: var(--surface-lilac);
 
   /* Gradients */
   --gradient-brand: linear-gradient(

@@ -1,68 +1,22 @@
-(function () {
-  const init = () => {
-    const mediaWrap = document.querySelector('.course-why__media-wrap');
-    const mediaImg = document.querySelector('.course-why__media-img');
-    const figureTop = document.querySelector('.course-why__decorations-figure--top');
-    
-    if (!mediaWrap || !mediaImg) {
+(() => {
+  const wrap = document.querySelector('.course-why__media-wrap');
+  const image = document.querySelector('.course-why__media-img');
+  if (!wrap || !image) return;
+  const motion = matchMedia('(min-width: 1280px) and (prefers-reduced-motion: no-preference)');
+  let frame = 0;
+  const update = () => {
+    frame = 0;
+    if (!motion.matches) {
+      image.style.transform = '';
       return;
     }
-
-    // Рассчитываем максимальное смещение (20% от высоты картинки)
-    // Картинка 120% высоты, обертка 100%, значит можно сдвинуть на 20%
-    const maxOffset = 0.20;
-
-    const updateParallax = () => {
-      const rect = mediaWrap.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Вычисляем прогресс видимости элемента (0 - когда элемент внизу экрана, 1 - когда вверху)
-      const elementTop = rect.top;
-      const elementHeight = rect.height;
-      const elementBottom = elementTop + elementHeight;
-      
-      // Когда элемент виден на экране
-      if (elementBottom > 0 && elementTop < windowHeight) {
-        // Вычисляем прогресс от 0 до 1
-        // 0 = элемент только появился снизу, 1 = элемент полностью проскроллен вверх
-        const scrollProgress = 1 - (elementBottom / (windowHeight + elementHeight));
-        
-        // Ограничиваем от 0 до 1
-        const clampedProgress = Math.max(0, Math.min(1, scrollProgress));
-        
-        // Применяем смещение (0% в начале, -16.67% в конце)
-        const translateY = -maxOffset * clampedProgress * 100;
-        mediaImg.style.transform = `translateY(${translateY}%)`;
-
-        // Parallax для figure-02 (слегка плывет при скролле)
-        if (figureTop) {
-          const figureOffset = -30 * clampedProgress;
-          figureTop.style.transform = `translateY(${figureOffset}px)`;
-        }
-      }
-    };
-
-    // Обновляем при скролле
-    let ticking = false;
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateParallax();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    
-    // Инициализируем начальное состояние
-    updateParallax();
+    const rect = wrap.getBoundingClientRect();
+    const progress = Math.max(0, Math.min(1, 1 - rect.bottom / (innerHeight + rect.height)));
+    image.style.transform = 'translateY(' + (-16 * progress) + '%)';
   };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+  addEventListener('scroll', schedule, { passive: true });
+  addEventListener('resize', schedule);
+  motion.addEventListener('change', schedule);
+  update();
 })();

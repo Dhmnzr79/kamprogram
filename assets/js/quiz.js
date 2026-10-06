@@ -124,30 +124,26 @@
       btn.addEventListener('click', handleBack);
     });
 
-    // Сброс квиза при открытии модалки
-    const openButtons = document.querySelectorAll('[data-modal="quiz"]');
-    openButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Небольшая задержка, чтобы модалка успела открыться
-        setTimeout(resetQuiz, 100);
-      });
-    });
+    quizModal.addEventListener('modal:open', resetQuiz);
+    updateProgress(1, false);
+  };
 
-    // Также отслеживаем открытие модалки через наблюдение за классом
-    let lastState = quizModal.classList.contains('is-open');
-    const observer = new MutationObserver(() => {
-      const currentState = quizModal.classList.contains('is-open');
-      if (currentState && !lastState) {
-        // Модалка только что открылась
-        resetQuiz();
-      }
-      lastState = currentState;
-    });
-
-    observer.observe(quizModal, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
+  const updateProgress = (number, focus = true) => {
+    const modal = document.getElementById('modal-quiz');
+    const progress = modal.querySelector('[data-quiz-progress]');
+    const label = modal.querySelector('[data-quiz-progress-label]');
+    if (progress) progress.value = Math.min(number, 4);
+    if (label) label.textContent = number === 5 ? 'Готово' : `0${number} / 04`;
+    modal.querySelector('.modal__content').scrollTop = 0;
+    const step = modal.querySelector(`.quiz-step[data-step="${number}"]`);
+    const heading = step?.querySelector('h2');
+    if (focus && heading) {
+      heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
+    }
+    if (focus && step && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      step.animate([{ opacity: .3, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 240, easing: 'ease-out' });
+    }
   };
 
   /**
@@ -217,6 +213,7 @@
       currentStep.classList.add('hidden');
       nextStep.hidden = false;
       nextStep.classList.remove('hidden');
+      updateProgress(nextStepNumber);
     }
   };
 
@@ -240,6 +237,7 @@
         currentStep.classList.add('hidden');
         prevStep.hidden = false;
         prevStep.classList.remove('hidden');
+        updateProgress(prevStepNumber);
       }
     }
   };
@@ -339,6 +337,7 @@
     step4.classList.add('hidden');
     step5.hidden = false;
     step5.classList.remove('hidden');
+    updateProgress(5);
 
     // Заполняем скрытые поля формы
     fillHiddenFields();
@@ -419,6 +418,7 @@
         step.classList.add('hidden');
       }
     });
+    updateProgress(1, false);
   };
 
   // Инициализация при загрузке DOM

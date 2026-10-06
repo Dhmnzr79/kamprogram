@@ -2,6 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
+        <span class="reviews__eyebrow">Опыт, которым делятся</span>
         <h2 class="reviews__title">Что говорят о нас родители и дети</h2>
       </div>
     </div>
@@ -48,17 +49,18 @@
             ],
           ];
 
-          foreach ($reviews as $review) :
+          foreach ($reviews as $review_index => $review) :
             $img_src = get_stylesheet_directory_uri() . $review['img'];
             ?>
             <article class="reviews__slide" data-reviews-slide>
               <div class="reviews__card">
-                <img class="reviews__photo" src="<?php echo esc_url($img_src); ?>" alt="">
-                <div class="reviews__name"><?php echo esc_html($review['name']); ?></div>
+                <div class="reviews__identity"><img class="reviews__photo" src="<?php echo esc_url($img_src); ?>" alt=""><div><div class="reviews__name"><?php echo esc_html($review['name']); ?></div>
                 <?php if (!empty($review['date'])) : ?>
                   <div class="reviews__date"><?php echo esc_html($review['date']); ?></div>
                 <?php endif; ?>
-                <div class="reviews__text"><?php echo esc_html($review['text']); ?></div>
+                </div><span class="reviews__quote" aria-hidden="true">“</span></div>
+                <div class="reviews__text" id="review-text-<?php echo (int) $review_index; ?>"><?php echo esc_html($review['text']); ?></div>
+                <button class="reviews__expand" type="button" data-review-expand aria-expanded="false" aria-controls="review-text-<?php echo (int) $review_index; ?>" hidden>Читать полностью <span aria-hidden="true">↗&#xfe0e;</span></button>
               </div>
             </article>
           <?php endforeach; ?>
@@ -69,5 +71,3 @@
     </div>
   </div>
 </section>
-
-

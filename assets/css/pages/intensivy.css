@@ -1,0 +1,116 @@
+/* Page: intensivy */
+
+/* Hero — badge со стартом и ценой */
+.hero__badge {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.hero__badge-item {
+  background: rgba(255, 255, 255, 0.33);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+}
+
+.hero__badge-item:has(.feature-icon) { display: inline-flex; align-items: center; gap: 12px; padding: 0; border: 0; background: none; backdrop-filter: none; }
+
+/* Directions section */
+.intensivy-directions {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.intensivy-directions__title {
+  margin-bottom: 12px;
+}
+
+.intensivy-directions__subtitle {
+  margin-bottom: 48px;
+  opacity: 0.6;
+}
+
+.intensivy-directions__grid {
+  align-items: stretch;
+}
+
+.intensivy-directions__card {
+  background: var(--surface-lilac);
+  border-radius: 24px;
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.intensivy-directions__card-icon {
+  margin-bottom: 24px;
+}
+
+.intensivy-directions__card-title {
+  margin-bottom: 16px;
+}
+
+.intensivy-directions__card-text {
+  flex: 1;
+  margin-bottom: 28px;
+}
+
+.intensivy-directions__card-price {
+  font-family: var(--font-heading);
+  font-size: 30px;
+  color: var(--color-heading);
+  margin-bottom: 24px;
+}
+
+.intensivy-directions__card-cta {
+  align-self: flex-start;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Tablet */
+@media (max-width: 1280px) {
+  .intensivy-directions {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .intensivy-directions__card {
+    padding: 32px 28px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .intensivy-directions {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .intensivy-directions__subtitle {
+    margin-bottom: 32px;
+  }
+
+  .intensivy-directions__card {
+    padding: 28px 24px;
+    margin-bottom: 16px;
+  }
+
+  .intensivy-directions__card-price {
+    font-size: 24px;
+  }
+
+  .hero__badge-item {
+    font-size: 15px;
+    padding: 8px 16px;
+  }
+}

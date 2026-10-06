@@ -1,0 +1,39 @@
+.course-promo {
+  position: relative;
+  background: var(--gradient-brand);
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+.course-promo__inner {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-block: 22px;
+}
+
+.course-promo__mark {
+  font: 700 42px/1 var(--font-heading);
+  color: #ffcb46;
+  white-space: nowrap;
+}
+
+.course-promo__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.course-promo__copy strong {
+  font: 600 24px/1.25 var(--font-heading);
+}
+
+.course-promo__copy span {
+  font-size: 15px;
+}
+
+.course-promo__link {
+  flex-shrink: 0;
+  padding: 16px 24px;
+}

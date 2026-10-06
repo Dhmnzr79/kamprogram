@@ -22,6 +22,13 @@
   font-size: 36px;
 }
 
+@media (min-width: 1280px) {
+  .page-course .hero__header h1 { max-width: 640px; line-height: 1.12; }
+  .page-course .hero__title-main { display: block; text-wrap: balance; }
+  .page-course .hero__title-main--short { max-width: 18ch; }
+  .page-course .hero__kid-photo img { max-height: 725px; width: auto; }
+}
+
 /* Course For Whom */
 .course-for-whom__subtitle {
   font-family: var(--font-heading);
@@ -55,13 +62,10 @@
   content: "";
   position: absolute;
   left: 0;
-  top: 7px;
-  width: 20px;
-  height: 20px;
-  background-image: url("../../svg/chk-red.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+  top: .7em;
+  width: 14px;
+  height: 2px;
+  background: #b7a1d2;
 }
 
 /* Course Why */
@@ -156,7 +160,7 @@
 }
 
 .course-results__card {
-  background: #FFEBEC;
+  background: var(--surface-lilac);
   padding: 30px;
   border-radius: 30px;
   display: flex;
@@ -166,15 +170,8 @@
   width: 100%;
 }
 
-.course-results__grid .col-4:nth-child(2) .course-results__card {
-  background: #f9dffd;
-}
-
 .course-results__icon {
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 /* Course CTA */
@@ -384,4 +381,29 @@
   .course-cta__text {
     font-size: 16px;
   }
+}
+.course-cta__intro { min-width: 0; }
+.course-cta__eyebrow { display: block; margin-bottom: 20px; color: #eee4fa; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.course-cta__detail { display: flex; align-items: center; gap: 16px; margin-top: 30px; color: #fff; font-size: 15px; line-height: 1.5; }
+.course-cta__form { padding: 30px; background: #fff; border-radius: 24px; box-sizing: border-box; }
+.course-cta .form__label { color: #574666; font-size: 13px; }
+.course-cta .form__input { border-radius: 12px; background: var(--surface-lilac); border: 1px solid #e7dfef; font-size: 16px; transition: border-color .2s ease, background .2s ease; }
+.course-cta .form__input:focus { outline: 2px solid #ae92d0; outline-offset: 2px; border-color: #ae92d0; background: #fff; box-shadow: none; }
+.course-cta .form__privacy { color: #71647e; font-size: 12px; line-height: 1.6; }
+.course-cta .form__privacy .wpcf7-list-item { margin: 0; }
+.course-cta .form__privacy label { display: flex; align-items: flex-start; gap: 10px; }
+.course-cta .form__privacy input[type="checkbox"] { width: 18px; height: 18px; flex: 0 0 18px; margin: 2px 0 0; accent-color: #7552a4; cursor: pointer; }
+.course-cta .form__privacy a { color: #604284; text-decoration-color: #c7b2df; }
+.course-cta .form__privacy a:hover { color: #422365; text-decoration-color: currentColor; }
+.course-cta .form__actions .btn { width: 100%; border-radius: 12px; justify-content: space-between; padding-inline: 22px; }
+.course-cta .form__actions .btn:not(:has(svg))::after { content: "→"; font-size: 24px; line-height: 1; }
+.course-cta .wpcf7-not-valid-tip { font-size: 12px; margin-top: 6px; }
+.course-cta .wpcf7-response-output { color: #574666; margin: 20px 0 0; border-radius: 12px; font-size: 14px; }
+@media (min-width: 1280px) {
+  .course-cta__content:has(.course-cta__intro) { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 48px; }
+  .course-cta__title { font-size: 38px; line-height: 1.16; }
+  .course-cta__text { font-size: 18px; line-height: 1.55; margin: 18px 0 0; }
+  .course-cta .form__wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 16px; }
+  .course-cta .form__field { min-width: 0; }
+  .course-cta .form__actions { grid-column: 1 / -1; }
 }

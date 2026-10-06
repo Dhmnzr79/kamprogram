@@ -2,13 +2,13 @@
 get_header();
 ?>
 
-<section class="hero hero--with-header-bg">
+<section class="hero hero--with-header-bg hero--unified hero--home">
   <div class="container">
     <div class="hero__wrapper">
       <div class="hero__content">
         <div class="hero__intro">
           <div class="hero__header">
-            <h1>Курсы для детей и подростков в Петропавловске-Камчатском</h1>
+            <h1 class="home-hero__title">Курсы для детей<br>и подростков<span class="home-hero__location">в Петропавловске-Камчатском</span></h1>
             <div class="hero__kid-photo--mobile">
               <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/hero-bg.png'); ?>" alt="">
             </div>
@@ -17,8 +17,14 @@ get_header();
         </div>
         <div class="hero__kid-photo hero__kid-photo--desktop">
           <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/hero-bg.png'); ?>" alt="">
+          <img class="hero__decor-figure-03" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/figure-03.svg'); ?>" alt="" aria-hidden="true">
         </div>
-        <div class="hero__indexes">
+        <div class="hero__indexes hero__indexes--unified">
+          <div class="hero-facts__heading"><span>Ваш следующий шаг</span><h2>Учимся с интересом</h2></div>
+          <div class="hero__indexes-decor">
+            <img class="hero__decor-figure-05 hero__decor-figure-05--top" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/figure-05.svg'); ?>" alt="" aria-hidden="true">
+            <img class="hero__decor-figure-06 hero__decor-figure-06--bottom" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/figure-06.svg'); ?>" alt="" aria-hidden="true">
+          </div>
           <div class="hero__index">
           <img
             src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
@@ -42,7 +48,9 @@ get_header();
           >
             <div class="hero__index-text">Небольшие группы и живое общение</div>
           </div>
+          <button class="hero-facts__link" type="button" data-modal="signup">Начнём с бесплатного урока <span aria-hidden="true">↗&#xfe0e;</span></button>
         </div>
+        <img class="hero__decor-figure-04" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/figure-04.svg'); ?>" alt="" aria-hidden="true">
         <button class="btn btn--secondary hero__cta" type="button" data-modal="signup">
           Записаться на бесплатный урок
           <svg class="btn__icon" width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,10 +61,10 @@ get_header();
         </div>
       </div>
     </div>
-  </div>
 </section>
 
 <main class="page-home">
+  <?php get_template_part('template-parts/section', 'course-promo'); ?>
   <div class="container"></div>
 
   <?php
@@ -157,44 +165,32 @@ get_header();
   ?>
   <section class="section home-quiz">
     <div class="container">
-      <div class="home-quiz__content">
+      <div class="home-quiz__content home-quiz__content--selector">
         <div class="row">
           <div class="col-6">
+            <div class="home-quiz__eyebrow">Найдём то, что увлечёт</div>
             <h2 class="home-quiz__title"><span>Не знаете,</span><br>какой курс подойдёт вашему ребёнку?</h2>
 
-            <div class="home-quiz__faces">
-              <img
-                class="home-quiz__face"
-                src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/face-bg-01.jpg'); ?>"
-                alt=""
-              >
-              <img
-                class="home-quiz__face"
-                src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/img/face-bg-02.jpg'); ?>"
-                alt=""
-              >
-            </div>
+            <ul class="home-quiz__directions" aria-label="Направления обучения">
+              <li><?php echo kamprogram_icon('code', 'feature-icon--on-surface'); ?><span>Программирование</span></li>
+              <li><?php echo kamprogram_icon('blocks', 'feature-icon--on-surface'); ?><span>Робототехника</span></li>
+              <li><?php echo kamprogram_icon('brush', 'feature-icon--on-surface'); ?><span>Творчество</span></li>
+            </ul>
           </div>
 
           <div class="col-6">
             <div class="home-quiz__body">
               <div class="home-quiz__info">
-                <h3 class="home-quiz__heading">Ответьте всего на 4 коротких вопроса</h3>
+                <h3 class="home-quiz__heading"><span class="home-quiz__prompt">Ответьте всего на</span> <span class="home-quiz__number">4</span> <span class="home-quiz__questions">коротких вопроса</span></h3>
                 <div class="home-quiz__description">и мы подскажем направления, которые лучше всего подойдут по возрасту и интересам.</div>
 
                 <div class="home-quiz__facts">
                   <div class="home-quiz__fact">
-                    <img
-                      src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
-                      alt=""
-                    >
+                    <?php echo kamprogram_icon('clock', 'home-quiz__fact-icon'); ?>
                     Займёт не больше 2 минут
                   </div>
                   <div class="home-quiz__fact">
-                    <img
-                      src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>"
-                      alt=""
-                    >
+                    <?php echo kamprogram_icon('gift', 'home-quiz__fact-icon'); ?>
                     Первый урок бесплатно
                   </div>
                 </div>
@@ -232,5 +228,3 @@ get_header();
 <?php
 get_footer();
 ?>
-
-

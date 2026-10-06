@@ -1,0 +1,44 @@
+/* One entrance per document; individual translate leaves hover transforms intact. */
+@keyframes hero-text-enter {
+  from { opacity: 0; translate: 0 20px; clip-path: inset(100% 0 0 0); }
+  to { opacity: 1; translate: 0 0; clip-path: inset(0 0 0 0); }
+}
+@keyframes hero-detail-enter {
+  from { opacity: 0; translate: 0 12px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes hero-panel-enter {
+  from { opacity: 0; clip-path: inset(0 0 100% 0 round 26px); }
+  to { opacity: 1; clip-path: inset(0 0 0 0 round 26px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-motion .hero--unified :where(.free-course-hero__eyebrow, .hero__text, .hero__price, .hero__cta:not(.free-course-hero__action), .free-course-hero__action > .btn, .free-course-hero__note) {
+    animation: hero-detail-enter 560ms cubic-bezier(.2,.7,.2,1) both;
+  }
+  .hero-motion .hero--unified .hero__header h1 { animation: hero-text-enter 720ms cubic-bezier(.2,.7,.2,1) 60ms both; }
+  .hero-motion .hero--unified .hero__text { animation-delay: 180ms; }
+  .hero-motion .hero--unified .hero__price { animation-delay: 240ms; }
+  .hero-motion .hero--unified :is(.hero__cta:not(.free-course-hero__action), .free-course-hero__action > .btn) { animation-delay: 300ms; }
+  .hero-motion .hero--unified .free-course-hero__note { animation-delay: 370ms; }
+  .hero-motion .hero--unified .hero__indexes--unified { animation: hero-panel-enter 650ms cubic-bezier(.2,.7,.2,1) 100ms both; }
+  .hero-motion .hero--unified .hero__indexes--unified > :is(.hero-facts__heading, .hero__index, .hero-facts__link) {
+    animation: hero-detail-enter 460ms cubic-bezier(.2,.7,.2,1) both;
+    animation-delay: var(--hero-entry-delay, 260ms);
+  }
+  .hero-motion .hero--unified .hero-facts__link { --hero-entry-delay: 620ms; }
+  .hero-motion .hero--unified .hero__index { --hero-entry-delay: 340ms; }
+  .hero-motion .hero--unified .hero__index ~ .hero__index { --hero-entry-delay: 420ms; }
+  .hero-motion .hero--unified .hero__index ~ .hero__index ~ .hero__index { --hero-entry-delay: 500ms; }
+}
+@media (max-width: 1279px) and (prefers-reduced-motion: no-preference) {
+  .hero-motion .hero--unified .hero__header h1 { animation-name: hero-detail-enter; animation-duration: 560ms; }
+  .hero-motion .hero--unified .hero__indexes--unified {
+    animation-name: hero-detail-enter;
+    animation-delay: 0ms;
+  }
+  .hero-motion .hero--unified .hero__indexes--unified:not(.hero-card-enter),
+  .hero-motion .hero--unified .hero__indexes--unified:not(.hero-card-enter) > :is(.hero-facts__heading, .hero__index, .hero-facts__link) { animation-play-state: paused; }
+}
+/* Focus, history restoration and reduced motion always expose content immediately. */
+.hero-motion .hero--unified.hero-motion-skip,
+.hero-motion .hero--unified.hero-motion-skip * { animation: none !important; }

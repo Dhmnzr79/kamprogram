@@ -1,0 +1,74 @@
+/* Optional decorative layer. Kept separate so the experiment is easy to remove. */
+.course-promo__copy .course-promo__project {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #ffe0a6;
+  margin-bottom: 3px;
+}
+
+.learning-geometry-host { position: relative; }
+.learning-geometry {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: max(40px, calc((100% - 1400px) / 2));
+  width: 82px;
+  height: 82px;
+  color: #8060c4;
+  opacity: .85;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: center;
+}
+.learning-geometry--triangle {
+  width: 66px;
+  height: 66px;
+  left: max(16px, calc((100% - 1510px) / 2));
+  right: auto;
+  top: -20px;
+  color: #fc7656;
+  opacity: .9;
+}
+.learning-geometry--ring { right: 25%; width: 70px; height: 70px; color: #ffb640; }
+.learning-geometry--soft-square {
+  right: 27%;
+  top: -12px;
+  width: 38px;
+  height: 38px;
+  color: #ffb640;
+  filter: blur(3px);
+  opacity: .6;
+}
+.learning-geometry--soft-disc {
+  right: 60px;
+  top: -28px;
+  width: 44px;
+  height: 44px;
+  color: #9976ce;
+  filter: blur(4px);
+  opacity: .55;
+}
+@media (min-width: 1280px) {
+  .learning-geometry { display: block; }
+}
+
+/* Three reusable arrangements, shared by every page of the same type. */
+.page-home .learning-geometry--soft-square { left: 32%; right: auto; top: -48px; }
+.page-course .learning-geometry--triangle { left: auto; right: 14%; top: -76px; }
+.page-course .learning-geometry--ring { left: 38%; right: auto; top: -76px; }
+.page-course .learning-geometry--diamond { right: 5%; top: -90px; }
+.page-course .learning-geometry--soft-disc { right: 32%; top: -60px; }
+.page-course .learning-geometry--soft-square { left: 32%; right: auto; top: -110px; }
+.page-course .learning-geometry--solid-square { left: -24px; right: auto; top: -40px; width: 78px; height: 78px; color: #fc7656; opacity: 1; }
+.page-about .learning-geometry--diamond { right: 12%; top: -28px; }
+.page-about .learning-geometry--ring { right: 7%; top: -80px; }
+.page-about .learning-geometry--triangle { left: 18%; right: auto; top: -80px; }
+.page-about .learning-geometry--soft-square { right: 9%; top: -28px; }
+.page-about .learning-geometry--soft-disc { left: 36%; right: auto; top: -72px; }
+.free-course .learning-geometry--ring { right: 13%; }
+.free-course .learning-geometry--diamond { left: 4%; right: auto; top: -92px; }
+.free-course .learning-geometry--triangle { left: auto; right: 8%; top: 8px; }
+.free-course .learning-geometry--soft-disc { right: 32%; }
+.free-course .learning-geometry--soft-square { left: 30%; right: auto; top: -52px; }

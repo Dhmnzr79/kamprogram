@@ -21,7 +21,7 @@
                 alt="<?php echo esc_attr(get_bloginfo('name')); ?>"
               >
             </a>
-            <div class="site-header__tagline">Центр профессий будущего на Камчатке</div>
+            <div class="site-header__tagline">Центр профессий будущего<br><span>на Камчатке</span></div>
           </div>
 
           <div class="site-header__desktop-nav" data-header-desktop-nav>
@@ -36,13 +36,13 @@
           </div>
 
           <div class="site-header__contacts" data-header-contacts>
-            <div class="site-header__address">📍 г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
-            <a class="site-header__phone" href="tel:+79248941600">📞 +7 924 894-16-00</a>
+            <div class="site-header__address">Петропавловск-Камчатский<br><span>ул. Максутова, д. 34</span></div>
+            <a class="site-header__phone" href="tel:+79248941600">+7 924 894-16-00</a>
           </div>
 
           <div class="site-header__mobile-buttons">
             <a class="btn-call" href="tel:+79248941600" aria-label="Позвонить">
-              <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/phone-icon.svg'); ?>" alt="">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m7 3 3 5-2 2c1 3 3 5 6 6l2-2 5 3c0 3-2 4-4 4C9 20 4 15 3 7c0-2 1-4 4-4Z" stroke-linejoin="round"/></svg>
             </a>
             <button class="btn-menu" type="button" aria-haspopup="dialog" aria-controls="mobileNav" aria-expanded="false" data-header-burger>
               <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/menu-icon.svg'); ?>" alt="">
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <nav class="site-header__drawer" aria-label="Меню" data-header-drawer hidden>
+    <nav class="site-header__drawer" id="mobileNav" aria-label="Меню" data-header-drawer hidden>
       <div class="site-header__drawer-header">
         <button class="site-header__close" type="button" aria-label="Закрыть меню" data-header-close>Закрыть</button>
       </div>
@@ -79,8 +79,10 @@
           ]);
           ?>
         </div>
+        <a class="site-header__campaign" href="<?php $campaign_page = get_page_by_path('1c-besplatno'); echo esc_url($campaign_page ? get_permalink($campaign_page) : home_url('/1c-besplatno/')); ?>">
+          <strong>Проект «Код будущего» <span aria-hidden="true">↗&#xfe0e;</span></strong>
+          <span>Бесплатно · запись до 10 октября 2026</span>
+        </a>
       </div>
     </nav>
   </header>
-
-

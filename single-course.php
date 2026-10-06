@@ -37,7 +37,7 @@ while (have_posts()) {
   ?>
 
   <main class="page-course">
-    <section class="hero hero--with-header-bg">
+    <section class="hero hero--with-header-bg hero--unified">
       <div class="container">
         <div class="hero__wrapper">
           <div class="hero__content">
@@ -47,11 +47,13 @@ while (have_posts()) {
                   <?php
                   $title = $hero_h1 ?: get_the_title();
                   $parts = explode('|', $title, 2);
+                  $title_length = preg_match_all('/./u', trim($parts[0]));
+                  $title_class = 'hero__title-main' . ($title_length <= 35 ? ' hero__title-main--short' : '');
                   if (count($parts) === 2) {
-                    echo esc_html(trim($parts[0]));
+                    echo '<span class="' . esc_attr($title_class) . '">' . esc_html(trim($parts[0])) . '</span>';
                     echo ' <span class="hero__h1-part2">' . esc_html(trim($parts[1])) . '</span>';
                   } else {
-                    echo esc_html($title);
+                    echo '<span class="' . esc_attr($title_class) . '">' . esc_html($title) . '</span>';
                   }
                   ?>
                 </h1>
@@ -74,7 +76,8 @@ while (have_posts()) {
               </div>
             <?php endif; ?>
 
-            <div class="hero__indexes">
+            <div class="hero__indexes hero__indexes--unified">
+                <div class="hero-facts__heading"><span>Ваш следующий шаг</span><h2>Курс в деталях</h2></div>
               <div class="hero__index">
                 <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/chk-white.svg'); ?>" alt="">
                 <div class="hero__index-label">Возраст:</div>
@@ -92,6 +95,7 @@ while (have_posts()) {
                 <div class="hero__index-label">Длительность:</div>
                 <div class="hero__index-value"><?php echo esc_html($duration); ?></div>
               </div>
+                <button class="hero-facts__link" type="button" data-modal="signup">Начнём с бесплатного урока <span aria-hidden="true">↗&#xfe0e;</span></button>
             </div>
 
             <button class="btn btn--secondary hero__cta" type="button" data-modal="signup">
@@ -158,10 +162,6 @@ while (have_posts()) {
                 <div class="course-why__media-wrap">
                   <?php echo wp_get_attachment_image($why_photo_id, 'large', false, ['class' => 'course-why__media-img']); ?>
                 </div>
-                <div class="course-why__decorations">
-                  <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/figure-02.svg'); ?>" alt="" class="course-why__decorations-figure course-why__decorations-figure--top">
-                  <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/svg/figure-01.svg'); ?>" alt="" class="course-why__decorations-figure course-why__decorations-figure--bottom">
-                </div>
               </div>
             <?php endif; ?>
           </div>
@@ -227,12 +227,7 @@ while (have_posts()) {
               ?>
               <div class="col-4">
                 <div class="course-results__card">
-                  <?php if ($icon_id) : ?>
-                    <?php $src = wp_get_attachment_url($icon_id); ?>
-                    <?php if ($src) : ?><img class="course-results__icon" src="<?php echo esc_url($src); ?>" alt=""><?php endif; ?>
-                  <?php elseif ($icon_url) : ?>
-                    <img class="course-results__icon" src="<?php echo esc_url($icon_url); ?>" alt="">
-                  <?php endif; ?>
+                  <?php echo kamprogram_icon(kamprogram_result_icon($t), 'course-results__icon feature-icon--on-surface'); ?>
                   <?php if ($t) : ?><h3 class="course-results__card-title"><?php echo esc_html($t); ?></h3><?php endif; ?>
                   <?php if ($d) : ?><div class="course-results__card-text"><?php echo esc_html($d); ?></div><?php endif; ?>
                 </div>
@@ -246,8 +241,12 @@ while (have_posts()) {
     <section class="section course-cta">
       <div class="container">
         <div class="course-cta__content">
+          <div class="course-cta__intro">
+          <span class="course-cta__eyebrow">Попробуйте перед выбором курса</span>
           <?php if ($cta_title) : ?><h2 class="course-cta__title"><?php echo esc_html($cta_title); ?></h2><?php endif; ?>
           <?php if ($cta_text) : ?><div class="course-cta__text"><?php echo esc_html($cta_text); ?></div><?php endif; ?>
+          <div class="course-cta__detail"><?php echo kamprogram_icon('compass', 'feature-icon--on-surface'); ?><span>Первый шаг —<br>найти свой интерес</span></div>
+          </div>
 
           <div class="course-cta__form">
             <?php echo do_shortcode('[contact-form-7 id="6c52f0a" title="Основная форма"]'); ?>
@@ -266,5 +265,3 @@ while (have_posts()) {
 
 get_footer();
 ?>
-
-

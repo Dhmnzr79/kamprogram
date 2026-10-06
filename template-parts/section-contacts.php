@@ -4,16 +4,25 @@
       <div class="col-6">
         <h2 class="contacts__title">Контакты</h2>
         <div class="contacts__info">
-          <div class="contacts__address">📍 г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
-          <a class="contacts__email" href="mailto:info@kamprogram.ru">📧 info@kamprogram.ru</a>
-          <a class="contacts__phone" href="tel:+79248941600">📞 +7 924 894-16-00</a>
+          <div class="contacts__address contacts__item"><?php echo kamprogram_icon('pin'); ?><span>г. Петропавловск-Камчатский,<br>ул. Максутова, д.34</span></div>
+          <a class="contacts__email contacts__item" href="mailto:info@kamprogram.ru"><?php echo kamprogram_icon('mail'); ?><span>info@kamprogram.ru</span></a>
+          <a class="contacts__phone contacts__item" href="tel:+79248941600"><?php echo kamprogram_icon('phone'); ?><span>+7 924 894-16-00</span></a>
         </div>
-        <button class="btn btn--primary contacts__cta" type="button" data-modal="signup">
+        <?php if (!empty($args['signup_url'])) : ?>
+          <a class="btn btn--primary contacts__cta" href="<?php echo esc_url($args['signup_url']); ?>">
+          Записаться на курс
+        <?php else : ?>
+          <button class="btn btn--primary contacts__cta" type="button" data-modal="signup">
           Заказать обратный звонок
+        <?php endif; ?>
           <svg class="btn__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14.75 7.75L0.75 7.75M14.75 7.75L7.75 14.75M14.75 7.75L7.75 0.75" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </button>
+        <?php if (!empty($args['signup_url'])) : ?>
+          </a>
+        <?php else : ?>
+          </button>
+        <?php endif; ?>
       </div>
 
       <div class="col-6">
@@ -24,5 +33,3 @@
     </div>
   </div>
 </section>
-
-

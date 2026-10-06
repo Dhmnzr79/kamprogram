@@ -1,4 +1,4 @@
-  <footer class="site-footer">
+  <footer class="site-footer site-footer--refreshed">
     <div class="container">
       <div class="row">
         <div class="col-3">
@@ -11,6 +11,8 @@
             </a>
             <div class="site-footer__tagline">Центр профессий будущего на Камчатке</div>
           </div>
+          <p class="site-footer__note">Помогаем найти интерес<br>и превратить его в умение.</p>
+          <a class="site-footer__about" href="<?php echo esc_url(home_url('/o-nas/')); ?>">О нашем центре <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></a>
         </div>
 
         <div class="col-6">
@@ -20,21 +22,21 @@
             <div class="row site-footer__courses-grid">
               <div class="col-6">
                 <nav class="site-footer__courses-list">
-                  <a class="site-footer__courses-link" href="#">Робототехника LEGO</a>
-                  <a class="site-footer__courses-link" href="#">Мастерская Scratch</a>
-                  <a class="site-footer__courses-link" href="#">Программирование на Python</a>
-                  <a class="site-footer__courses-link" href="#">Системное администрирование</a>
-                  <a class="site-footer__courses-link" href="#">Компьютерная графика</a>
+                  <a class="site-footer__courses-link" href="<?php echo esc_url(home_url('/course/robototekhnika-lego/')); ?>">Робототехника LEGO</a>
+                  <a class="site-footer__courses-link" href="<?php echo esc_url(home_url('/course/masterskaya-scratch/')); ?>">Мастерская Scratch</a>
+                  <a class="site-footer__courses-link" href="<?php echo esc_url(home_url('/course/programmirovanie-na-python/')); ?>">Программирование на Python</a>
+                  <a class="site-footer__courses-link" href="<?php echo esc_url(home_url('/course/sistemnoe-administrirovanie/')); ?>">Системное администрирование</a>
+                  <a class="site-footer__courses-link" href="<?php echo esc_url(home_url('/course/kompyuternaya-grafika/')); ?>">Компьютерная графика</a>
                 </nav>
               </div>
 
               <div class="col-6">
                 <nav class="site-footer__courses-list">
-                  <a class="site-footer__courses-link" href="#">Мультипликация</a>
-                  <a class="site-footer__courses-link" href="#">HTML и JavaScript</a>
-                  <a class="site-footer__courses-link" href="#">Олимпиадная математика</a>
-                  <a class="site-footer__courses-link" href="#">Каллиграфия и красивый почерк</a>
-                  <a class="site-footer__courses-link" href="#">Черчение</a>
+                  <a class="site-footer__courses-link" href="<?php echo esc_url(home_url('/course/multiplikaciya/')); ?>">Мультипликация</a>
+                  <a class="site-footer__courses-link" href="<?php echo esc_url(home_url('/course/html-i-javascript/')); ?>">HTML и JavaScript</a>
+                  <a class="site-footer__courses-link" href="<?php echo esc_url(home_url('/course/olimpiadnaya-matematika/')); ?>">Олимпиадная математика</a>
+                  <a class="site-footer__courses-link" href="<?php echo esc_url(home_url('/course/kalligrafiya-i-krasivyj-pocherk/')); ?>">Каллиграфия и красивый почерк</a>
+                  <a class="site-footer__courses-link" href="<?php echo esc_url(home_url('/course/cherchenie/')); ?>">Черчение</a>
                 </nav>
               </div>
             </div>
@@ -43,30 +45,55 @@
 
         <div class="col-3">
           <div class="site-footer__contacts">
-            <div class="site-footer__address">📍 г. Петропавловск-Камчатский, ул. Максутова, д.34</div>
+            <h3 class="site-footer__courses-title">Будем на связи</h3>
+            <div class="site-footer__address">Петропавловск-Камчатский<br>ул. Максутова, д. 34</div>
             <a class="site-footer__phone" href="tel:+79248941600">+7 924 894-16-00</a>
+            <a class="site-footer__email" href="mailto:info@kamprogram.ru">info@kamprogram.ru</a>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="site-footer__bottom">
+      <div class="container site-footer__bottom-inner">
+        <span class="site-footer__copyright">© <?php echo esc_html(wp_date('Y')); ?> Центр профессий будущего на Камчатке</span>
+        <a
+          class="site-footer__privacy"
+          href="<?php echo esc_url('https://kamprogram.ru/privacy.pdf'); ?>"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Политика конфиденциальности</a>
+      </div>
+    </div>
   </footer>
 
-  <div class="modal" id="modal-signup">
+  <div class="modal" id="modal-signup" role="dialog" aria-modal="true" aria-labelledby="signup-title" aria-hidden="true">
     <div class="modal__overlay" data-modal-close></div>
-    <div class="modal__content">
-      <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">×</button>
-      <h2 class="modal__title">Оставьте заявку</h2>
-      <div class="modal__subtitle">И мы свяжемся с вами в ближайшее время</div>
-      <div class="modal__form">
-        <?php echo do_shortcode('[contact-form-7 id="6c52f0a" title="Основная форма"]'); ?>
+    <div class="modal__content signup-dialog" tabindex="-1">
+      <button class="modal__close" type="button" data-modal-close aria-label="Закрыть"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      <aside class="signup-dialog__story">
+        <span class="signup-dialog__eyebrow">Начинается с интереса</span>
+        <h2>Большое будущее.<br>Первый шаг —<br>сегодня.</h2>
+        <div class="signup-dialog__art" aria-hidden="true"><span>{</span><i><svg width="54" height="54" viewBox="0 0 54 54" fill="none"><path d="M13 41 41 13M13 13h28v28" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span>}</span></div>
+        <p>Поможем выбрать направление и ответим на ваши вопросы.</p>
+        <span class="signup-dialog__signature">Центр профессий будущего / Камчатка</span>
+      </aside>
+      <div class="signup-dialog__form-panel">
+        <span class="signup-dialog__eyebrow">Давайте знакомиться</span>
+        <h2 class="modal__title" id="signup-title">Оставьте заявку</h2>
+        <div class="modal__subtitle">И мы свяжемся с вами в ближайшее время</div>
+        <div class="modal__form">
+          <?php echo do_shortcode('[contact-form-7 id="6c52f0a" title="Основная форма"]'); ?>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="modal" id="modal-quiz">
+  <div class="modal" id="modal-quiz" role="dialog" aria-modal="true" aria-labelledby="quiz-dialog-title" aria-hidden="true">
     <div class="modal__overlay" data-modal-close></div>
-    <div class="modal__content modal-quiz">
-      <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">×</button>
+    <div class="modal__content modal-quiz" tabindex="-1">
+      <button class="modal__close" type="button" data-modal-close aria-label="Закрыть"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      <div class="quiz-progress"><div class="quiz-progress__caption"><span id="quiz-dialog-title">Найдём свой курс</span><span data-quiz-progress-label>01 / 04</span></div><progress class="quiz-progress__bar" data-quiz-progress max="4" value="1" aria-label="Прогресс подбора курса"></progress></div>
       
       <!-- Шаг 1: Возраст -->
       <div class="quiz-step" data-step="1">
@@ -200,8 +227,34 @@
     </div>
   </div>
 
+  <?php
+  $privacy_pdf = 'https://kamprogram.ru/privacy.pdf';
+  ?>
+  <div
+    class="cookie-banner"
+    id="cookie-banner"
+    role="dialog"
+    aria-label="<?php echo esc_attr('Уведомление об использовании cookie'); ?>"
+    aria-live="polite"
+    hidden
+  >
+    <div class="container cookie-banner__inner">
+      <p class="cookie-banner__text">
+        Мы используем файлы cookie и схожие технологии для работы сайта и улучшения сервиса.
+        Нажимая «Принять», вы даёте согласие на обработку данных в соответствии с
+        <a
+          class="cookie-banner__link"
+          href="<?php echo esc_url($privacy_pdf); ?>"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Политикой конфиденциальности</a>.
+      </p>
+      <button class="btn btn--primary cookie-banner__accept" type="button" id="cookie-banner-accept">
+        Принять
+      </button>
+    </div>
+  </div>
+
   <?php wp_footer(); ?>
 </body>
 </html>
-
-
