@@ -938,6 +938,17 @@ body.page-is-contacts {
   margin-top: 4px;
 }
 
+.reviews__avatar { display: grid; place-items: center; flex: 0 0 48px; height: 48px; border-radius: 16px; background: #fff; color: #ff603f; }
+.reviews__source-note { margin-top: 4px; font-size: 11px; color: #70617f; }
+.reviews__original { text-decoration: none; border-bottom: 1px solid #d4c5ea; }
+.review-image-dialog { padding: 0; border: 0; background: transparent; max-width: calc(100vw - 32px); max-height: calc(100dvh - 32px); overflow: auto; }
+.review-image-dialog::backdrop { background: rgb(28 16 46 / 78%); backdrop-filter: blur(6px); }
+.review-image-dialog[open] { display: block; }
+.review-image-dialog__content { position: relative; padding: 48px 0 0; }
+.review-image-dialog__image { display: block; width: auto; max-width: 100%; height: auto; max-height: calc(100dvh - 80px); object-fit: contain; margin: auto; border-radius: 12px; }
+.review-image-dialog__close { position: absolute; top: 0; right: 0; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid rgb(255 255 255 / 40%); border-radius: 14px; background: #fff; color: #4823a8; font: 400 28px/1 sans-serif; cursor: pointer; }
+.review-image-dialog__close:focus-visible { outline: 2px solid #ff934a; outline-offset: 3px; }
+
 /* Contacts */
 .contacts__item { display: flex; align-items: center; gap: 16px; }
 .contacts__item > span:last-child { min-width: 0; }

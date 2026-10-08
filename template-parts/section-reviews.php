@@ -18,6 +18,18 @@
           <?php
           $reviews = [
             [
+              'name' => 'Георгий Кульков',
+              'date' => '06.10.2026',
+              'screenshot' => '/assets/img/review-code-future-student.jpg',
+              'text' => 'Поступил в РЭУ имени Плеханова на специальность «Компьютерные системы и программирование». Сейчас дополнительно изучаю JavaScript. Скучаю по занятиям 1С и нашей группе. Желаю преподавателю и ребятам успехов и найти себя в жизни!',
+            ],
+            [
+              'name' => 'Андрей Левченко',
+              'date' => '06.10.2026',
+              'screenshot' => '/assets/img/review-code-future-admission.jpg',
+              'text' => 'Спасибо за чудесные уроки по программированию! За них мне дали 5 баллов за индивидуальные достижения при поступлении. Поступил на бюджет в КамГУ имени Витуса Беринга на прикладную информатику. Сумма — 176 баллов, больше всех в моём классе.',
+            ],
+            [
               'img' => '/assets/img/otz-1.jpg',
               'name' => 'Ольга М',
               'date' => '28 марта 2025',
@@ -50,17 +62,18 @@
           ];
 
           foreach ($reviews as $review_index => $review) :
-            $img_src = get_stylesheet_directory_uri() . $review['img'];
+            $img_src = !empty($review['img']) ? get_stylesheet_directory_uri() . $review['img'] : '';
             ?>
             <article class="reviews__slide" data-reviews-slide>
               <div class="reviews__card">
-                <div class="reviews__identity"><img class="reviews__photo" src="<?php echo esc_url($img_src); ?>" alt=""><div><div class="reviews__name"><?php echo esc_html($review['name']); ?></div>
+                <div class="reviews__identity"><?php if ($img_src) : ?><img class="reviews__photo" src="<?php echo esc_url($img_src); ?>" alt=""><?php else : ?><span class="reviews__avatar" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="16" cy="11" r="5"/><path d="M6 27v-2a10 10 0 0 1 20 0v2"/></svg></span><?php endif; ?><div><div class="reviews__name"><?php echo esc_html($review['name']); ?></div>
                 <?php if (!empty($review['date'])) : ?>
                   <div class="reviews__date"><?php echo esc_html($review['date']); ?></div>
                 <?php endif; ?>
+                <?php if (!empty($review['anonymous'])) : ?><div class="reviews__source-note">Имя изменено · по переписке</div><?php endif; ?>
                 </div><span class="reviews__quote" aria-hidden="true">“</span></div>
                 <div class="reviews__text" id="review-text-<?php echo (int) $review_index; ?>"><?php echo esc_html($review['text']); ?></div>
-                <button class="reviews__expand" type="button" data-review-expand aria-expanded="false" aria-controls="review-text-<?php echo (int) $review_index; ?>" hidden>Читать полностью <span aria-hidden="true">↗&#xfe0e;</span></button>
+                <?php if (!empty($review['screenshot'])) : ?><a class="reviews__expand reviews__original" href="<?php echo esc_url(get_stylesheet_directory_uri() . $review['screenshot']); ?>" data-review-image aria-haspopup="dialog">Посмотреть отзыв <span aria-hidden="true">↗&#xfe0e;</span></a><?php endif; ?>
               </div>
             </article>
           <?php endforeach; ?>
@@ -71,3 +84,9 @@
     </div>
   </div>
 </section>
+<dialog class="review-image-dialog" aria-label="Скриншот отзыва" data-review-image-dialog>
+  <div class="review-image-dialog__content">
+    <button class="review-image-dialog__close" type="button" aria-label="Закрыть скриншот">×</button>
+    <img class="review-image-dialog__image" alt="Переписка с отзывом об обучении">
+  </div>
+</dialog>

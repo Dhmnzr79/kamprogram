@@ -1,4 +1,25 @@
 (() => {
+  const imageDialog = document.querySelector('[data-review-image-dialog]');
+  if (imageDialog && typeof imageDialog.showModal === 'function') {
+    let previousOverflow = '';
+    document.querySelectorAll('[data-review-image]').forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        imageDialog.querySelector('img').src = link.href;
+        previousOverflow = document.documentElement.style.overflow;
+        imageDialog.showModal();
+        document.documentElement.style.overflow = 'hidden';
+      });
+    });
+    imageDialog.querySelector('button').addEventListener('click', () => imageDialog.close());
+    imageDialog.addEventListener('click', event => {
+      if (event.target === imageDialog) imageDialog.close();
+    });
+    imageDialog.addEventListener('close', () => {
+      document.documentElement.style.overflow = previousOverflow;
+      imageDialog.querySelector('img').removeAttribute('src');
+    });
+  }
   const sliders = document.querySelectorAll("[data-reviews-slider]");
 
   const getVisibleCount = () => {
